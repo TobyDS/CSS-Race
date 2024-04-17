@@ -1,0 +1,3 @@
+# server/.husky/pre-commit
+cd server
+npm run format

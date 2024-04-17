@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier-eslint --write \"**/*{.json,.js}\""
+    "format": "prettier-eslint --write \"**/*{.json,.js}\"",
+    "prepare": "cd .. && husky server/.husky"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-node": "^11.1.0",
+    "husky": "^9.0.11",
     "nodemon": "^3.1.0",
     "prettier-eslint-cli": "^8.0.1"
   }
