@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0 --fix",
     "format": "prettier-eslint --write \"**/*{.json,.js,.jsx}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "cd .. && husky client/.husky"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -23,6 +24,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "husky": "^9.0.11",
     "prettier": "^3.2.5",
     "prettier-eslint-cli": "^8.0.1",
     "vite": "^5.2.0"
