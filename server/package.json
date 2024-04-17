@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TobyDS/CSS-Race.git"
+  },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "author": "Toby Dixon Smith",
+  "license": "MIT",
+  "description": "",
+  "homepage": "https://github.com/TobyDS/CSS-Race#readme"
 }
