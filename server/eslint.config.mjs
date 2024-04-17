@@ -1,12 +1,12 @@
 import globals from 'globals';
-import js from '@eslint/js';
 
 export default [
-  js.configs.recommended,
   {
     languageOptions: {
       globals: globals.browser,
     },
+    extends: ['eslint:recommended', 'plugin:node/recommended', 'airbnb-base'],
+    plugins: ['json'],
     rules: {
       'no-unused-vars': 'off',
       'no-undef': 'off',
