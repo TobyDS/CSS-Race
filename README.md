@@ -67,7 +67,12 @@ CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Rac
 
 ### Built With
 
+- [![Node][Node.js]][Node-url]
+- [![Express][Express.js]][Express-url]
+- [![MongoDB][MongoDB]][Mongo-url]
 - [![React][React.js]][React-url]
+- [![ESLint][ESLint]][ESLint-url]
+- [![Prettier][Prettier]][Prettier-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,3 +185,13 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [product-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express-url]: https://expressjs.com/
+[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/
+[MongoDB]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+[Mongo-url]: https://www.mongodb.com/
+[ESLint]: https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
+[ESLint-url]: https://eslint.org/
+[Prettier]: https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
+[Prettier-url]: https://prettier.io/
