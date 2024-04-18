@@ -1,5 +1,7 @@
 import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
+import styles from './index.module.css';
+
 function CodeEditor ({ editorHeight, language, templateCode }) {
   return (
     <div className='editor-container'>
