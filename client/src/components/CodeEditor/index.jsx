@@ -38,7 +38,7 @@ function CodeEditor ({ language, setValue }) {
       <Editor
         theme='vs-dark'
         height={editorDefaults.height}
-        width={'50%'}
+        width={'100%'}
         defaultLanguage={language}
         defaultValue={editorTemplate}
         beforeMount={handleEditorWillMount}
