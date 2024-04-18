@@ -30,7 +30,7 @@ function CodeEditor ({ language, setValue }) {
       : editorDefaults.cssTemplate;
 
   return (
-    <div className={styles.editorContainer}>
+    <div className={styles.editorContainer + ' editor-container'}>
       <Editor
         theme='vs-dark'
         height={editorDefaults.height}
