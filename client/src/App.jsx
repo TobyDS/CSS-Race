@@ -1,17 +1,21 @@
+import { useState } from 'react';
 import CodeEditor from './components/CodeEditor';
 
+const templateCode = '<div></div>';
+
 function App () {
-  const editorHeight = '90vh';
-  const language = 'html';
-  const templateCode = '<div></div>';
+  const [html, setHtml] = useState(templateCode);
+
+  const editorConfig = {
+    editorHeight: '90vh',
+    language: 'html',
+    templateCode: templateCode,
+  };
+
   return (
     <>
       <h1>CSS Race</h1>
-      <CodeEditor
-        editorHeight={editorHeight}
-        language={language}
-        templateCode={templateCode}
-      />
+      <CodeEditor editorConfig={editorConfig} setValue={setHtml} />
     </>
   );
 }
