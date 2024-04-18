@@ -4,6 +4,7 @@ const editorDefaults = {
     minimap: { enabled: false },
     lineNumbers: false,
     linkedEditing: true,
+    fontSize: 16,
   },
   htmlTemplate: '<div></div>',
   cssTemplate:
