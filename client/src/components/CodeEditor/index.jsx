@@ -1,10 +1,10 @@
 import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
-import { emmetHTML } from 'emmet-monaco-es';
+import { emmetCSS, emmetHTML } from 'emmet-monaco-es';
 import { useRef, useState } from 'react';
 import styles from './index.module.css';
 
-import editorDefaults from '../../data/editorDefaults';
+import editorDefaults from '/src/data/editorDefaults';
 
 function CodeEditor ({ language, setValue }) {
   const disposeEmmetRef = useRef();
@@ -12,7 +12,11 @@ function CodeEditor ({ language, setValue }) {
   const [timeoutId, setTimeoutId] = useState();
 
   function handleEditorWillMount (monaco) {
-    disposeEmmetRef.current = emmetHTML(monaco);
+    if (language === 'html') {
+      disposeEmmetRef.current = emmetHTML(monaco);
+    } else {
+      disposeEmmetRef.current = emmetCSS(monaco);
+    }
   }
 
   function handleOnMount (editor) {
