@@ -2,7 +2,7 @@ import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
 import { emmetHTML } from 'emmet-monaco-es';
 import { useRef, useState } from 'react';
-import styles from './index.module.css';  
+import styles from './index.module.css';
 
 import editorDefaults from '../../data/editorDefaults';
 
@@ -34,6 +34,7 @@ function CodeEditor ({ language, setValue }) {
       <Editor
         theme='vs-dark'
         height={editorDefaults.height}
+        width={'50%'}
         defaultLanguage={language}
         defaultValue={editorTemplate}
         beforeMount={handleEditorWillMount}
