@@ -21,13 +21,36 @@ const imageController = {
       if (!image) {
         return res.status(404).json({ message: 'Image not found' });
       }
-      res
-        .status(200)
-        .json({ id: image._id, img: base64Image, img_2x: base64Image2x });
+      res.status(200).json({
+        id: image._id,
+        img: base64Image,
+        img_2x: base64Image2x,
+        colors: image.colors,
+      });
     } catch (error) {
       res
         .status(500)
         .json({ message: 'Failed to get image', error: error.message });
+    }
+  },
+
+  getRandomImage: async (req, res) => {
+    try {
+      Image.random((image) => {
+        console.log(image);
+        const base64Image = image.img.toString('base64');
+        const base64Image2x = image.img_2x.toString('base64');
+        res.status(200).json({
+          id: image._id,
+          img: base64Image,
+          img_2x: base64Image2x,
+          colors: image.colors,
+        });
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Failed to get random image', error: error.message });
     }
   },
 

@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 router.get('/testing/image/:id', imageController.getImageByIdAsString);
 router.post('/testing/image', imageController.addImage);
 
+router.get('/image/random', imageController.getRandomImage);
 router.get('/image/:id', imageController.getImageById);
 router.get('/images', imageController.getImages);
 
