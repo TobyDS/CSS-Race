@@ -13,6 +13,10 @@ const imageSchema = new Schema({
     type: Buffer,
     required: false,
   },
+  colors: {
+    type: [String],
+    required: false,
+  },
 });
 
 imageSchema.set('toJSON', {
