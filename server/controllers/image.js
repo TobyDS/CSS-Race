@@ -1,6 +1,15 @@
 const Image = require('../models/image');
 
+/**
+ * Controller for handling image-related operations.
+ */
 const imageController = {
+  /**
+   * Get all images.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The response object with the images.
+   */
   getImages: async (req, res) => {
     try {
       const images = await Image.find();
@@ -12,6 +21,12 @@ const imageController = {
     }
   },
 
+  /**
+   * Get an image by its ID.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The response object with the image.
+   */
   getImageById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -34,6 +49,12 @@ const imageController = {
     }
   },
 
+  /**
+   * Get a random image.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The response object with the random image.
+   */
   getRandomImage: async (req, res) => {
     try {
       Image.random((image) => {
@@ -56,6 +77,12 @@ const imageController = {
 
   // TODO: REMOVE
   // ! FOR TESTING PURPOSES ONLY:
+  /**
+   * Add an image.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The response object with the added image.
+   */
   addImage: async (req, res) => {
     try {
       const { base64Image, base64Image_2x } = req.body;
@@ -80,6 +107,12 @@ const imageController = {
 
   // TODO: REMOVE
   // ! FOR TESTING PURPOSES ONLY:
+  /**
+   * Get an image by its ID as a string.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} - The response object with the image as a string.
+   */
   getImageByIdAsString: async (req, res) => {
     try {
       const { id } = req.params;

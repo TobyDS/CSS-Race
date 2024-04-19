@@ -4,6 +4,13 @@ const mongoose = require('./');
 
 const Schema = mongoose.Schema;
 
+/**
+ * @typedef {Object} Image
+ * @property {Buffer} img - The image data.
+ * @property {Buffer} img_2x - The high-resolution image data.
+ * @property {string[]} colors - An array of colors associated with the image.
+ */
+
 const imageSchema = new Schema({
   img: {
     type: Buffer,
@@ -27,6 +34,10 @@ imageSchema.set('toJSON', {
   },
 });
 
+/**
+ * Get a random image from the collection.
+ * @param {function} callback - The callback function to handle the retrieved image.
+ */
 function getRandom (callback) {
   this.countDocuments()
     .then((count) => {

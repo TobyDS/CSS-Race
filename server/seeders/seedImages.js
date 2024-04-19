@@ -16,6 +16,10 @@ mongoose
     console.error('Error connecting to MongoDB:', error);
   });
 
+/**
+ * Seeds images into the database.
+ * @returns {Promise<void>} A promise that resolves when the images are seeded successfully or rejects with an error.
+ */
 async function seedImages () {
   try {
     // Remove existing images
