@@ -15,6 +15,14 @@ const imageSchema = new Schema({
   },
 });
 
+imageSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
 const Image = mongoose.model('Image', imageSchema);
 
 module.exports = Image;
