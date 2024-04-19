@@ -8,7 +8,7 @@ const imageController = {
    * Get all images.
    * @param {Object} req - The request object.
    * @param {Object} res - The response object.
-   * @returns {Object} - The response object with the images.
+   * @returns {Object} The response object with the images.
    */
   getImages: async (req, res) => {
     try {
@@ -25,7 +25,7 @@ const imageController = {
    * Get an image by its ID.
    * @param {Object} req - The request object.
    * @param {Object} res - The response object.
-   * @returns {Object} - The response object with the image.
+   * @returns {Object} The response object with the image.
    */
   getImageById: async (req, res) => {
     try {
@@ -53,7 +53,7 @@ const imageController = {
    * Get a random image.
    * @param {Object} req - The request object.
    * @param {Object} res - The response object.
-   * @returns {Object} - The response object with the random image.
+   * @returns {Object} The response object with the random image.
    */
   getRandomImage: async (req, res) => {
     try {
@@ -81,7 +81,7 @@ const imageController = {
    * Add an image.
    * @param {Object} req - The request object.
    * @param {Object} res - The response object.
-   * @returns {Object} - The response object with the added image.
+   * @returns {Object} The response object with the added image.
    */
   addImage: async (req, res) => {
     try {
@@ -111,7 +111,7 @@ const imageController = {
    * Get an image by its ID as a string.
    * @param {Object} req - The request object.
    * @param {Object} res - The response object.
-   * @returns {Object} - The response object with the image as a string.
+   * @returns {Object} The response object with the image as a string.
    */
   getImageByIdAsString: async (req, res) => {
     try {
