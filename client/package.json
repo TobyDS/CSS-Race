@@ -13,6 +13,7 @@
     "prepare": "cd .. && husky client/.husky"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.12",
     "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.15.15",

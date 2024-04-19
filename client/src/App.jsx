@@ -5,7 +5,8 @@ import {
   Routes,
   useNavigate,
 } from 'react-router-dom';
-import Battle from './pages/Battle';
+import Battle from '@pages/Battle';
+import Dashboard from '@pages/Dashboard';
 
 function RedirectToBattle () {
   let navigate = useNavigate();
@@ -21,6 +22,7 @@ function App () {
     <Router>
       <Routes>
         <Route path='/battle' element={<Battle />} />
+        <Route path='/' element={<Dashboard />} />
         <Route path='*' element={<RedirectToBattle />} />
       </Routes>
     </Router>
