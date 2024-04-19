@@ -7,18 +7,19 @@ import RenderImage from '/src/components/RenderImage';
 
 import styles from './index.module.css';
 
-const imageId = '662265da3e18fbf02271edf2';
-
 function Battle () {
   const [htmlCode, setHtmlCode] = useState(editorDefaults.htmlTemplate);
   const [cssCode, setCssCode] = useState(editorDefaults.cssTemplate);
   const [combinedCode, setCombinedCode] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
 
   useEffect(() => {
-    apiClientService.getImageById(imageId).then((response) => {
+    apiClientService.getRandomImage().then((response) => {
       setImage(response);
     });
+  }, []);
+
+  useEffect(() => {
     setCombinedCode(
       `<html><body>${htmlCode}<style>${cssCode}</style></body></html>`
     );
