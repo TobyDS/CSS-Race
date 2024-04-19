@@ -1,9 +1,6 @@
 import axios from 'axios';
-import * as path from 'path';
-import dotenv from 'dotenv';
-dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
+const BASE_URL = import.meta.VITE_API_BASE_URL || 'http://localhost:3000';
 
 class ApiClientService {
   constructor () {
@@ -12,16 +9,37 @@ class ApiClientService {
     });
   }
 
-  getImageById (id) {
-    return this.client.get(`/image/${id}`);
+  async getImageById (id) {
+    try {
+      const response = await this.client.get(`/image/${id}`);
+      const image = response.data;
+      return image;
+    } catch (error) {
+      console.error('Failed to fetch image', error);
+      return null;
+    }
   }
 
-  getRandomImage () {
-    return this.client.get('/image/random');
+  async getRandomImage () {
+    try {
+      const response = await this.client.get('/image/random');
+      const image = response.data;
+      return image;
+    } catch (error) {
+      console.error('Failed to fetch image', error);
+      return null;
+    }
   }
 
-  postScore (id, code) {
-    return this.client.post(`/score/${id}`, { code });
+  async postScore (id, code) {
+    try {
+      const response = await this.client.post(`/score/${id}`, { code });
+      const image = response.data;
+      return image;
+    } catch (error) {
+      console.error('Failed to fetch image', error);
+      return null;
+    }
   }
 }
 
