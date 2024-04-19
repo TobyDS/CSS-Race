@@ -21,6 +21,12 @@ async function seedImages () {
     // Remove existing images
     await Image.deleteMany();
 
+    sampleImages.forEach((image) => {
+      image.img = Buffer.from(image.img, 'base64');
+      if (image.img_2x) {
+        image.img_2x = Buffer.from(image.img_2x, 'base64');
+      }
+    });
     // Insert example images into the database
     await Image.insertMany(sampleImages);
 

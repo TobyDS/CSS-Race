@@ -16,10 +16,14 @@ const imageController = {
     try {
       const { id } = req.params;
       const image = await Image.findById(id);
+      const base64Image = image.img.toString('base64');
+      const base64Image2x = image.img_2x.toString('base64');
       if (!image) {
         return res.status(404).json({ message: 'Image not found' });
       }
-      res.status(200).json({ image });
+      res
+        .status(200)
+        .json({ id: image._id, img: base64Image, img_2x: base64Image2x });
     } catch (error) {
       res
         .status(500)
