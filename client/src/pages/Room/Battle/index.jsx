@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import CodeEditor from '/src/components/CodeEditor';
-import editorDefaults from '/src/data/editorDefaults';
-import RenderFrame from '/src/components/RenderFrame';
-import apiClientService from '/src/services/apiClientService';
-import RenderImage from '/src/components/RenderImage';
+import CodeEditor from '@components/CodeEditor';
+import editorDefaults from '@data/editorDefaults';
+import RenderFrame from '@components/RenderFrame';
+import apiClientService from '@services/apiClientService';
+import RenderImage from '@components/RenderImage';
 
 import styles from './index.module.css';
 
