@@ -10,7 +10,7 @@ import {
 
 function JoinGameTab () {
   return (
-    <Card sx={{ minWidth: 500, height: '100%' }}>
+    <Card sx={{ minWidth: 550, height: '100%' }}>
       <CardContent sx={{ height: '100%' }}>
         <Box
           display='flex'
@@ -25,9 +25,14 @@ function JoinGameTab () {
           <TextField
             label='Room ID'
             variant='outlined'
-            sx={{ width: '300px', marginTop: '-10px' }}
+            sx={{ width: '200px', marginTop: '-20px' }}
           />
-          <Button variant='contained' color='primary' sx={{ mt: 2 }}>
+          <Button
+            variant='contained'
+            color='primary'
+            mt={0}
+            sx={{ width: '200px', padding: '10px 0' }}
+          >
             Join Room
           </Button>
         </Box>

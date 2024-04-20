@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 function CreateGameTab () {
   return (
-    <Card sx={{ minWidth: 500, height: '100%' }}>
+    <Card sx={{ minWidth: 550, height: '100%' }}>
       <CardContent sx={{ height: '100%' }}>
         <Box
           display='flex'
@@ -19,7 +19,11 @@ function CreateGameTab () {
           <Typography variant='h5' color='text.primary'>
             Create a new game
           </Typography>
-          <Button variant='contained' color='primary'>
+          <Button
+            variant='contained'
+            color='primary'
+            sx={{ width: '200px', padding: '10px' }}
+          >
             Create Room
           </Button>
         </Box>

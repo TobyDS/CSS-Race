@@ -30,9 +30,6 @@ function Dashboard () {
           justifyContent='center'
         >
           <Grid item>
-            <Typography variant='h2' color='text.primary'>
-              Welcome to CSS Race
-            </Typography>
             <Box sx={{ minWidth: 500, typography: 'body1' }}>
               <Tabs value={value} onChange={handleChange} />
             </Box>
