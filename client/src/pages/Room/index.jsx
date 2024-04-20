@@ -1,6 +1,7 @@
-import React from 'react';
+import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import UserStatus from '@components/UserStatus';
 import {
   Box,
   Button,
@@ -16,13 +17,15 @@ import Navbar from '@components/Navbar';
 import darkTheme from '@data/darkTheme';
 
 import styles from './index.module.css';
+import { Divider } from '@mui/material';
+
+// TODO: DELETE THIS: This is just a placeholder for the user status
+const isHost = true;
+const roomID = '123456';
 
 function Room () {
-  const [value, setValue] = React.useState('1');
-
-  function handleChange (event, newValue) {
-    setValue(newValue);
-  }
+  const [userIsReady, setUserIsReady] = useState(false);
+  const [opponentIsReady, setOpponentIsReady] = useState();
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -45,11 +48,26 @@ function Room () {
                   Room ID:
                 </Typography>
                 <Typography variant='h5' color='text.primary'>
-                  123456
+                  {roomID}
                 </Typography>
                 <IconButton aria-label='copy' color='primary'>
                   <ContentCopyIcon />
                 </IconButton>
+              </div>
+              <div className={styles.usersContainer}>
+                <UserStatus
+                  isHost={isHost}
+                  isUser={isHost ? true : false}
+                  isReady={isHost ? userIsReady : opponentIsReady}
+                  setIsReady={setUserIsReady}
+                />
+                <Divider orientation='vertical' flexItem />
+                <UserStatus
+                  isHost={isHost}
+                  isUser={!isHost ? true : false}
+                  isReady={!isHost ? userIsReady : opponentIsReady}
+                  setIsReady={setUserIsReady}
+                />
               </div>
             </CardContent>
           </Card>

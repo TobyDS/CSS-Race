@@ -1,0 +1,10 @@
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.flexCol > * {
+  margin: 0;
+}

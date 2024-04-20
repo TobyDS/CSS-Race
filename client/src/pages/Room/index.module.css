@@ -4,3 +4,15 @@
   gap: 1em;
   align-items: center;
 }
+
+.usersContainer {
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  justify-content: center;
+  gap: 1em;
+}
+
+.usersContainer div {
+  margin: 0;
+}
