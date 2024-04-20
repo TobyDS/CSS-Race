@@ -58,7 +58,6 @@ const imageController = {
   getRandomImage: async (req, res) => {
     try {
       Image.random((image) => {
-        console.log(image);
         const base64Image = image.img.toString('base64');
         const base64Image2x = image.img_2x.toString('base64');
         res.status(200).json({
