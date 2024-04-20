@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { Link as RouterLink } from 'react-router-dom';
 
 function CreateGameTab () {
   return (
@@ -20,6 +21,8 @@ function CreateGameTab () {
             Create a new game
           </Typography>
           <Button
+            component={RouterLink}
+            to='/room'
             variant='contained'
             color='primary'
             sx={{ width: '200px', padding: '10px' }}

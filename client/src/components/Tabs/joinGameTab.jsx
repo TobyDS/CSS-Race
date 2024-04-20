@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 function JoinGameTab () {
   return (
@@ -28,6 +29,8 @@ function JoinGameTab () {
             sx={{ width: '200px', marginTop: '-20px' }}
           />
           <Button
+            component={RouterLink}
+            to='/room'
             variant='contained'
             color='primary'
             mt={0}

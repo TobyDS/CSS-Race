@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import Navbar from '@components/Navbar';
 import Tabs from '@components/Tabs';
