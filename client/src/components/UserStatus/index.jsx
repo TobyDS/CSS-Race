@@ -6,14 +6,14 @@ import { userStatusUtils } from '@utils/userStatusUtils';
 
 import styles from './index.module.css';
 
-function UserStatus ({ isHost, isUser, isReady, setIsReady }) {
+function UserStatus ({ playerNum, isHost, isUser, isReady, setIsReady }) {
   const userSvg = userStatusUtils.getSVG({ isHost, isReady });
   const userStatusText = userStatusUtils.getUserStatusText(isReady);
 
   return (
     <div className={styles.flexCol}>
       <Typography>
-        Player {isHost ? 1 : 2}: {userStatusText}
+        Player {playerNum}: {userStatusText}
       </Typography>
       {userSvg}
       {isUser && (
@@ -31,6 +31,7 @@ function UserStatus ({ isHost, isUser, isReady, setIsReady }) {
 }
 
 UserStatus.propTypes = {
+  playerNum: PropTypes.number.isRequired,
   isHost: PropTypes.bool.isRequired,
   isUser: PropTypes.bool.isRequired,
   isReady: PropTypes.bool,

@@ -56,6 +56,7 @@ function Room () {
               </div>
               <div className={styles.usersContainer}>
                 <UserStatus
+                  playerNum={1}
                   isHost={isHost}
                   isUser={isHost ? true : false}
                   isReady={isHost ? userIsReady : opponentIsReady}
@@ -63,6 +64,7 @@ function Room () {
                 />
                 <Divider orientation='vertical' flexItem />
                 <UserStatus
+                  playerNum={2}
                   isHost={isHost}
                   isUser={!isHost ? true : false}
                   isReady={!isHost ? userIsReady : opponentIsReady}
