@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from '@components/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, Typography, Grid } from '@mui/material';
 
+import Navbar from '@components/Navbar';
+import Tabs from '@components/Tabs';
 import darkTheme from '@data/darkTheme';
 
 import styles from './index.module.css';
-import Tabs from '@components/Tabs';
 
 function Dashboard () {
   const [value, setValue] = React.useState('1');
