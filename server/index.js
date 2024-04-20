@@ -11,6 +11,10 @@ const { Server } = require('socket.io');
 require('dotenv').config();
 
 const router = require(path.join(__dirname, './router.js'));
+const setupSocketListeners = require(
+  path.join(__dirname, './controllers/socket.js')
+);
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
@@ -25,9 +29,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './temp.html'));
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
+setupSocketListeners(io);
 
 app.use(router);
 
