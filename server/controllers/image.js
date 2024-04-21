@@ -31,17 +31,10 @@ const imageController = {
     try {
       const { id } = req.params;
       const image = await Image.findById(id);
-      const base64Image = image.img.toString('base64');
-      const base64Image2x = image.img_2x.toString('base64');
       if (!image) {
         return res.status(404).json({ message: 'Image not found' });
       }
-      res.status(200).json({
-        id: image._id,
-        img: base64Image,
-        img_2x: base64Image2x,
-        colors: image.colors,
-      });
+      res.status(200).json(image);
     } catch (error) {
       res
         .status(500)
@@ -58,14 +51,7 @@ const imageController = {
   getRandomImage: async (req, res) => {
     try {
       Image.random((image) => {
-        const base64Image = image.img.toString('base64');
-        const base64Image2x = image.img_2x.toString('base64');
-        res.status(200).json({
-          id: image._id,
-          img: base64Image,
-          img_2x: base64Image2x,
-          colors: image.colors,
-        });
+        res.status(200).json(image);
       });
     } catch (error) {
       res
@@ -85,13 +71,11 @@ const imageController = {
   addImage: async (req, res) => {
     try {
       const { base64Image, base64Image_2x } = req.body;
-      const bufferImage = Buffer.from(base64Image, 'base64');
       let newImage;
       if (base64Image_2x) {
-        const bufferImage_2x = Buffer.from(base64Image_2x, 'base64');
-        newImage = new Image({ img: bufferImage, img_2x: bufferImage_2x });
+        newImage = new Image({ img: base64Image, img_2x: base64Image_2x });
       } else {
-        newImage = new Image({ img: bufferImage });
+        newImage = new Image({ img: base64Image });
       }
       await newImage.save();
       res
@@ -101,30 +85,6 @@ const imageController = {
       res
         .status(500)
         .json({ message: 'Failed to add image', error: error.message });
-    }
-  },
-
-  // TODO: REMOVE
-  // ! FOR TESTING PURPOSES ONLY:
-  /**
-   * Get an image by its ID as a string.
-   * @param {Object} req - The request object.
-   * @param {Object} res - The response object.
-   * @returns {Object} The response object with the image as a string.
-   */
-  getImageByIdAsString: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const image = await Image.findById(id);
-      if (!image) {
-        return res.status(404).json({ message: 'Image not found' });
-      }
-      const base64Image = image.img.toString('base64');
-      res.status(200).json({ base64Image });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Failed to get image', error: error.message });
     }
   },
 };

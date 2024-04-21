@@ -12,11 +12,11 @@ const Schema = mongoose.Schema;
  */
 
 const imageSchema = new Schema({
-  img: {
+  img_Buffer: {
     type: Buffer,
     required: true,
   },
-  img_2x: {
+  img_2x_Buffer: {
     type: Buffer,
     required: false,
   },
@@ -26,11 +26,30 @@ const imageSchema = new Schema({
   },
 });
 
+imageSchema.virtual('img').get(function () {
+  return this.img_Buffer.toString('base64');
+});
+
+imageSchema.virtual('img').set(function (base64) {
+  this.img_Buffer = Buffer.from(base64, 'base64');
+});
+
+imageSchema.virtual('img_2x').get(function () {
+  return this.img_2x_Buffer.toString('base64');
+});
+
+imageSchema.virtual('img_2x').set(function (base64) {
+  this.img_2x_Buffer = base64 ? Buffer.from(base64, 'base64') : null;
+});
+
 imageSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,
   transform: function (doc, ret) {
+    ret.id = ret._id;
     delete ret._id;
+    delete ret.img_Buffer;
+    delete ret.img_2x_Buffer;
   },
 });
 
@@ -38,7 +57,7 @@ imageSchema.set('toJSON', {
  * Get a random image from the collection.
  * @param {function} callback - The callback function to handle the retrieved image.
  */
-function getRandom (callback) {
+imageSchema.statics.random = function (callback) {
   this.countDocuments()
     .then((count) => {
       const rand = Math.floor(Math.random() * count);
@@ -48,9 +67,7 @@ function getRandom (callback) {
         .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
-}
-
-imageSchema.statics.random = getRandom;
+};
 
 const Image = mongoose.model('Image', imageSchema);
 

@@ -23,15 +23,6 @@ router.get('/', (req, res) => {
 // ! FOR TESTING PURPOSES ONLY:
 
 /**
- * Route for getting an image by ID as a string.
- * @name GET /testing/image/:id
- * @function
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- */
-router.get('/testing/image/:id', imageController.getImageByIdAsString);
-
-/**
  * Route for adding an image.
  * @name POST /testing/image
  * @function
