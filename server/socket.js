@@ -1,7 +1,12 @@
 const Room = require('./libs/Room');
 const compareImages = require('./utils/compareImages');
+const codeToImage = require('./utils/codeToImage');
 
 const activeRooms = [];
+
+// FIXME[epic=DELETE ME]
+const solutionCode = require('./data/solutionCode');
+const Image = require('./models/image');
 
 module.exports = function (io) {
   io.on('connection', (socket) => {
@@ -51,20 +56,19 @@ module.exports = function (io) {
         // Get the room that the socket is currently connected to
         const room = activeRooms.find((room) => room.users.includes(socket.id));
 
-        // FIXME[epic=DELETE ME]
-        const room2 = activeRooms[0];
-
-        // TODO[epic=Code To Image]: GENERATE IMAGE FROM CODE
-
         // Check if room is defined
         if (!room) {
           console.error(`No room found with ID ${roomId}`);
-          return;
         }
 
+        // TODO: replace with users code
+        const userImage = await codeToImage(solutionCode);
+
+        // FIXME: remove this line, replace first arg in score with room.targetImage
+        const firstTarget = await Image.findOne();
+
         // Call compareImages with the room's target image and the code
-        // TODO[epic=Image Comparison]: Replace room2.targetImage with the image generated from the code
-        const score = await compareImages(room.targetImage, room2.targetImage);
+        const score = await compareImages(firstTarget, userImage);
 
         // Emit the score to the client
         socket.emit('score', score);

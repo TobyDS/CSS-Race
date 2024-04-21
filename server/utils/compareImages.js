@@ -5,7 +5,7 @@ async function compareImages (targetImage, userImage) {
   try {
     // Decode the image buffers to RGBA format
     const targetPng = PNG.sync.read(targetImage.img_Buffer);
-    const userPng = PNG.sync.read(userImage.img_Buffer);
+    const userPng = PNG.sync.read(userImage);
 
     // Perform image comparison using pixelmatch
     const width = targetPng.width;
