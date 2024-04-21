@@ -37,6 +37,10 @@ class Room {
   get targetImage () {
     return this.#targetImage;
   }
+
+  addUser (userId) {
+    this.#users.push(userId);
+  }
 }
 
 module.exports = Room;
