@@ -39,7 +39,7 @@ class Room {
   }
 
   addUser (userId) {
-    this.#users.push(userId);
+    this.#users.push({id: userId, isReady: false, bestScore: 0});
   }
 }
 

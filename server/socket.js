@@ -4,10 +4,6 @@ const codeToImage = require('./utils/codeToImage');
 
 const activeRooms = [];
 
-// FIXME[epic=DELETE ME]
-const solutionCode = require('./data/solutionCode');
-const Image = require('./models/image');
-
 module.exports = function (io) {
   io.on('connection', (socket) => {
     console.log(`User ${socket.id} connected`);
@@ -40,6 +36,8 @@ module.exports = function (io) {
           socket.emit('image', image);
           socket.join(roomId);
           room.addUser(socket.id);
+          const opponent = room.users.find((user) => user.id === socket.id);
+          socket.emit('opponent_status', opponent.isReady);
           socket
             .to(roomId)
             .emit('message', `A new user has joined room ${roomId}`);
@@ -55,25 +53,70 @@ module.exports = function (io) {
       try {
         // Get the room that the socket is currently connected to
         const room = activeRooms.find((room) => room.users.includes(socket.id));
-
+        const user = room.users.find((user) => user.id === socket.id);
         // Check if room is defined
         if (!room) {
-          console.error(`No room found with ID ${roomId}`);
+          throw new Error(`No room found with ID ${roomId}`);
         }
 
-        // TODO: replace with users code
-        const userImage = await codeToImage(solutionCode);
+        // Check code is defined
+        if (!code) {
+          throw new Error('Code must have a value');
+        }
 
-        // FIXME: remove this line, replace first arg in score with room.targetImage
-        const firstTarget = await Image.findOne();
+        const userImage = await codeToImage(code);
 
         // Call compareImages with the room's target image and the code
-        const score = await compareImages(firstTarget, userImage);
+        const score = await compareImages(room.targetImage, userImage);
+        if (score > user.bestScore) {
+          user.bestScore = score;
+        }
 
         // Emit the score to the client
-        socket.emit('score', score);
+        socket.emit('user_score', { score });
+        socket.to(room.id).emit('opponent_score', { score });
+        if (score === 100) {
+          io.to(room.id).emit('game_over', socket.id);
+        }
       } catch (error) {
+        socket.emit('error', error);
         console.error(`Error comparing images: ${error}`);
+      }
+    });
+
+    socket.on('ready', async () => {
+      try {
+        const room = activeRooms.find((room) => room.users.includes(socket.id));
+        const user = room.users.find((user) => user.id === socket.id);
+        user.isReady = true;
+        socket.to(room.id).emit('opponent_ready', socket.id);
+        if (room.users.every((user) => user.isReady)) {
+          io.to(room.id).emit('all_ready');
+        }
+      } catch (error) {
+        console.error(`Error setting player ready: ${error}`);
+      }
+    });
+
+    socket.on('not_ready', async () => {
+      try {
+        const room = activeRooms.find((room) => room.users.includes(socket.id));
+        const user = room.users.find((user) => user.id === socket.id);
+        user.isReady = false;
+        socket.to(room.id).emit('opponent_not_ready', socket.id);
+      } catch (error) {
+        console.error(`Error setting player not ready: ${error}`);
+      }
+    });
+
+    socket.on('start_game', async () => {
+      try {
+        const room = activeRooms.find((room) => room.users.includes(socket.id));
+        if (room.users.every((user) => user.isReady)) {
+          io.to(room.id).emit('start_game');
+        }
+      } catch (error) {
+        console.error(`Error starting game: ${error}`);
       }
     });
 
