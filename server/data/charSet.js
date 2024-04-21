@@ -1,0 +1,30 @@
+// Set of unambiguous characters for creating room codes
+const charSet = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  'A',
+  'C',
+  'D',
+  'F',
+  'G',
+  'H',
+  'J',
+  'K',
+  'M',
+  'N',
+  'P',
+  'R',
+  'U',
+  'W',
+  'Y',
+];
+
+module.exports = charSet;
