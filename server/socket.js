@@ -109,12 +109,26 @@ module.exports = function (io) {
       }
     });
 
+    const TEN_MINUTES_IN_MS = 600000;
+
     socket.on('start_game', async () => {
       try {
         const room = activeRooms.find((room) => room.users.includes(socket.id));
-        if (room.users.every((user) => user.isReady)) {
-          io.to(room.id).emit('start_game');
-        }
+        io.to(room.id).emit('start_game');
+
+        // Start the 10-minute countdown
+        setTimeout(() => {
+          // Check if a user has reached a score of 100
+          const winner = room.users.find((user) => user.bestScore >= 100);
+
+          if (!winner) {
+            // If no user has reached a score of 100, find the user with the highest score
+            const highestScorer = room.users.reduce((prev, current) =>
+              prev.score > current.score ? prev : current
+            );
+            io.to(room.id).emit('game_over', highestScorer.id);
+          }
+        }, TEN_MINUTES_IN_MS);
       } catch (error) {
         console.error(`Error starting game: ${error}`);
       }
