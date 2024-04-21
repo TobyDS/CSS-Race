@@ -1,8 +1,6 @@
-const generateRoomId = require('../utils/generateRoomId');
-const Image = require('../models/image');
+const Room = require('./libs/Room');
 
-// Mapping of room IDs to images
-const roomImages = {};
+const activeRooms = {};
 
 module.exports = function (io) {
   io.on('connection', (socket) => {
@@ -11,23 +9,21 @@ module.exports = function (io) {
     // Generate a new room ID and a random image when a user connects without a room ID
     socket.on('create_room', async () => {
       try {
-        const roomId = generateRoomId();
-        Image.random((image) => {
-          const base64Image = image.img.toString('base64');
-          const base64Image2x = image.img_2x.toString('base64');
-          const parsedImage = {
-            id: image._id,
-            img: base64Image,
-            img_2x: base64Image2x,
-            colors: image.colors,
-          };
-          console.log('image', parsedImage);
-          roomImages[roomId] = parsedImage;
-          socket.emit('room_id', roomId);
-          socket.emit('image', parsedImage);
-          socket.join(roomId);
-          console.log(`Room ${roomId} created`);
-        });
+        const room = await Room.create();
+        activeRooms[room.id] = room;
+        socket.emit('room_id', room.id);
+        const image = room.targetImage;
+        if (image) {
+          socket.emit('image', image);
+          socket.join(room.id);
+          console.log(`User joined room ${room.id}`);
+          io.to(room.id).emit(
+            'message',
+            `A new user has joined room ${room.id}`
+          );
+        } else {
+          console.error(`No image found for room ${room.id}`);
+        }
       } catch (error) {
         console.error(`Error creating room: ${error}`);
       }
@@ -36,7 +32,8 @@ module.exports = function (io) {
     // Join a room when a user connects with a room ID
     socket.on('join_room', (roomId) => {
       try {
-        const image = roomImages[roomId];
+        const room = activeRooms[roomId];
+        const image = room.targetImage;
         if (image) {
           socket.emit('image', image);
           socket.join(roomId);

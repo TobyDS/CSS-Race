@@ -11,9 +11,7 @@ const { Server } = require('socket.io');
 require('dotenv').config();
 
 const router = require(path.join(__dirname, './router.js'));
-const setupSocketListeners = require(
-  path.join(__dirname, './controllers/socket.js')
-);
+const setupSocketListeners = require(path.join(__dirname, './socket.js'));
 
 const app = express();
 const server = createServer(app);
