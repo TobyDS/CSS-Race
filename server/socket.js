@@ -59,13 +59,9 @@ module.exports = function (io) {
             (user) => user.id !== socket.id
           );
           socket.emit('opponent_status', opponent.isReady);
-          // FIXME[epic=DELETE ME]
-          console.log('Host', opponent.id);
-          console.log('Joined Player', socket.id);
-          console.log('image id', image.id);
           socket
             .to(roomId)
-            .emit('message', `A new user has joined room ${roomId}`);
+            .emit('opponent_status', room.users[socket.id].isReady);
         } else {
           console.error(`No image found for room ${roomId}`);
         }
@@ -112,13 +108,15 @@ module.exports = function (io) {
     });
 
     socket.on('ready', async () => {
+      console.log('Ready event received');
       try {
         const room = activeRooms.find((room) =>
           Object.prototype.hasOwnProperty.call(room.users, socket.id)
         );
         const user = room.users[socket.id];
         user.isReady = true;
-        socket.to(room.id).emit('opponent_ready', socket.id);
+        socket.to(room.id).emit('opponent_ready');
+        console.log(room.id);
         if (Object.values(room.users).every((user) => user.isReady)) {
           io.to(room.id).emit('all_ready');
         }
@@ -128,13 +126,18 @@ module.exports = function (io) {
     });
 
     socket.on('not_ready', async () => {
+      console.log('Not Ready event received');
       try {
         const room = activeRooms.find((room) =>
           Object.prototype.hasOwnProperty.call(room.users, socket.id)
         );
         const user = room.users[socket.id];
         user.isReady = false;
-        socket.to(room.id).emit('opponent_not_ready', socket.id);
+        console.log(room.id);
+        socket.to(room.id).emit('opponent_not_ready');
+        if (Object.values(room.users).any((user) => !user.isReady)) {
+          io.to(room.id).emit('not_all_ready');
+        }
       } catch (error) {
         console.error(`Error setting player not ready: ${error}`);
       }
@@ -182,7 +185,7 @@ module.exports = function (io) {
         room.removeUser(socket.id);
 
         // Emit a message to the room
-        io.to(room.id).emit('user_disconnected', socket.id);
+        io.to(room.id).emit('opponent_disconnected', socket.id);
 
         // If the room is empty, remove it from the active rooms
         if (room.users.length === 0) {
