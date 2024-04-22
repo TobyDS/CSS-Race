@@ -1,3 +1,4 @@
+import { check } from 'prettier';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -6,6 +7,8 @@ const SOCKET_SERVER_URL =
   import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
 const socket = io(SOCKET_SERVER_URL);
+let setLoadingFunction = null;
+
 const socketFunctions = {
   useSocket: function (
     isHost,
@@ -76,6 +79,13 @@ const socketFunctions = {
         navigate('/battle', { state: { image: image } });
       });
 
+      socket.on('user_score', async (score) => {
+        if (setLoadingFunction) {
+          setLoadingFunction(false);
+        }
+        console.log('Received user_score event with score:', score);
+      });
+
       return () => {
         socket.off('connect');
         socket.off('room_id');
@@ -100,9 +110,25 @@ const socketFunctions = {
       }
     }, [userIsReady]);
   },
+
+  setSetLoadingFunction: function (setLoading) {
+    setLoadingFunction = setLoading;
+  },
+
+  emitCheckCode: function (code) {
+    console.log('Sending code_submit event with code:', code);
+    socket.emit('code_submit', code);
+  },
+
   startGame: function () {
     console.log('Sending start_game event');
     socket.emit('start_game');
+  },
+
+  checkScore: function (setLoading, CombinedCode) {
+    console.log('Sending check_score event');
+    setLoading(true);
+    socket.emit('check_score', combinedCode);
   },
 };
 export default socketFunctions;

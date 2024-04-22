@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Paper, Button } from '@mui/material/';
 import { LoadingButton } from '@mui/lab';
 
+import socketFunctions from '@utils/useSocket';
 import CodeEditor from '@components/CodeEditor';
 import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
@@ -22,10 +23,19 @@ function Battle () {
   const image = location.state?.image || '';
 
   useEffect(() => {
+    socketFunctions.setSetLoadingFunction(setLoading);
+  }, []);
+
+  useEffect(() => {
     setCombinedCode(
       `<html><body>${htmlCode}<style>${cssCode}</style></body></html>`
     );
   }, [htmlCode, cssCode]);
+
+  function handleCheckCode () {
+    setLoading(true);
+    socketFunctions.emitCheckCode(combinedCode);
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -41,7 +51,11 @@ function Battle () {
                 Check Score
               </LoadingButton>
             ) : (
-              <Button variant='contained' size='small'>
+              <Button
+                variant='contained'
+                size='small'
+                onClick={handleCheckCode}
+              >
                 Check Score
               </Button>
             )}
