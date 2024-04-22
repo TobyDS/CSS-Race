@@ -7,11 +7,11 @@ const socket = io(SOCKET_SERVER_URL);
 
 function useSocket (
   isHost,
-  roomId,
   setRoomId,
   setOpponentIsReady,
   userIsReady,
-  retrievedRoomId
+  retrievedRoomId,
+  setStartEnabled
 ) {
   useEffect(() => {
     if (isHost) {
@@ -53,12 +53,22 @@ function useSocket (
       setOpponentIsReady(false);
     });
 
+    socket.on('all_ready', () => {
+      console.log('all_ready event received');
+      setStartEnabled(true);
+    });
+
+    socket.on('not_all_ready', () => {
+      console.log('not_all_ready event received');
+      setStartEnabled(false);
+    });
+
     return () => {
       socket.off('connect');
       socket.off('room_id');
       socket.off('opponent_status');
     };
-  }, [setRoomId, setOpponentIsReady]);
+  }, [setRoomId, setOpponentIsReady, setStartEnabled]);
 
   useEffect(() => {
     if (userIsReady) {

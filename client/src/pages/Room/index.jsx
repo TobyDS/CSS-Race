@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { Card, CardContent, Divider, Grid } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  Divider,
+  Grid,
+} from '@mui/material';
 
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
@@ -14,6 +21,7 @@ function Room () {
   const [userIsReady, setUserIsReady] = useState(false);
   const [opponentIsReady, setOpponentIsReady] = useState();
   const [roomId, setRoomId] = useState('');
+  const [startEnabled, setStartEnabled] = useState(false);
   const location = useLocation();
   const tabValue = location.state?.tabValue || 'Create';
   const retrievedRoomId = location.state?.roomId || '';
@@ -22,11 +30,11 @@ function Room () {
   // Custom hook
   useSocket(
     isHost,
-    roomId,
     setRoomId,
     setOpponentIsReady,
     userIsReady,
-    retrievedRoomId
+    retrievedRoomId,
+    setStartEnabled
   );
 
   return (
@@ -66,6 +74,20 @@ function Room () {
                 />
               </div>
             </CardContent>
+            <CardActions
+              container
+              sx={{ mb: 3, mt: -0.5, justifyContent: 'center' }}
+            >
+              {startEnabled ? (
+                <Button item variant='contained'>
+                  Start Game
+                </Button>
+              ) : (
+                <Button item variant='contained' disabled>
+                  Start Game
+                </Button>
+              )}
+            </CardActions>
           </Card>
         </Grid>
       </Grid>
