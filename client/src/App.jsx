@@ -19,8 +19,6 @@ function RedirectToBattle () {
   return null;
 }
 function App () {
-  const [prevTab, setPrevTab] = React.useState('Create Room');
-
   return (
     <Router>
       <Routes>

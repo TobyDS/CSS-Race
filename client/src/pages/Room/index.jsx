@@ -1,14 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import {
-  Card,
-  CardContent,
-  Divider,
-  IconButton,
-  Typography,
-  Grid,
-} from '@mui/material';
+import { Card, CardContent, Divider, Grid } from '@mui/material';
 
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
