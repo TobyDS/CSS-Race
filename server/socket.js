@@ -108,7 +108,6 @@ module.exports = function (io) {
     });
 
     socket.on('ready', async () => {
-      console.log('Ready event received');
       try {
         const room = activeRooms.find((room) =>
           Object.prototype.hasOwnProperty.call(room.users, socket.id)
@@ -116,7 +115,6 @@ module.exports = function (io) {
         const user = room.users[socket.id];
         user.isReady = true;
         socket.to(room.id).emit('opponent_ready');
-        console.log(room.id);
         if (Object.values(room.users).every((user) => user.isReady)) {
           io.to(room.id).emit('all_ready');
         }
@@ -126,16 +124,14 @@ module.exports = function (io) {
     });
 
     socket.on('not_ready', async () => {
-      console.log('Not Ready event received');
       try {
         const room = activeRooms.find((room) =>
           Object.prototype.hasOwnProperty.call(room.users, socket.id)
         );
         const user = room.users[socket.id];
         user.isReady = false;
-        console.log(room.id);
         socket.to(room.id).emit('opponent_not_ready');
-        if (Object.values(room.users).any((user) => !user.isReady)) {
+        if (Object.values(room.users).some((user) => user.isReady === false)) {
           io.to(room.id).emit('not_all_ready');
         }
       } catch (error) {
