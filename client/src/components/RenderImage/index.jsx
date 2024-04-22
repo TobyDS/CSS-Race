@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ClickableChips from '@components/ClickableChips';
 import renderStyles from '../RenderFrame/index.module.css';
 import styles from './index.module.css';
 
@@ -18,6 +19,7 @@ function RenderImage ({ image }) {
         </div>
         <img src={`data:image/jpeg;base64,${image.img}`} />
       </div>
+      <ClickableChips colors={image.colors} />
     </div>
   );
 }
@@ -25,6 +27,7 @@ function RenderImage ({ image }) {
 RenderImage.propTypes = {
   image: PropTypes.shape({
     img: PropTypes.string.isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
 };
 

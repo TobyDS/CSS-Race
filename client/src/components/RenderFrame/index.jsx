@@ -1,7 +1,6 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
 
 import styles from './index.module.css';
 
