@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import io from 'socket.io-client';
 import { ThemeProvider } from '@mui/material/styles';
 import {
   Card,
@@ -15,13 +14,8 @@ import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
 import CopyClipboardButton from '@components/copyClipboardButton';
 import darkTheme from '@data/darkTheme';
+import useSocket from '@utils/useSocket';
 import styles from './index.module.css';
-
-const SOCKET_SERVER_URL =
-  import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
-
-// TODO: DELETE THIS: This is just a placeholder for the user status
-const isHost = true;
 
 function Room () {
   const [userIsReady, setUserIsReady] = useState(false);
@@ -29,24 +23,18 @@ function Room () {
   const [roomId, setRoomId] = useState('');
   const location = useLocation();
   const tabValue = location.state?.tabValue || 'Create';
+  const retrievedRoomId = location.state?.roomId || '';
+  const isHost = tabValue === 'Create';
 
-  useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL);
-    socket.on('connect', () => {
-      console.log('Connected to server');
-
-      // Send the 'create_room' event
-      socket.emit('create_room', { tabValue });
-
-      // Listen for the 'room_id' event
-      socket.on('room_id', (retRoomId) => {
-        setRoomId(retRoomId);
-      });
-    });
-    return () => {
-      socket.disconnect();
-    };
-  }, [tabValue]);
+  // Custom hook
+  useSocket(
+    isHost,
+    roomId,
+    setRoomId,
+    setOpponentIsReady,
+    userIsReady,
+    retrievedRoomId
+  );
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -79,8 +67,8 @@ function Room () {
                 <UserStatus
                   playerNum={2}
                   isHost={isHost}
-                  isUser={!isHost ? true : false}
-                  isReady={!isHost ? userIsReady : opponentIsReady}
+                  isUser={isHost ? false : true}
+                  isReady={isHost ? opponentIsReady : userIsReady}
                   setIsReady={setUserIsReady}
                 />
               </div>

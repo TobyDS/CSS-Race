@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -12,9 +12,10 @@ import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {
   const navigate = useNavigate();
+  const [roomId, setRoomId] = useState('');
 
   function handleButtonClick () {
-    navigate('/room', { state: { tabValue: 'Join' } });
+    navigate('/room', { state: { tabValue: 'Join', roomId: roomId } });
   }
 
   return (
@@ -34,6 +35,8 @@ function JoinGameTab () {
             label='Room ID'
             variant='outlined'
             sx={{ width: '200px', marginTop: '-20px' }}
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
           />
           <Button
             onClick={handleButtonClick}

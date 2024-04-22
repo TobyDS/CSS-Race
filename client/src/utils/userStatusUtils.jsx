@@ -1,13 +1,13 @@
 export const userStatusUtils = {
-  getSVG: function ({ isHost, isReady }) {
+  getSVG: function ({ playerNum, isReady }) {
     let imgSrc = '/src/assets/images/user-outline-grey.svg';
-    let altText = 'user outline';
+    let altText = 'user not connected';
 
     if (isReady !== undefined) {
-      const color = isHost ? 'blue' : 'red';
+      const color = playerNum === 1 ? 'blue' : 'red';
       const type = isReady ? 'solid' : 'outline';
       imgSrc = `/src/assets/images/user-${type}-${color}.svg`;
-      altText = `user ${type}`;
+      altText = `user ${type === 'solid' ? 'ready' : 'not ready'}`;
     }
 
     return <img src={imgSrc} alt={altText} />;

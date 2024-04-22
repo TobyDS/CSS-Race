@@ -6,8 +6,8 @@ import { userStatusUtils } from '@utils/userStatusUtils';
 
 import styles from './index.module.css';
 
-function UserStatus ({ playerNum, isHost, isUser, isReady, setIsReady }) {
-  const userSvg = userStatusUtils.getSVG({ isHost, isReady });
+function UserStatus ({ playerNum, isHost, isReady, setIsReady }) {
+  const userSvg = userStatusUtils.getSVG({ playerNum, isReady });
   const userStatusText = userStatusUtils.getUserStatusText(isReady);
 
   return (
@@ -16,7 +16,7 @@ function UserStatus ({ playerNum, isHost, isUser, isReady, setIsReady }) {
         Player {playerNum}: {userStatusText}
       </Typography>
       {userSvg}
-      {isUser && (
+      {((isHost && playerNum === 1) || (!isHost && playerNum === 2)) && (
         <Button
           className={styles.button}
           onClick={() => setIsReady(!isReady)}
@@ -33,7 +33,6 @@ function UserStatus ({ playerNum, isHost, isUser, isReady, setIsReady }) {
 UserStatus.propTypes = {
   playerNum: PropTypes.number.isRequired,
   isHost: PropTypes.bool.isRequired,
-  isUser: PropTypes.bool.isRequired,
   isReady: PropTypes.bool,
   setIsReady: PropTypes.func,
 };
