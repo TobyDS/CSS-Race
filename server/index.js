@@ -15,7 +15,14 @@ const setupSocketListeners = require(path.join(__dirname, './socket.js'));
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST'], // Allow these HTTP methods
+    allowedHeaders: ['my-custom-header'], // Allow these headers
+    credentials: true,
+  },
+});
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'http://localhost';

@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 import { ThemeProvider } from '@mui/material/styles';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import UserStatus from '@components/UserStatus';
-import { useLocation } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -14,39 +12,41 @@ import {
 } from '@mui/material';
 
 import Navbar from '@components/Navbar';
+import UserStatus from '@components/UserStatus';
+import CopyClipboardButton from '@components/copyClipboardButton';
 import darkTheme from '@data/darkTheme';
 import styles from './index.module.css';
 
-// const SOCKET_SERVER_URL =
-//   import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
+const SOCKET_SERVER_URL =
+  import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
 // TODO: DELETE THIS: This is just a placeholder for the user status
 const isHost = true;
-const roomID = '123456';
 
 function Room () {
   const [userIsReady, setUserIsReady] = useState(false);
   const [opponentIsReady, setOpponentIsReady] = useState();
+  const [roomId, setRoomId] = useState('');
   const location = useLocation();
   const tabValue = location.state?.tabValue || 'Create';
 
-  console.log(tabValue);
+  useEffect(() => {
+    const socket = io(SOCKET_SERVER_URL);
+    socket.on('connect', () => {
+      console.log('Connected to server');
 
-  // useEffect(() => {
-  //   const socket = io(SOCKET_SERVER_URL);
-  //   socket.on('connect', () => {
-  //     console.log('Connected to server');
-  //   });
-  //   socket.on('opponentReady', () => {
-  //     setOpponentIsReady(true);
-  //   });
-  //   socket.on('opponentNotReady', () => {
-  //     setOpponentIsReady(false);
-  //   });
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+      // Send the 'create_room' event
+      socket.emit('create_room', { tabValue });
+
+      // Listen for the 'room_id' event
+      socket.on('room_id', (retRoomId) => {
+        setRoomId(retRoomId);
+      });
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, [tabValue]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -65,15 +65,7 @@ function Room () {
           <Card sx={{ minWidth: 550, height: '100%' }}>
             <CardContent>
               <div className={styles.flexRow}>
-                <Typography variant='h5' color='text.primary'>
-                  Room ID:
-                </Typography>
-                <Typography variant='h5' color='text.primary'>
-                  {roomID}
-                </Typography>
-                <IconButton aria-label='copy' color='primary'>
-                  <ContentCopyIcon />
-                </IconButton>
+                <CopyClipboardButton roomId={roomId} />
               </div>
               <div className={styles.usersContainer}>
                 <UserStatus
