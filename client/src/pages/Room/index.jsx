@@ -28,7 +28,6 @@ function Room () {
   const retrievedRoomId = location.state?.roomId || '';
   const isHost = tabValue === 'Create';
 
-
   // Custom hook
   socketFunctions.useSocket(
     isHost,
@@ -82,10 +81,7 @@ function Room () {
                 />
               </div>
             </CardContent>
-            <CardActions
-              container
-              sx={{ mb: 3, mt: -0.5, justifyContent: 'center' }}
-            >
+            <CardActions container sx={{ mb: 3, justifyContent: 'center' }}>
               {startEnabled ? (
                 <Button item variant='contained' onClick={handleGameStart}>
                   Start Game
