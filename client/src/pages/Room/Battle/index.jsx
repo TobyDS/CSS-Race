@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ThemeProvider } from '@mui/material/styles';
-import { Grid } from '@mui/material';
 
 import CodeEditor from '@components/CodeEditor';
 import editorDefaults from '@data/editorDefaults';
@@ -27,32 +26,20 @@ function Battle () {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Grid container alignItems='flex-start' minHeight='100vh'>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
-        <Grid
-          container
-          item
-          height='100%'
-          direction='column'
-          alignItems='center'
-          justifyContent='center'
-        >
-          <div className={styles.wrapper}>
-            <div className={styles.leftContainer}>
-              <CodeEditor language={'html'} setValue={setHtmlCode} />
-              <CodeEditor language={'css'} setValue={setCssCode} />
-            </div>
-            <div className={styles.centerContainer}>
-              <RenderFrame combinedCode={combinedCode} />
-            </div>
-            <div className={styles.rightContainer}>
-              <RenderImage image={image} />
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+      <Navbar />
+
+      <div className={styles.wrapper}>
+        <div className={styles.leftContainer}>
+          <CodeEditor language={'html'} setValue={setHtmlCode} />
+          <CodeEditor language={'css'} setValue={setCssCode} />
+        </div>
+        <div className={styles.centerContainer}>
+          <RenderFrame combinedCode={combinedCode} />
+        </div>
+        <div className={styles.rightContainer}>
+          <RenderImage image={image} />
+        </div>
+      </div>
     </ThemeProvider>
   );
 }

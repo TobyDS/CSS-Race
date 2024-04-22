@@ -1,3 +1,7 @@
 .Logo:hover {
   cursor: pointer;
 }
+
+.Navbar {
+  height: var(--navbar-height);
+}

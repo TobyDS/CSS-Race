@@ -6,7 +6,7 @@ import styles from './index.module.css';
 
 function Navbar () {
   return (
-    <AppBar position='static'>
+    <AppBar position='static' className={styles.Navbar}>
       <Toolbar>
         <Link to='/' className={styles.Logo}>
           <img

@@ -17,6 +17,8 @@
 
   --fw-regular: 500;
   --fw-bold: 700;
+
+  --navbar-height: 70px;
 }
 
 body {
@@ -24,18 +26,4 @@ body {
   font-weight: var(--fw-regular);
   color: var(--clr-neutral-400);
   background-color: var(--clr-neutral-800);
-}
-
-/*
-  * '* + *' is the 'lobotomized owl' selector
-  * It selects all elements that have a preceding sibling
-  * and adds a top margin to them
-  * 
-  * The only exception is the editor-container class
-  * in order to prevent the margin from being applied to items inside the editor
-  * 
-  * For more information, see https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/
-*/
-* + *:not(.editor-container *) {
-  margin-top: 1.5em;
 }

@@ -1,11 +1,16 @@
 .wrapper {
   display: grid;
   width: 100%;
+  height: calc(100vh - var(--navbar-height));
   grid-template-columns: repeat(3, 1fr);
+}
+.leftContainer {
+  width: calc(100vw / 3);
 }
 
 .centerContainer,
 .rightContainer {
+  padding-top: 50px;
   display: flex;
   justify-content: center;
 }
