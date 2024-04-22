@@ -38,6 +38,26 @@ class Room {
     return this.#targetImage;
   }
 
+  containsUser (userId) {
+    return Object.prototype.hasOwnProperty.call(this.#users, userId);
+  }
+
+  checkForWinner () {
+    return Object.values(this.users).some((user) => user.score === 100);
+  }
+
+  highestScorer () {
+    let highestScore = 0;
+    let highestScorer = null;
+    Object.values(this.#users).forEach((user) => {
+      if (user.score > highestScore) {
+        highestScore = user.score;
+        highestScorer = user;
+      }
+    });
+    return highestScorer;
+  }
+
   addUser (userId) {
     this.#users[userId] = { id: userId, isReady: false };
   }

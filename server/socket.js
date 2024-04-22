@@ -73,10 +73,11 @@ module.exports = function (io) {
     socket.on('code_submit', async (code) => {
       try {
         // Get the room that the socket is currently connected to
-        const room = activeRooms.find((room) =>
-          Object.prototype.hasOwnProperty.call(room.users, socket.id)
+        const room = activeRooms.find((room) => room.containsUser(socket.id));
+        const user = Object.values(room.users).find(
+          (user) => user.id === socket.id
         );
-        const user = room.users[socket.id];
+        console.log(user);
         // Check if room is defined
         if (!room) {
           throw new Error(`No room found with ID ${roomId}`);
@@ -109,18 +110,23 @@ module.exports = function (io) {
 
     socket.on('ready', async () => {
       try {
-        const room = activeRooms.find((room) =>
-          Object.prototype.hasOwnProperty.call(room.users, socket.id)
-        );
-        const user = room.users[socket.id];
-        user.isReady = true;
-        socket.to(room.id).emit('opponent_ready');
-        if (
-          Object.values(room.users).length > 1 &&
-          Object.values(room.users).every((user) => user.isReady)
-        ) {
-          io.to(room.id).emit('all_ready');
-          console.log(room.id.users);
+        const room = activeRooms.find((room) => room.containsUser(socket.id));
+        if (room) {
+          // Check if room.users is defined
+          if (room.users) {
+            const user = room.users[socket.id];
+            user.isReady = true;
+            socket.to(room.id).emit('opponent_ready');
+            if (
+              Object.values(room.users).length > 1 &&
+              Object.values(room.users).every((user) => user.isReady)
+            ) {
+              io.to(room.id).emit('all_ready');
+              console.log(room.users[socket.id]);
+            }
+          } else {
+            console.error('Error: room.users is undefined');
+          }
         }
       } catch (error) {
         console.error(`Error setting player ready: ${error}`);
@@ -129,14 +135,16 @@ module.exports = function (io) {
 
     socket.on('not_ready', async () => {
       try {
-        const room = activeRooms.find((room) =>
-          Object.prototype.hasOwnProperty.call(room.users, socket.id)
-        );
-        const user = room.users[socket.id];
-        user.isReady = false;
-        socket.to(room.id).emit('opponent_not_ready');
-        if (Object.values(room.users).some((user) => user.isReady === false)) {
-          io.to(room.id).emit('not_all_ready');
+        const room = activeRooms.find((room) => room.containsUser(socket.id));
+        if (room) {
+          const user = room.users[socket.id];
+          user.isReady = false;
+          socket.to(room.id).emit('opponent_not_ready');
+          if (
+            Object.values(room.users).some((user) => user.isReady === false)
+          ) {
+            io.to(room.id).emit('not_all_ready');
+          }
         }
       } catch (error) {
         console.error(`Error setting player not ready: ${error}`);
@@ -149,30 +157,29 @@ module.exports = function (io) {
 
     socket.on('start_game', async () => {
       try {
-        const room = activeRooms.find((room) =>
-          Object.prototype.hasOwnProperty.call(room.users, socket.id)
-        );
-        io.to(room.id).emit('start_game');
+        const room = activeRooms.find((room) => room.containsUser(socket.id));
+        if (room) {
+          io.to(room.id).emit('start_game');
 
-        // Start the 10-minute countdown
-        setTimeout(() => {
-          // Check if the room is empty
-          if (Object.keys(room.users).length === 0) {
-            return;
-          }
+          // Start the 10-minute countdown
+          setTimeout(() => {
+            // Check if the room is empty
+            if (Object.keys(room.users).length === 0) {
+              return;
+            }
 
-          // Check if a user has reached a score of 100
-          const winner = room.users[socket.id].score === 100;
+            // Check if any user has reached a score of 100
+            const winner = room.checkForWinner();
 
-          if (!winner) {
-            // If no user has reached a score of 100, find the user with the highest score
-            const highestScorer = Object.values(room.users).reduce(
-              (prev, current) => (prev.score > current.score ? prev : current)
-            );
-            io.to(room.id).emit('game_over', highestScorer.id);
-          }
-          // FIXME: Set back to 10 minutes
-        }, TEN_HOURS_IN_MS);
+            if (!winner) {
+              // If no user has reached a score of 100, find the user with the highest score
+              const highestScorer = room.highestScorer();
+              io.to(room.id).emit('game_over', highestScorer.id);
+            }
+
+            // FIXME: Set back to 10 minutes
+          }, TEN_HOURS_IN_MS);
+        }
       } catch (error) {
         console.error(`Error starting game: ${error}`);
       }
@@ -182,9 +189,7 @@ module.exports = function (io) {
       console.log(`User ${socket.id} disconnected`);
 
       // Find the room that the socket was in
-      const room = activeRooms.find((room) =>
-        Object.prototype.hasOwnProperty.call(room.users, socket.id)
-      );
+      const room = activeRooms.find((room) => room.containsUser(socket.id));
 
       if (room) {
         // Remove the user from the room
