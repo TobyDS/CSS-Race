@@ -30,7 +30,10 @@ function JoinGameTab () {
           />
           <Button
             component={RouterLink}
-            to='/room'
+            to={{
+              pathname: '/room',
+              state: { referrer: 'Join' },
+            }}
             variant='contained'
             color='primary'
             mt={0}

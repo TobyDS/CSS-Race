@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 import { ThemeProvider } from '@mui/material/styles';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import UserStatus from '@components/UserStatus';
@@ -8,6 +10,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   IconButton,
   Typography,
   Grid,
@@ -15,9 +18,9 @@ import {
 
 import Navbar from '@components/Navbar';
 import darkTheme from '@data/darkTheme';
-
 import styles from './index.module.css';
-import { Divider } from '@mui/material';
+const SOCKET_SERVER_URL =
+  import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
 // TODO: DELETE THIS: This is just a placeholder for the user status
 const isHost = true;
@@ -26,6 +29,24 @@ const roomID = '123456';
 function Room () {
   const [userIsReady, setUserIsReady] = useState(false);
   const [opponentIsReady, setOpponentIsReady] = useState();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.state.referrer);
+    const socket = io(SOCKET_SERVER_URL);
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+    socket.on('opponentReady', () => {
+      setOpponentIsReady(true);
+    });
+    socket.on('opponentNotReady', () => {
+      setOpponentIsReady(false);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={darkTheme}>

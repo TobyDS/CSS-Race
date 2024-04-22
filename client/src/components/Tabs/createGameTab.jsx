@@ -22,7 +22,10 @@ function CreateGameTab () {
           </Typography>
           <Button
             component={RouterLink}
-            to='/room'
+            to={{
+              pathname: '/room',
+              state: { referrer: 'Create' },
+            }}
             variant='contained'
             color='primary'
             sx={{ width: '200px', padding: '10px' }}
