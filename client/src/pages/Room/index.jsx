@@ -14,7 +14,7 @@ import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
 import CopyClipboardButton from '@components/copyClipboardButton';
 import darkTheme from '@data/darkTheme';
-import useSocket from '@utils/useSocket';
+import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
 
 function Room () {
@@ -22,20 +22,28 @@ function Room () {
   const [opponentIsReady, setOpponentIsReady] = useState();
   const [roomId, setRoomId] = useState('');
   const [startEnabled, setStartEnabled] = useState(false);
+  const [image, setImage] = useState();
   const location = useLocation();
   const tabValue = location.state?.tabValue || 'Create';
   const retrievedRoomId = location.state?.roomId || '';
   const isHost = tabValue === 'Create';
 
+
   // Custom hook
-  useSocket(
+  socketFunctions.useSocket(
     isHost,
     setRoomId,
     setOpponentIsReady,
     userIsReady,
     retrievedRoomId,
-    setStartEnabled
+    setStartEnabled,
+    image,
+    setImage
   );
+
+  function handleGameStart () {
+    socketFunctions.startGame();
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -79,7 +87,7 @@ function Room () {
               sx={{ mb: 3, mt: -0.5, justifyContent: 'center' }}
             >
               {startEnabled ? (
-                <Button item variant='contained'>
+                <Button item variant='contained' onClick={handleGameStart}>
                   Start Game
                 </Button>
               ) : (

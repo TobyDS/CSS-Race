@@ -1,83 +1,108 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 const SOCKET_SERVER_URL =
   import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
+
 const socket = io(SOCKET_SERVER_URL);
+const socketFunctions = {
+  useSocket: function (
+    isHost,
+    setRoomId,
+    setOpponentIsReady,
+    userIsReady,
+    retrievedRoomId,
+    setStartEnabled,
+    image,
+    setImage
+  ) {
+    const navigate = useNavigate();
+    useEffect(() => {
+      if (isHost) {
+        console.log('Sending create_room event');
+        socket.emit('create_room');
+      }
+    }, [isHost]);
 
-function useSocket (
-  isHost,
-  setRoomId,
-  setOpponentIsReady,
-  userIsReady,
-  retrievedRoomId,
-  setStartEnabled
-) {
-  useEffect(() => {
-    if (isHost) {
-      console.log('Sending create_room event');
-      socket.emit('create_room');
-    }
-  }, [isHost]);
+    useEffect(() => {
+      if (!isHost) {
+        setRoomId(retrievedRoomId);
+        console.log('Sending join_room event with roomId:', retrievedRoomId);
+        socket.emit('join_room', retrievedRoomId);
+      }
+    }, [isHost, retrievedRoomId, setRoomId]);
 
-  useEffect(() => {
-    if (!isHost) {
-      setRoomId(retrievedRoomId);
-      console.log('Sending join_room event with roomId:', retrievedRoomId);
-      socket.emit('join_room', retrievedRoomId);
-    }
-  }, [isHost, retrievedRoomId, setRoomId]);
+    useEffect(() => {
+      socket.on('connect', () => {
+        console.log('Received connect event');
+      });
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Received connect event');
-    });
+      socket.on('room_id', (retRoomId) => {
+        console.log('Received room_id event with roomId:', retRoomId);
+        setRoomId(retRoomId);
+      });
 
-    socket.on('room_id', (retRoomId) => {
-      console.log('Received room_id event with roomId:', retRoomId);
-      setRoomId(retRoomId);
-    });
+      socket.on('opponent_status', (isReady) => {
+        console.log('Received opponent_status event with isReady:', isReady);
+        setOpponentIsReady(isReady);
+      });
 
-    socket.on('opponent_status', (isReady) => {
-      console.log('Received opponent_status event with isReady:', isReady);
-      setOpponentIsReady(isReady);
-    });
+      socket.on('opponent_ready', () => {
+        console.log('Received opponent_ready event');
+        setOpponentIsReady(true);
+      });
 
-    socket.on('opponent_ready', () => {
-      console.log('Received opponent_ready event');
-      setOpponentIsReady(true);
-    });
+      socket.on('opponent_not_ready', () => {
+        console.log('Received opponent_not_ready event');
+        setOpponentIsReady(false);
+      });
 
-    socket.on('opponent_not_ready', () => {
-      console.log('Received opponent_not_ready event');
-      setOpponentIsReady(false);
-    });
+      socket.on('all_ready', () => {
+        console.log('all_ready event received');
+        setStartEnabled(true);
+      });
 
-    socket.on('all_ready', () => {
-      console.log('all_ready event received');
-      setStartEnabled(true);
-    });
+      socket.on('not_all_ready', () => {
+        console.log('not_all_ready event received');
+        setStartEnabled(false);
+      });
 
-    socket.on('not_all_ready', () => {
-      console.log('not_all_ready event received');
-      setStartEnabled(false);
-    });
+      socket.on('image', (image) => {
+        setImage(image);
+      });
 
-    return () => {
-      socket.off('connect');
-      socket.off('room_id');
-      socket.off('opponent_status');
-    };
-  }, [setRoomId, setOpponentIsReady, setStartEnabled]);
+      socket.on('start_game', () => {
+        navigate('/battle', { state: { image: image } });
+      });
 
-  useEffect(() => {
-    if (userIsReady) {
-      console.log('Sending ready event');
-      socket.emit('ready');
-    } else {
-      console.log('Sending not_ready event');
-      socket.emit('not_ready');
-    }
-  }, [userIsReady]);
-}
-export default useSocket;
+      return () => {
+        socket.off('connect');
+        socket.off('room_id');
+        socket.off('opponent_status');
+      };
+    }, [
+      setRoomId,
+      setOpponentIsReady,
+      setStartEnabled,
+      setImage,
+      navigate,
+      image,
+    ]);
+
+    useEffect(() => {
+      if (userIsReady) {
+        console.log('Sending ready event');
+        socket.emit('ready');
+      } else {
+        console.log('Sending not_ready event');
+        socket.emit('not_ready');
+      }
+    }, [userIsReady]);
+  },
+  startGame: function () {
+    console.log('Sending start_game event');
+    socket.emit('start_game');
+  },
+};
+export default socketFunctions;
