@@ -115,7 +115,10 @@ module.exports = function (io) {
         const user = room.users[socket.id];
         user.isReady = true;
         socket.to(room.id).emit('opponent_ready');
-        if (Object.values(room.users).every((user) => user.isReady)) {
+        if (
+          Object.values(room.users).length > 1 &&
+          Object.values(room.users).every((user) => user.isReady)
+        ) {
           io.to(room.id).emit('all_ready');
           console.log(room.id.users);
         }
