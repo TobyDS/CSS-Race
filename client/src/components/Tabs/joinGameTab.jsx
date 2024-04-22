@@ -34,7 +34,7 @@ function JoinGameTab () {
           <TextField
             label='Room ID'
             variant='outlined'
-            sx={{ width: '200px', marginTop: '-20px' }}
+            sx={{ width: '200px' }}
             value={roomId}
             onChange={(e) => setRoomId(e.target.value)}
           />
@@ -42,7 +42,6 @@ function JoinGameTab () {
             onClick={handleButtonClick}
             variant='contained'
             color='primary'
-            mt={0}
             sx={{ width: '200px', padding: '10px 0' }}
           >
             Join Room
