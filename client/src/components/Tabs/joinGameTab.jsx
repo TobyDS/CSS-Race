@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Card,
   CardContent,
@@ -7,9 +8,15 @@ import {
   TextField,
   Button,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {
+  const navigate = useNavigate();
+
+  function handleButtonClick () {
+    navigate('/room', { state: { tabValue: 'Join' } });
+  }
+
   return (
     <Card sx={{ minWidth: 550, height: '100%' }}>
       <CardContent sx={{ height: '100%' }}>
@@ -29,11 +36,7 @@ function JoinGameTab () {
             sx={{ width: '200px', marginTop: '-20px' }}
           />
           <Button
-            component={RouterLink}
-            to={{
-              pathname: '/room',
-              state: { referrer: 'Join' },
-            }}
+            onClick={handleButtonClick}
             variant='contained'
             color='primary'
             mt={0}

@@ -11,6 +11,7 @@ import Room from '@pages/Room'; // Import the 'Room' component
 
 function RedirectToBattle () {
   let navigate = useNavigate();
+
   React.useEffect(() => {
     navigate('/battle');
   }, [navigate]);
@@ -18,6 +19,8 @@ function RedirectToBattle () {
   return null;
 }
 function App () {
+  const [prevTab, setPrevTab] = React.useState('Create Room');
+
   return (
     <Router>
       <Routes>

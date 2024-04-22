@@ -12,7 +12,7 @@ function Tabs ({ value, onChange }) {
         <TabList
           variant='fullWidth'
           onChange={onChange}
-          aria-label='lab API tabs example'
+          aria-label='Join or Create a Game'
         >
           <Tab label='Join a Game' value='1' />
           <Tab label='Create a New Game' value='2' />

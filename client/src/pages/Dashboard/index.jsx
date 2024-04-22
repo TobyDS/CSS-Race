@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useContext } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, Grid } from '@mui/material';
 
@@ -9,10 +9,10 @@ import darkTheme from '@data/darkTheme';
 import styles from './index.module.css';
 
 function Dashboard () {
-  const [value, setValue] = React.useState('1');
+  const [selectedTab, setSelectedTab] = useState('1');
 
   function handleChange (event, newValue) {
-    setValue(newValue);
+    setSelectedTab(newValue);
   }
 
   return (
@@ -31,7 +31,7 @@ function Dashboard () {
         >
           <Grid item>
             <Box sx={{ minWidth: 500, typography: 'body1' }}>
-              <Tabs value={value} onChange={handleChange} />
+              <Tabs value={selectedTab} onChange={handleChange} />
             </Box>
           </Grid>
         </Grid>
