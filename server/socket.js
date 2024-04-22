@@ -59,6 +59,10 @@ module.exports = function (io) {
             (user) => user.id !== socket.id
           );
           socket.emit('opponent_status', opponent.isReady);
+          // FIXME[epic=DELETE ME]
+          console.log('Host', opponent.id);
+          console.log('Joined Player', socket.id);
+          console.log('image id', image.id);
           socket
             .to(roomId)
             .emit('message', `A new user has joined room ${roomId}`);
@@ -115,7 +119,7 @@ module.exports = function (io) {
         const user = room.users[socket.id];
         user.isReady = true;
         socket.to(room.id).emit('opponent_ready', socket.id);
-        if (room.users.every((user) => user.isReady)) {
+        if (Object.values(room.users).every((user) => user.isReady)) {
           io.to(room.id).emit('all_ready');
         }
       } catch (error) {

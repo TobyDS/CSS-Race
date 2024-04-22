@@ -3,7 +3,7 @@ const Image = require('../models/image');
 
 class Room {
   #id;
-  #users;
+  #users = {};
   #targetImage;
 
   constructor () {
