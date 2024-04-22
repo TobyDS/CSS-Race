@@ -117,6 +117,7 @@ module.exports = function (io) {
         socket.to(room.id).emit('opponent_ready');
         if (Object.values(room.users).every((user) => user.isReady)) {
           io.to(room.id).emit('all_ready');
+          console.log(room.id.users);
         }
       } catch (error) {
         console.error(`Error setting player ready: ${error}`);
@@ -140,6 +141,8 @@ module.exports = function (io) {
     });
 
     const TEN_MINUTES_IN_MS = 600000;
+    // FIXME[epic=DELETE_ME]
+    const TEN_HOURS_IN_MS = 600000 * 6 * 10;
 
     socket.on('start_game', async () => {
       try {
@@ -150,19 +153,23 @@ module.exports = function (io) {
 
         // Start the 10-minute countdown
         setTimeout(() => {
+          // Check if the room is empty
+          if (Object.keys(room.users).length === 0) {
+            return;
+          }
+
           // Check if a user has reached a score of 100
           const winner = room.users[socket.id].score === 100;
 
           if (!winner) {
             // If no user has reached a score of 100, find the user with the highest score
-            const highestScorer = object
-              .values(room.users)
-              .reduce((prev, current) =>
-                prev.score > current.score ? prev : current
-              );
+            const highestScorer = Object.values(room.users).reduce(
+              (prev, current) => (prev.score > current.score ? prev : current)
+            );
             io.to(room.id).emit('game_over', highestScorer.id);
           }
-        }, TEN_MINUTES_IN_MS);
+          // FIXME: Set back to 10 minutes
+        }, TEN_HOURS_IN_MS);
       } catch (error) {
         console.error(`Error starting game: ${error}`);
       }
