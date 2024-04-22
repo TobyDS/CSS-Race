@@ -1,10 +1,10 @@
 const editorDefaults = {
-  height: 'calc((100vh - 70px - 100px )/ 2)',
+  height: 'calc((100vh - 70px - 100px - 50px )/ 2)',
   options: {
     minimap: { enabled: false },
     lineNumbers: false,
     linkedEditing: true,
-    fontSize: 16,
+    fontSize: 14,
   },
   htmlTemplate: '<div></div>',
   cssTemplate:
