@@ -8,7 +8,7 @@ class Room {
 
   constructor () {
     this.#id = generateRoomId();
-    this.#users = [];
+    this.#users = {};
     this.#targetImage = null;
   }
 
@@ -39,7 +39,17 @@ class Room {
   }
 
   addUser (userId) {
-    this.#users.push({ id: userId, isReady: false, bestScore: 0 });
+    this.#users[userId] = { id: userId, isReady: false };
+  }
+
+  removeUser (userId) {
+    const updatedUsers = {};
+    Object.entries(this.#users).forEach(([id, value]) => {
+      if (id !== userId) {
+        updatedUsers[id] = value;
+      }
+    });
+    this.#users = updatedUsers;
   }
 }
 

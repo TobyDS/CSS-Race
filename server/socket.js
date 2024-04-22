@@ -2,7 +2,24 @@ const Room = require('./libs/Room');
 const compareImages = require('./utils/compareImages');
 const codeToImage = require('./utils/codeToImage');
 
-const activeRooms = [];
+let activeRooms = [];
+
+function disconnectFromPrevious (socket) {
+  // Find the room that the user is currently in
+  const currentRoom = activeRooms.find((room) => room.users[socket.id]);
+
+  // If the user is in a room, remove them from it
+  if (currentRoom) {
+    socket.emit('message', `You have left room ${currentRoom.id}`);
+    currentRoom.removeUser(socket.id);
+    socket.leave(currentRoom.id);
+
+    // If the room is empty, remove it from the active rooms
+    if (Object.keys(currentRoom.users).length === 0) {
+      activeRooms = activeRooms.filter((room) => room.id !== currentRoom.id);
+    }
+  }
+}
 
 module.exports = function (io) {
   io.on('connection', (socket) => {
@@ -11,6 +28,7 @@ module.exports = function (io) {
     // Generate a new room ID and a random image when a user connects without a room ID
     socket.on('create_room', async () => {
       try {
+        disconnectFromPrevious(socket);
         const room = await Room.create();
         activeRooms.push(room);
         socket.emit('room_id', room.id);
@@ -30,13 +48,16 @@ module.exports = function (io) {
     // Join a room when a user connects with a room ID
     socket.on('join_room', (roomId) => {
       try {
+        disconnectFromPrevious(socket);
         const room = activeRooms.find((room) => room.id === roomId);
         const image = room.targetImage;
         if (image) {
           socket.emit('image', image);
           socket.join(roomId);
           room.addUser(socket.id);
-          const opponent = room.users.find((user) => user.id === socket.id);
+          const opponent = Object.values(room.users).find(
+            (user) => user.id !== socket.id
+          );
           socket.emit('opponent_status', opponent.isReady);
           socket
             .to(roomId)
@@ -52,8 +73,10 @@ module.exports = function (io) {
     socket.on('code_submit', async (code) => {
       try {
         // Get the room that the socket is currently connected to
-        const room = activeRooms.find((room) => room.users.includes(socket.id));
-        const user = room.users.find((user) => user.id === socket.id);
+        const room = activeRooms.find((room) =>
+          Object.prototype.hasOwnProperty.call(room.users, socket.id)
+        );
+        const user = room.users[socket.id];
         // Check if room is defined
         if (!room) {
           throw new Error(`No room found with ID ${roomId}`);
@@ -86,8 +109,10 @@ module.exports = function (io) {
 
     socket.on('ready', async () => {
       try {
-        const room = activeRooms.find((room) => room.users.includes(socket.id));
-        const user = room.users.find((user) => user.id === socket.id);
+        const room = activeRooms.find((room) =>
+          Object.prototype.hasOwnProperty.call(room.users, socket.id)
+        );
+        const user = room.users[socket.id];
         user.isReady = true;
         socket.to(room.id).emit('opponent_ready', socket.id);
         if (room.users.every((user) => user.isReady)) {
@@ -100,8 +125,10 @@ module.exports = function (io) {
 
     socket.on('not_ready', async () => {
       try {
-        const room = activeRooms.find((room) => room.users.includes(socket.id));
-        const user = room.users.find((user) => user.id === socket.id);
+        const room = activeRooms.find((room) =>
+          Object.prototype.hasOwnProperty.call(room.users, socket.id)
+        );
+        const user = room.users[socket.id];
         user.isReady = false;
         socket.to(room.id).emit('opponent_not_ready', socket.id);
       } catch (error) {
@@ -113,19 +140,23 @@ module.exports = function (io) {
 
     socket.on('start_game', async () => {
       try {
-        const room = activeRooms.find((room) => room.users.includes(socket.id));
+        const room = activeRooms.find((room) =>
+          Object.prototype.hasOwnProperty.call(room.users, socket.id)
+        );
         io.to(room.id).emit('start_game');
 
         // Start the 10-minute countdown
         setTimeout(() => {
           // Check if a user has reached a score of 100
-          const winner = room.users.find((user) => user.bestScore >= 100);
+          const winner = room.users[socket.id].score === 100;
 
           if (!winner) {
             // If no user has reached a score of 100, find the user with the highest score
-            const highestScorer = room.users.reduce((prev, current) =>
-              prev.score > current.score ? prev : current
-            );
+            const highestScorer = object
+              .values(room.users)
+              .reduce((prev, current) =>
+                prev.score > current.score ? prev : current
+              );
             io.to(room.id).emit('game_over', highestScorer.id);
           }
         }, TEN_MINUTES_IN_MS);
@@ -136,6 +167,26 @@ module.exports = function (io) {
 
     socket.on('disconnect', () => {
       console.log(`User ${socket.id} disconnected`);
+
+      // Find the room that the socket was in
+      const room = activeRooms.find((room) =>
+        Object.prototype.hasOwnProperty.call(room.users, socket.id)
+      );
+
+      if (room) {
+        // Remove the user from the room
+        room.removeUser(socket.id);
+
+        // Emit a message to the room
+        io.to(room.id).emit('user_disconnected', socket.id);
+
+        // If the room is empty, remove it from the active rooms
+        if (room.users.length === 0) {
+          activeRooms = activeRooms.filter(
+            (activeRoom) => activeRoom.id !== room.id
+          );
+        }
+      }
     });
   });
 };
