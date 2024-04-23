@@ -9,7 +9,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-function RenderFrame ({ combinedCode }) {
+function RenderFrame ({ combinedCode, bestScore, latestScore }) {
   const sanitizedCode = DOMPurify.sanitize(combinedCode);
   return (
     <div className={styles.flexContainer}>
@@ -25,13 +25,15 @@ function RenderFrame ({ combinedCode }) {
           height='300'
         ></iframe>
       </div>
-      <p>Match 0%</p>
+      <p>Match {bestScore}%</p>
     </div>
   );
 }
 
 RenderFrame.propTypes = {
   combinedCode: PropTypes.string.isRequired,
+  bestScore: PropTypes.number.isRequired,
+  latestScore: PropTypes.number.isRequired,
 };
 
 export default RenderFrame;

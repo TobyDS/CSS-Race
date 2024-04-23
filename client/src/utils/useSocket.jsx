@@ -88,7 +88,12 @@ const socketFunctions = {
         if (setLoadingFunction) {
           setLoadingFunction(false);
         }
-        console.log('Received user_score event with score:', score);
+        if (setUserLatestScoreFunction) {
+          setUserLatestScoreFunction(score);
+        }
+        if (setUserBestScoreFunction) {
+          setUserBestScoreFunction((prev) => Math.max(prev, score));
+        }
       });
 
       return () => {

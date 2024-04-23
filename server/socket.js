@@ -97,8 +97,8 @@ module.exports = function (io) {
         }
 
         // Emit the score to the client
-        socket.emit('user_score', { score });
-        socket.to(room.id).emit('opponent_score', { score });
+        socket.emit('user_score', score);
+        socket.to(room.id).emit('opponent_score', score);
         if (score === 100) {
           io.to(room.id).emit('game_over', socket.id);
         }
