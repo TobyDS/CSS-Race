@@ -1,8 +1,3 @@
-/**
- * Express server for CSS Race game.
- * @module index
- */
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -17,10 +12,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST'], // Allow these HTTP methods
-    allowedHeaders: ['my-custom-header'], // Allow these headers
-    credentials: true,
+    origin: '*',
   },
 });
 
@@ -38,14 +30,6 @@ setupSocketListeners(io);
 
 app.use(router);
 
-/**
- * Start the server and listen on the specified port.
- * @function
- * @name listen
- * @param {number} port - The port number to listen on.
- * @param {Function} callback - The callback function to execute once the server is up and running.
- * @returns {void}
- */
 server.listen(PORT, () =>
   console.log(`> Server is up and running on ${HOST}:${PORT}`)
 );
