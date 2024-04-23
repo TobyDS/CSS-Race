@@ -4,7 +4,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url] -->
 
-[![Issues][issues-shield]][issues-url]
+<!-- [![Issues][issues-shield]][issues-url] -->
+
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -12,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/TobyDS/CSS-Race">
-    <img src="images/logo.png" alt="Logo" height="80">
+    <img src="images/CSS Logo Short.svg" alt="Logo" height="80">
   </a>
 
 <h3 align="center">CSS-Race</h3>
@@ -23,11 +24,6 @@
     <a href="https://github.com/TobyDS/CSS-Race"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/TobyDS/CSS-Race">View Demo</a>
-    ·
-    <a href="https://github.com/TobyDS/CSS-Race/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/TobyDS/CSS-Race/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -59,7 +55,7 @@
 
 ## About The Project
 
-[![CSS Race Screen Shot][product-screenshot]](https://example.com)
+[![CSS Race Screen Shot][product-screenshot]]
 
 CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Race allows users to practice their CSS skills in a fun, engaging way. Users are given a target image and try to replicate the given image using just HTML and CSS. Users then race against their friend to match the target image first. If neither user can match the image in 10 minutes, then the player with the closest match wins the game.
 
@@ -67,10 +63,12 @@ CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Rac
 
 ### Built With
 
-- [![Node][Node.js]][Node-url]
-- [![Express][Express.js]][Express-url]
-- [![MongoDB][MongoDB]][Mongo-url]
 - [![React][React.js]][React-url]
+- [![Express][Express.js]][Express-url]
+- [![Socket.io][SocketIo]][SocketIo-url]
+- [![MUI][MUI]][MUI-url]
+- [![MongoDB][MongoDB]][Mongo-url]
+- [![Node][Node.js]][Node-url]
 - [![ESLint][ESLint]][ESLint-url]
 - [![Prettier][Prettier]][Prettier-url]
 
@@ -80,12 +78,9 @@ CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Rac
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
 
 - npm
 
@@ -95,23 +90,30 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
 
    ```sh
    git clone https://github.com/TobyDS/CSS-Race.git
    ```
 
-3. Install NPM packages
+2. Install NPM packages in both the server and client directories
 
    ```sh
    npm install
    ```
 
-4. Enter your API in `config.js`
+3. Start the server and the client in separate terminals
 
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   ```sh
+   npm run dev
+   ```
+
+4. Access the app at
+   `http://localhost:5174`
+
+5. (Optional) Create your own .env files. In server and client respectively:
+   ```sh
+   cp .env.template .env
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -182,7 +184,7 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [license-url]: https://github.com/TobyDS/CSS-Race/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/toby-dixon-smith/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/CSS_Race_Screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
@@ -195,3 +197,7 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [ESLint-url]: https://eslint.org/
 [Prettier]: https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
 [Prettier-url]: https://prettier.io/
+[SocketIo-url]: https://socket.io/
+[SocketIo]: https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101
+[MUI-url]: https://mui.com/
+[MUI]: https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white
