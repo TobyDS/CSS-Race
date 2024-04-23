@@ -23,8 +23,6 @@ function disconnectFromPrevious (socket) {
 
 module.exports = function (io) {
   io.on('connection', (socket) => {
-    console.log(`User ${socket.id} connected`);
-
     // Generate a new room ID and a random image when a user connects without a room ID
     socket.on('create_room', async () => {
       try {
@@ -74,18 +72,23 @@ module.exports = function (io) {
       try {
         // Get the room that the socket is currently connected to
         const room = activeRooms.find((room) => room.containsUser(socket.id));
+        // Check if room is defined
+        if (!room) {
+          io.to(room.id).emit('user_score', 0);
+          return;
+        }
+
         const user = Object.values(room.users).find(
           (user) => user.id === socket.id
         );
-        console.log(user);
-        // Check if room is defined
-        if (!room) {
-          throw new Error(`No room found with ID ${roomId}`);
-        }
 
+        if (!user) {
+          io.to(room.id).emit('user_score', 0);
+          return;
+        }
         // Check code is defined
         if (!code) {
-          throw new Error('Code must have a value');
+          io.to(room.id).emit('user_score', 0);
         }
 
         const userImage = await codeToImage(code);
@@ -103,8 +106,7 @@ module.exports = function (io) {
           io.to(room.id).emit('game_over');
         }
       } catch (error) {
-        socket.emit('error', error);
-        console.error(`Error comparing images: ${error}`);
+        console.error(`Error comparing images - ${error}`);
       }
     });
 
@@ -129,7 +131,7 @@ module.exports = function (io) {
           }
         }
       } catch (error) {
-        console.error(`Error setting player ready: ${error}`);
+        console.error(`Error setting player ready - ${error}`);
       }
     });
 
@@ -147,13 +149,11 @@ module.exports = function (io) {
           }
         }
       } catch (error) {
-        console.error(`Error setting player not ready: ${error}`);
+        console.error(`Error setting player not ready - ${error}`);
       }
     });
 
     const TEN_MINUTES_IN_MS = 600000;
-    // FIXME[epic=DELETE_ME]
-    const TEN_HOURS_IN_MS = 600000 * 6 * 10;
 
     socket.on('start_game', async () => {
       try {
@@ -172,16 +172,12 @@ module.exports = function (io) {
             const winner = room.checkForWinner();
 
             if (!winner) {
-              // If no user has reached a score of 100, find the user with the highest score
-              const highestScorer = room.highestScorer();
               io.to(room.id).emit('game_over');
             }
-
-            // FIXME: Set back to 10 minutes
-          }, TEN_HOURS_IN_MS);
+          }, TEN_MINUTES_IN_MS);
         }
       } catch (error) {
-        console.error(`Error starting game: ${error}`);
+        console.error(`Error starting game - ${error}`);
       }
     });
 
@@ -192,13 +188,11 @@ module.exports = function (io) {
           socket.to(room.id).emit('code_update', code);
         }
       } catch (error) {
-        console.error(`Error updating code: ${error}`);
+        console.error(`Error updating code - ${error}`);
       }
     });
 
     socket.on('disconnect', () => {
-      console.log(`User ${socket.id} disconnected`);
-
       // Find the room that the socket was in
       const room = activeRooms.find((room) => room.containsUser(socket.id));
 
