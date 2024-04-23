@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import Battle from '@pages/Room/Battle';
 import Dashboard from '@pages/Dashboard';
-import Room from '@pages/Room'; // Import the 'Room' component
+import Room from '@pages/Room';
 
 function RedirectToDashboard () {
   let navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate('/D');
+    navigate('/');
   }, [navigate]);
 
   return null;

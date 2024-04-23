@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
-const SOCKET_SERVER_URL = import.meta.VITE_SOCKET_SERVER_URL;
+const SOCKET_SERVER_URL =
+  import.meta.env.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
-const socket = io(SOCKET_SERVER_URL);
-
-console.log('SOCKET_SERVER_URL:', SOCKET_SERVER_URL);
+const socket = io(SOCKET_SERVER_URL, {
+  reconnectionDelay: 1000,
+});
 
 let setLoadingFunction = null;
 let setUserLatestScoreFunction = null;

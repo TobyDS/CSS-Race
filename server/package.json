@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "build": "npx puppeteer browsers install chrome",
     "seed": "node ./seeders/seedImages.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",

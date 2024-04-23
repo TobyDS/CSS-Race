@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/battle", "destination": "/battle" },
-    { "source": "/(.*)", "destination": "/" }
-  ]
-}

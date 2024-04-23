@@ -89,13 +89,13 @@ function Room () {
                 />
               </div>
             </CardContent>
-            <CardActions container sx={{ mb: 3, justifyContent: 'center' }}>
+            <CardActions sx={{ mb: 3, justifyContent: 'center' }}>
               {startEnabled ? (
-                <Button item variant='contained' onClick={handleGameStart}>
+                <Button variant='contained' onClick={handleGameStart}>
                   Start Game
                 </Button>
               ) : (
-                <Button item variant='contained' disabled>
+                <Button variant='contained' disabled>
                   Start Game
                 </Button>
               )}

@@ -31,8 +31,6 @@ function Battle () {
   const image = location.state?.image || '';
   const playerNumber = location.state?.playerNumber;
 
-  console.log('Battle -> playerNumber', playerNumber);
-
   const navigate = useNavigate();
 
   useEffect(() => {
