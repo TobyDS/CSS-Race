@@ -72,8 +72,8 @@ function Battle () {
         <div className={styles.centerContainer}>
           <RenderFrame
             combinedCode={combinedCode}
-            bestScore={userBestScore}
-            latestScore={userLatestScore}
+            bestScore={Math.round(userBestScore * 10) / 10}
+            latestScore={Math.round(userLatestScore * 10) / 10}
           />
         </div>
         <div className={styles.rightContainer}>
