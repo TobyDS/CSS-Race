@@ -9,11 +9,11 @@ import Battle from '@pages/Room/Battle';
 import Dashboard from '@pages/Dashboard';
 import Room from '@pages/Room'; // Import the 'Room' component
 
-function RedirectToBattle () {
+function RedirectToDashboard () {
   let navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate('/battle');
+    navigate('/D');
   }, [navigate]);
 
   return null;
@@ -25,7 +25,7 @@ function App () {
         <Route path='/battle' element={<Battle />} />
         <Route path='/room' element={<Room />} />
         <Route path='/' element={<Dashboard />} />
-        <Route path='*' element={<RedirectToBattle />} />
+        <Route path='*' element={<RedirectToDashboard />} />
       </Routes>
     </Router>
   );
