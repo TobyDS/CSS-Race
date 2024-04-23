@@ -21,9 +21,17 @@ function Battle () {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const image = location.state?.image || '';
+  const [userBestScore, setUserBestScore] = useState(0);
+  const [userLatestScore, setUserLatestScore] = useState(0);
+  const [opponentBestScore, setOpponentBestScore] = useState(0);
+  const [opponentLatestScore, setOpponentLatestScore] = useState(0);
 
   useEffect(() => {
     socketFunctions.setSetLoadingFunction(setLoading);
+    socketFunctions.setSetUserBestScoreFunction(setUserBestScore);
+    socketFunctions.setSetUserLatestScoreFunction(setUserLatestScore);
+    socketFunctions.setSetOpponentBestScoreFunction(setOpponentBestScore);
+    socketFunctions.setSetOpponentLatestScoreFunction(setOpponentLatestScore);
   }, []);
 
   useEffect(() => {
@@ -62,7 +70,11 @@ function Battle () {
           </Paper>
         </div>
         <div className={styles.centerContainer}>
-          <RenderFrame combinedCode={combinedCode} />
+          <RenderFrame
+            combinedCode={combinedCode}
+            score={userBestScore}
+            userLatestScore={userLatestScore}
+          />
         </div>
         <div className={styles.rightContainer}>
           <RenderImage image={image} />

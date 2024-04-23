@@ -7,7 +7,12 @@ const SOCKET_SERVER_URL =
   import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
 const socket = io(SOCKET_SERVER_URL);
+
 let setLoadingFunction = null;
+let setUserLatestScoreFunction = null;
+let setUserBestScoreFunction = null;
+let setOpponentLatestScoreFunction = null;
+let setOpponentBestScoreFunction = null;
 
 const socketFunctions = {
   useSocket: function (
@@ -115,6 +120,22 @@ const socketFunctions = {
     setLoadingFunction = setLoading;
   },
 
+  setSetUserBestScoreFunction: function (setUserBestScore) {
+    setUserBestScoreFunction = setUserBestScore;
+  },
+
+  setSetUserLatestScoreFunction: function (setUserPrevScore) {
+    setUserLatestScoreFunction = setUserPrevScore;
+  },
+
+  setSetOpponentBestScoreFunction: function (setOpponentBestScore) {
+    setOpponentBestScoreFunction = setOpponentBestScore;
+  },
+
+  setSetOpponentLatestScoreFunction: function (setOpponentPrevScore) {
+    setOpponentLatestScoreFunction = setOpponentPrevScore;
+  },
+
   emitCheckCode: function (code) {
     console.log('Sending code_submit event with code:', code);
     socket.emit('code_submit', code);
@@ -123,12 +144,6 @@ const socketFunctions = {
   startGame: function () {
     console.log('Sending start_game event');
     socket.emit('start_game');
-  },
-
-  checkScore: function (setLoading, CombinedCode) {
-    console.log('Sending check_score event');
-    setLoading(true);
-    socket.emit('check_score', combinedCode);
   },
 };
 export default socketFunctions;
