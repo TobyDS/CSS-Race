@@ -18,6 +18,7 @@ function Battle () {
   const [htmlCode, setHtmlCode] = useState(editorDefaults.htmlTemplate);
   const [cssCode, setCssCode] = useState(editorDefaults.cssTemplate);
   const [combinedCode, setCombinedCode] = useState('');
+  const [opponentCode, setOpponentCode] = useState('');
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const image = location.state?.image || '';
@@ -28,6 +29,7 @@ function Battle () {
 
   useEffect(() => {
     socketFunctions.setSetLoadingFunction(setLoading);
+    socketFunctions.setSetOpponentCodeFunction(setOpponentCode);
     socketFunctions.setSetUserBestScoreFunction(setUserBestScore);
     socketFunctions.setSetUserLatestScoreFunction(setUserLatestScore);
     socketFunctions.setSetOpponentBestScoreFunction(setOpponentBestScore);
@@ -35,9 +37,9 @@ function Battle () {
   }, []);
 
   useEffect(() => {
-    setCombinedCode(
-      `<html><body>${htmlCode}<style>${cssCode}</style></body></html>`
-    );
+    const newCombinedCode = `<html><body>${htmlCode}<style>${cssCode}</style></body></html>`;
+    setCombinedCode(newCombinedCode);
+    socketFunctions.emitCodeUpdate(newCombinedCode);
   }, [htmlCode, cssCode]);
 
   function handleCheckCode () {
@@ -71,9 +73,16 @@ function Battle () {
         </div>
         <div className={styles.centerContainer}>
           <RenderFrame
+            isUser={true}
             combinedCode={combinedCode}
             bestScore={Math.round(userBestScore * 10) / 10}
             latestScore={Math.round(userLatestScore * 10) / 10}
+          />
+          <RenderFrame
+            isUser={false}
+            combinedCode={opponentCode}
+            bestScore={Math.round(opponentBestScore * 10) / 10}
+            latestScore={Math.round(opponentLatestScore * 10) / 10}
           />
         </div>
         <div className={styles.rightContainer}>

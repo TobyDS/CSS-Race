@@ -9,13 +9,13 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-function RenderFrame ({ combinedCode, bestScore, latestScore }) {
+function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
   const sanitizedCode = DOMPurify.sanitize(combinedCode);
   return (
     <div className={styles.flexContainer}>
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
-          <p>Your Code</p>
+          <p>{isUser ? 'Your' : 'Opponents'} Code</p>
         </div>
         <iframe
           className={styles.frame}
@@ -34,6 +34,7 @@ RenderFrame.propTypes = {
   combinedCode: PropTypes.string.isRequired,
   bestScore: PropTypes.number.isRequired,
   latestScore: PropTypes.number.isRequired,
+  isUser: PropTypes.bool.isRequired,
 };
 
 export default RenderFrame;

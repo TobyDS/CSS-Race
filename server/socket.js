@@ -185,6 +185,17 @@ module.exports = function (io) {
       }
     });
 
+    socket.on('code_update', (code) => {
+      try {
+        const room = activeRooms.find((room) => room.containsUser(socket.id));
+        if (room) {
+          socket.to(room.id).emit('code_update', code);
+        }
+      } catch (error) {
+        console.error(`Error updating code: ${error}`);
+      }
+    });
+
     socket.on('disconnect', () => {
       console.log(`User ${socket.id} disconnected`);
 
