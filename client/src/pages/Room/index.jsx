@@ -12,7 +12,7 @@ import {
 
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
-import CopyClipboardButton from '@components/copyClipboardButton';
+import CopyClipboardButton from '@components/CopyClipboardButton';
 import darkTheme from '@data/darkTheme';
 import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
