@@ -6,6 +6,8 @@ const SOCKET_SERVER_URL = import.meta.VITE_SOCKET_SERVER_URL;
 
 const socket = io(SOCKET_SERVER_URL);
 
+console.log('SOCKET_SERVER_URL:', SOCKET_SERVER_URL);
+
 let setLoadingFunction = null;
 let setUserLatestScoreFunction = null;
 let setUserBestScoreFunction = null;
