@@ -1,13 +1,21 @@
+import userOutlineGrey from '@images/user-outline-grey.svg';
+import userSolidBlue from '@images/user-solid-blue.svg';
+import userSolidRed from '@images/user-solid-red.svg';
+import userOutlineBlue from '@images/user-outline-blue.svg';
+import userOutlineRed from '@images/user-outline-red.svg';
+
 export const userStatusUtils = {
   getSVG: function ({ playerNum, isReady }) {
-    let imgSrc = '/src/assets/images/user-outline-grey.svg';
+    let imgSrc = userOutlineGrey;
     let altText = 'user not connected';
 
     if (isReady !== undefined) {
-      const color = playerNum === 1 ? 'blue' : 'red';
-      const type = isReady ? 'solid' : 'outline';
-      imgSrc = `/src/assets/images/user-${type}-${color}.svg`;
-      altText = `user ${type === 'solid' ? 'ready' : 'not ready'}`;
+      if (playerNum === 1) {
+        imgSrc = isReady ? userSolidBlue : userOutlineBlue;
+      } else {
+        imgSrc = isReady ? userSolidRed : userOutlineRed;
+      }
+      altText = `user ${isReady ? 'ready' : 'not ready'}`;
     }
 
     return <img src={imgSrc} alt={altText} />;

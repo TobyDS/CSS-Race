@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 const SOCKET_SERVER_URL =
-  import.meta.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
+  import.meta.VITE_SOCKET_SERVER_URL;
 
 const socket = io(SOCKET_SERVER_URL);
 
