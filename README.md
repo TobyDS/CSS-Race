@@ -4,8 +4,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url] -->
 
-<!-- [![Issues][issues-shield]][issues-url] -->
 
+[![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -55,7 +55,7 @@
 
 ## About The Project
 
-[![CSS Race Screen Shot][product-screenshot]]
+![CSS Race Screen Shot][product-screenshot]
 
 CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Race allows users to practice their CSS skills in a fun, engaging way. Users are given a target image and try to replicate the given image using just HTML and CSS. Users then race against their friend to match the target image first. If neither user can match the image in 10 minutes, then the player with the closest match wins the game.
 
