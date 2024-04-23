@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { Paper, Button } from '@mui/material/';
@@ -13,19 +13,33 @@ import Navbar from '@components/Navbar';
 import editorDefaults from '@data/editorDefaults';
 import darkTheme from '@data/darkTheme';
 import styles from './index.module.css';
+import AnnounceWinner from '@components/AnnounceWinner';
 
 function Battle () {
   const [htmlCode, setHtmlCode] = useState(editorDefaults.htmlTemplate);
   const [cssCode, setCssCode] = useState(editorDefaults.cssTemplate);
-  const [combinedCode, setCombinedCode] = useState('');
-  const [opponentCode, setOpponentCode] = useState('');
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  const image = location.state?.image || '';
+  const [combinedCode, setCombinedCode] = useState('');
   const [userBestScore, setUserBestScore] = useState(0);
   const [userLatestScore, setUserLatestScore] = useState(0);
+  const [opponentCode, setOpponentCode] = useState('');
   const [opponentBestScore, setOpponentBestScore] = useState(0);
   const [opponentLatestScore, setOpponentLatestScore] = useState(0);
+  const [announceWinner, setAnnounceWinner] = useState(false);
+  const location = useLocation();
+
+  const image = location.state?.image || '';
+  const playerNumber = location.state?.playerNumber;
+
+  console.log('Battle -> playerNumber', playerNumber);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location.state?.image) {
+      navigate('/');
+    }
+  }, [location.state?.image, navigate]);
 
   useEffect(() => {
     socketFunctions.setSetLoadingFunction(setLoading);
@@ -34,6 +48,7 @@ function Battle () {
     socketFunctions.setSetUserLatestScoreFunction(setUserLatestScore);
     socketFunctions.setSetOpponentBestScoreFunction(setOpponentBestScore);
     socketFunctions.setSetOpponentLatestScoreFunction(setOpponentLatestScore);
+    socketFunctions.setSetAnnounceWinnerFunction(setAnnounceWinner);
   }, []);
 
   useEffect(() => {
@@ -52,6 +67,13 @@ function Battle () {
       <Navbar />
 
       <div className={styles.wrapper}>
+        <AnnounceWinner
+          announceWinner={announceWinner}
+          setAnnounceWinner={setAnnounceWinner}
+          playerNumber={playerNumber}
+          userBestScore={userBestScore}
+          opponentBestScore={opponentBestScore}
+        />
         <div className={styles.leftContainer}>
           <CodeEditor language={'html'} setValue={setHtmlCode} />
           <CodeEditor language={'css'} setValue={setCssCode} />

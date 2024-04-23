@@ -13,6 +13,7 @@ let setUserBestScoreFunction = null;
 let setOpponentCodeFunction = null;
 let setOpponentLatestScoreFunction = null;
 let setOpponentBestScoreFunction = null;
+let setAnnounceWinnerFunction = null;
 
 const socketFunctions = {
   useSocket: function (
@@ -71,7 +72,8 @@ const socketFunctions = {
       });
 
       socket.on('start_game', () => {
-        navigate('/battle', { state: { image: image } });
+        let playerNumber = isHost ? 1 : 2;
+        navigate('/battle', { state: { image: image, playerNumber } });
       });
 
       socket.on('user_score', async (score) => {
@@ -99,6 +101,10 @@ const socketFunctions = {
         setOpponentCodeFunction(code);
       });
 
+      socket.on('game_over', () => {
+        setAnnounceWinnerFunction(true);
+      });
+
       return () => {
         socket.off('connect');
         socket.off('room_id');
@@ -111,6 +117,7 @@ const socketFunctions = {
       setImage,
       navigate,
       image,
+      isHost,
     ]);
 
     useEffect(() => {
@@ -144,6 +151,10 @@ const socketFunctions = {
 
   setSetOpponentCodeFunction: function (setOpponentCode) {
     setOpponentCodeFunction = setOpponentCode;
+  },
+
+  setSetAnnounceWinnerFunction: function (setAnnounceWinner) {
+    setAnnounceWinnerFunction = setAnnounceWinner;
   },
 
   emitCheckCode: function (code) {

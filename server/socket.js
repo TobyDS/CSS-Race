@@ -100,7 +100,7 @@ module.exports = function (io) {
         socket.emit('user_score', score);
         socket.to(room.id).emit('opponent_score', score);
         if (score === 100) {
-          io.to(room.id).emit('game_over', socket.id);
+          io.to(room.id).emit('game_over');
         }
       } catch (error) {
         socket.emit('error', error);
@@ -174,7 +174,7 @@ module.exports = function (io) {
             if (!winner) {
               // If no user has reached a score of 100, find the user with the highest score
               const highestScorer = room.highestScorer();
-              io.to(room.id).emit('game_over', highestScorer.id);
+              io.to(room.id).emit('game_over');
             }
 
             // FIXME: Set back to 10 minutes

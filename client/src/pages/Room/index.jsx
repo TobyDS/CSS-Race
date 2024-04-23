@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import {
   Button,
@@ -24,9 +24,17 @@ function Room () {
   const [startEnabled, setStartEnabled] = useState(false);
   const [image, setImage] = useState();
   const location = useLocation();
-  const tabValue = location.state?.tabValue || 'Create';
+  const tabValue = location.state?.tabValue;
   const retrievedRoomId = location.state?.roomId || '';
   const isHost = tabValue === 'Create';
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!tabValue) {
+      navigate('/');
+    }
+  });
 
   // Custom hook
   socketFunctions.useSocket(
