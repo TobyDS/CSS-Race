@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Backdrop,
   Button,
@@ -22,6 +23,7 @@ function AnnounceWinner ({
   const [winner, setWinner] = useState(null);
   const [roundedUserScore, setRoundedUserScore] = useState(0);
   const [roundedOpponentScore, setRoundedOpponentScore] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -41,11 +43,14 @@ function AnnounceWinner ({
     setAnnounceWinner(false);
   }
 
+  function handleRedirect () {
+    navigate('/');
+  }
+
   return (
     <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={announceWinner}
-      onClick={handleClose}
     >
       <Card>
         <CardContent>
@@ -73,8 +78,12 @@ function AnnounceWinner ({
         <CardActions
           sx={{ mb: 3, justifyContent: 'space-evenly', gap: '2rem' }}
         >
-          <Button variant='outlined'>Dismiss</Button>
-          <Button variant='contained'>New Game</Button>
+          <Button variant='outlined' onClick={handleClose}>
+            Dismiss
+          </Button>
+          <Button variant='contained' onClick={handleRedirect}>
+            New Game
+          </Button>
         </CardActions>
       </Card>
     </Backdrop>

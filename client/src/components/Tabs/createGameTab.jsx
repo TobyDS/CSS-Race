@@ -10,7 +10,7 @@ function CreateGameTab () {
   const navigate = useNavigate();
 
   function handleButtonClick () {
-    navigate('/room', { state: { tabValue: 'Create' } }); // replace 'Create' with your actual tab value
+    navigate('/room', { state: { tabValue: 'Create' } });
   }
 
   return (

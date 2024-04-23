@@ -43,6 +43,14 @@ const socketFunctions = {
     useEffect(() => {
       socket.on('connect', () => {});
 
+      socket.on('connect_error', (error) => {
+        console.error('Error connecting:', error);
+      });
+
+      socket.on('error', (error) => {
+        console.error('Error:', error);
+      });
+
       socket.on('room_id', (retRoomId) => {
         setRoomId(retRoomId);
       });
