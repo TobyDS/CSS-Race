@@ -4,7 +4,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url] -->
 
-
+[![wakatime](https://wakatime.com/badge/user/cfa2aafe-7386-4dcc-94fe-adbcb814e7f5/project/018eec23-e7e7-4e99-8a02-924ca6325a9e.svg/?style=for-the-badge)](https://wakatime.com/badge/user/cfa2aafe-7386-4dcc-94fe-adbcb814e7f5/project/018eec23-e7e7-4e99-8a02-924ca6325a9e)
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
