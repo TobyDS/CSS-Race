@@ -182,12 +182,12 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [issues-url]: https://github.com/TobyDS/CSS-Race/issues
 [license-shield]: https://img.shields.io/github/license/TobyDS/CSS-Race.svg?style=for-the-badge
 [license-url]: https://github.com/TobyDS/CSS-Race/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: [https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)
 [linkedin-url]: https://linkedin.com/in/toby-dixon-smith/
 [product-screenshot]: images/CSS_Race_Screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express
 [Express-url]: https://expressjs.com/
 [Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [Node-url]: https://nodejs.org/
