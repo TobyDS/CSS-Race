@@ -24,6 +24,11 @@
     <a href="https://github.com/TobyDS/CSS-Race"><strong>Explore the docs »</strong></a>
     <br />
     <br />
+<a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -63,14 +68,7 @@ CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Rac
 
 ### Built With
 
-- [![React][React.js]][React-url]
-- [![Express][Express.js]][Express-url]
-- [![Socket.io][SocketIo]][SocketIo-url]
-- [![MUI][MUI]][MUI-url]
-- [![MongoDB][MongoDB]][Mongo-url]
-- [![Node][Node.js]][Node-url]
-- [![ESLint][ESLint]][ESLint-url]
-- [![Prettier][Prettier]][Prettier-url]
+[![React][React.js]][React-url] [![Express][Express.js]][Express-url] [![Socket.io][SocketIo]][SocketIo-url] [![MUI][MUI]][MUI-url] [![MongoDB][MongoDB]][Mongo-url] [![Node][Node.js]][Node-url] [![ESLint][ESLint]][ESLint-url] [![Prettier][Prettier]][Prettier-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -82,7 +80,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-- npm
+- npm - ([Link](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm))
 
   ```sh
   npm install npm@latest -g
@@ -162,6 +160,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
+Toby Dixon Smith - tobydixonsmith@gmail.com
+
 Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS-Race)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -182,7 +182,7 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [issues-url]: https://github.com/TobyDS/CSS-Race/issues
 [license-shield]: https://img.shields.io/github/license/TobyDS/CSS-Race.svg?style=for-the-badge
 [license-url]: https://github.com/TobyDS/CSS-Race/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/toby-dixon-smith/
 [product-screenshot]: images/CSS_Race_Screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
