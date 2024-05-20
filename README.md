@@ -187,7 +187,7 @@ Project Link: [https://github.com/TobyDS/CSS-Race](https://github.com/TobyDS/CSS
 [product-screenshot]: images/CSS_Race_Screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express
 [Express-url]: https://expressjs.com/
 [Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [Node-url]: https://nodejs.org/
