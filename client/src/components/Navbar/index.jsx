@@ -10,7 +10,7 @@ function Navbar () {
     <AppBar position='static' className={styles.Navbar}>
       <Toolbar>
         <Link to='/' className={styles.Logo}>
-          <img alt='Logo' src={logoImg} height='30px' />
+          <img data-testid='nav-logo' alt='Logo' src={logoImg} height='30px' />
         </Link>
       </Toolbar>
     </AppBar>
