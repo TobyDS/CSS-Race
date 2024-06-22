@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "prepare": "cd .. && husky client/.husky",
     "test": "vitest",
+    "test:ui": "vitest --ui --coverage.enabled=true",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -40,6 +41,7 @@
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
