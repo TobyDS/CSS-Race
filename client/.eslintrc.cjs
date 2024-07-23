@@ -12,9 +12,9 @@ module.exports = {
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
-    'no-unused-vars': 'off',
-    'no-undef': 'off',
-    'no-console': 'off',
+    'no-unused-vars': 'warn',
+    'no-undef': 'warn',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     eqeqeq: 'warn',
     'func-style': ['error', 'declaration'],
     'object-shorthand': 'off',
