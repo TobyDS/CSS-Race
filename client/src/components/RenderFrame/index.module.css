@@ -1,7 +1,10 @@
 .frame {
-  background-color: white;
-  border: none;
-  margin: auto;
+  margin: 0;
+}
+
+.iframeContainer {
+  height: 300px;
+  width: 400px;
 }
 
 .renderFrameContainer {
@@ -9,8 +12,6 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 4px;
-  height: 342px;
-  width: 412px;
   border-radius: 5px;
   border: 2px solid #3f3f3f;
 }

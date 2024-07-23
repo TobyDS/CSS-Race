@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
 
@@ -10,20 +10,42 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
-  const sanitizedCode = DOMPurify.sanitize(combinedCode);
+  const iframeRef = useRef(null);
+  const [iframeSrc, setIframeSrc] = useState('');
+
+  useEffect(() => {
+    const sanitizedCode = DOMPurify.sanitize(combinedCode);
+    const blob = new Blob([sanitizedCode], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    setIframeSrc(url);
+
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [combinedCode]);
+
   return (
     <div className={styles.flexContainer}>
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
           <p>{isUser ? 'Your' : 'Opponents'} Code</p>
         </div>
-        <iframe
-          className={styles.frame}
-          srcDoc={sanitizedCode}
-          title='Render Frame'
-          width='400'
-          height='300'
-        ></iframe>
+        <div className={styles.iframeContainer}>
+          <iframe
+            ref={iframeRef}
+            className={styles.frame}
+            style={{
+              background: 'white',
+              width: '400px',
+              height: '300px',
+              border: '0px',
+              outline: '0px',
+              pointerEvents: 'none',
+            }}
+            src={iframeSrc}
+            title='Render Frame'
+          ></iframe>
+        </div>
       </div>
       <p>Match {bestScore}%</p>
     </div>

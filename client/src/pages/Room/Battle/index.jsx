@@ -50,7 +50,7 @@ function Battle () {
   }, []);
 
   useEffect(() => {
-    const newCombinedCode = `<html><body>${htmlCode}<style>${cssCode}</style></body></html>`;
+    const newCombinedCode = `${htmlCode}<style>${cssCode}</style>`;
     setCombinedCode(newCombinedCode);
     socketFunctions.emitCodeUpdate(newCombinedCode);
   }, [htmlCode, cssCode]);
