@@ -1,11 +1,15 @@
+:root {
+  --min-page-width: 1250px;
+}
+
 .wrapper {
   display: grid;
-  width: 100%;
+  width: max(100%, var(--min-page-width));
   height: calc(100vh - var(--navbar-height));
   grid-template-columns: repeat(3, 1fr);
 }
 .leftContainer {
-  width: calc(100vw / 3);
+  width: calc(max(calc(100vw / 3), calc(var(--min-page-width) / 3)));
 }
 
 .centerContainer,
