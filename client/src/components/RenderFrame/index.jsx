@@ -15,7 +15,9 @@ function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
 
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
-    const blob = new Blob([sanitizedCode], { type: 'text/html' });
+    // Create the full HTML string including the script tag in the head
+    const fullHtml = `<html><head><style>html{height:100%;width:100%}body{overflow:clip}</style></head><body>${sanitizedCode}</body></html>`;
+    const blob = new Blob([fullHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     setIframeSrc(url);
 
