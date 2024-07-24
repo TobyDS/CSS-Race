@@ -1,4 +1,3 @@
-import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -12,13 +11,13 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, '/src/components'),
-      '@pages': path.resolve(__dirname, '/src/pages'),
-      '@services': path.resolve(__dirname, '/src/services'),
-      '@data': path.resolve(__dirname, '/src/data'),
-      '@utils': path.resolve(__dirname, '/src/utils'),
-      '@styles': path.resolve(__dirname, '/src/assets/styles'),
-      '@images': path.resolve(__dirname, '/src/assets/images'),
+      '@components': new URL('/src/components', import.meta.url).pathname,
+      '@pages': new URL('/src/pages', import.meta.url).pathname,
+      '@services': new URL('/src/services', import.meta.url).pathname,
+      '@data': new URL('/src/data', import.meta.url).pathname,
+      '@utils': new URL('/src/utils', import.meta.url).pathname,
+      '@styles': new URL('/src/assets/styles', import.meta.url).pathname,
+      '@images': new URL('/src/assets/images', import.meta.url).pathname,
     },
   },
 });
