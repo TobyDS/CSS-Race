@@ -23,7 +23,7 @@ async function codeToImage (htmlCode) {
   });
   const page = await browser.newPage();
 
-  await page.setViewport({ width: 401, height: 300 });
+  await page.setViewport({ width: 400, height: 300 });
   await page.setContent(fullHtml);
 
   const content = await page.$('html');
