@@ -90,10 +90,11 @@ const socketFunctions = {
         if (setLoadingFunction) {
           setLoadingFunction(false);
         }
-        if (setUserLatestScoreFunction) {
+        // TODO: Show modal on error
+        if (setUserLatestScoreFunction && !isNaN(score)) {
           setUserLatestScoreFunction(score);
         }
-        if (setUserBestScoreFunction) {
+        if (setUserBestScoreFunction && !isNaN(score)) {
           setUserBestScoreFunction((prev) => Math.max(prev, score));
         }
       });
