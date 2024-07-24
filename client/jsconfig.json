@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "paths": {
-      "@styles/*": ["./src/styles/*"],
       "@components/*": ["./src/components/*"],
-      "@data/*": ["./src/data/*"],
       "@pages/*": ["./src/pages/*"],
       "@services/*": ["./src/services/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@data/*": ["./src/data/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@images/*": ["./src/assets/images/*"]
     }
   }
 }
