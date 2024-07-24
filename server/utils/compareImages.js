@@ -27,7 +27,7 @@ async function compareImages (targetImage, userImage) {
     return matchScore;
   } catch (error) {
     console.error('Error comparing images:', error);
-    throw error;
+    return NaN;
   }
 }
 
