@@ -5,8 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './index';
 
 // Tests
-describe('Renders main page correctly', async () => {
-  it('Should render the page correctly', async () => {
+describe('Renders main page correctly', () => {
+  it('Should render the page correctly', () => {
     // Setup
     render(
       <Router>

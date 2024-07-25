@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppBar, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import logoImg from '@images/CSS Logo Dark Mode.svg';

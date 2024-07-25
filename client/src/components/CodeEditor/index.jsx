@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { emmetCSS, emmetHTML } from 'emmet-monaco-es';
 import { useRef, useState } from 'react';
 import styles from './index.module.css';
-import { Typography } from '@mui/material';
 
 import editorDefaults from '/src/data/editorDefaults';
 

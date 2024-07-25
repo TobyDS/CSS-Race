@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, Grid } from '@mui/material';
 
@@ -6,12 +6,10 @@ import Navbar from '@components/Navbar';
 import Tabs from '@components/Tabs';
 import darkTheme from '@data/darkTheme';
 
-import styles from './index.module.css';
-
 function Dashboard () {
   const [selectedTab, setSelectedTab] = useState('1');
 
-  function handleChange (event, newValue) {
+  function handleChange (_event, newValue) {
     setSelectedTab(newValue);
   }
 
