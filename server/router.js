@@ -8,17 +8,6 @@
 const router = require('express').Router();
 const imageController = require('./controllers/image');
 
-/**
- * Route for the root endpoint.
- * @name GET /
- * @function
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- */
-router.get('/', (req, res) => {
-  res.send('Hello world');
-});
-
 // TODO: REMOVE
 // ! FOR TESTING PURPOSES ONLY:
 
