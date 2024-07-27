@@ -1,23 +1,13 @@
+// src/components/CodeEditor.js
+import { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
-import { emmetCSS, emmetHTML } from 'emmet-monaco-es';
-import { useRef, useState } from 'react';
 import styles from './index.module.css';
-
 import editorDefaults from '/src/data/editorDefaults';
 
 function CodeEditor ({ language, setValue }) {
-  const disposeEmmetRef = useRef();
   const editorRef = useRef();
   const [timeoutId, setTimeoutId] = useState();
-
-  function handleEditorWillMount (monaco) {
-    if (language === 'html') {
-      disposeEmmetRef.current = emmetHTML(monaco);
-    } else {
-      disposeEmmetRef.current = emmetCSS(monaco);
-    }
-  }
 
   function handleOnMount (editor) {
     editorRef.current = editor;
@@ -41,7 +31,6 @@ function CodeEditor ({ language, setValue }) {
         height={editorDefaults.height}
         defaultLanguage={language}
         defaultValue={editorTemplate}
-        beforeMount={handleEditorWillMount}
         onChange={handleChange}
         onMount={handleOnMount}
         options={editorDefaults.options}

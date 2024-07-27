@@ -1,10 +1,11 @@
-import React from 'react';
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useNavigate,
 } from 'react-router-dom';
+import { initMonaco } from './utils/monacoLoader';
 import Battle from '@pages/Room/Battle';
 import Dashboard from '@pages/Dashboard';
 import Room from '@pages/Room';
@@ -12,13 +13,16 @@ import Room from '@pages/Room';
 function RedirectToDashboard () {
   let navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigate('/');
   }, [navigate]);
 
   return null;
 }
 function App () {
+  useEffect(() => {
+    initMonaco();
+  }, []);
   return (
     <Router>
       <Routes>
