@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import {
-  BrowserRouter as Router,
   Route,
+  BrowserRouter as Router,
   Routes,
   useNavigate,
 } from 'react-router-dom';
-import { initMonaco } from './utils/monacoLoader';
-import Battle from '@pages/Room/Battle';
+
 import Dashboard from '@pages/Dashboard';
 import Room from '@pages/Room';
+import Battle from '@pages/Room/Battle';
+import { initMonaco } from '@utils/monacoLoader';
 
 function RedirectToDashboard () {
   let navigate = useNavigate();

@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
 import {
   Button,
   Card,
-  CardContent,
   CardActions,
+  CardContent,
   Divider,
   Grid,
 } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
-import CopyClipboardButton from '@components/CopyClipboardButton';
 import darkTheme from '@data/darkTheme';
 import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';

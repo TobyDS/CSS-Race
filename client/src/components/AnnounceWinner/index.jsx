@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Backdrop,
   Button,
   Card,
-  CardContent,
   CardActions,
+  CardContent,
   Divider,
   Typography,
 } from '@mui/material';
 import propTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './index.module.css';
 

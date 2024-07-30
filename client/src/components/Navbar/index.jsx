@@ -1,7 +1,7 @@
 import { AppBar, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import logoImg from '@images/CSS Logo Dark Mode.svg';
 
+import logoImg from '@images/CSS Logo Dark Mode.svg';
 import styles from './index.module.css';
 
 function Navbar () {

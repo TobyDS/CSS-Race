@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import {
+  Box,
+  Button,
   Card,
   CardContent,
-  Box,
-  Typography,
   TextField,
-  Button,
+  Typography,
 } from '@mui/material';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {

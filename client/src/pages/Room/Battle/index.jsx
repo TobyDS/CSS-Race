@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
+import { LoadingButton } from '@mui/lab';
+import { Button, Paper } from '@mui/material/';
+import { ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ThemeProvider } from '@mui/material/styles';
-import { Paper, Button } from '@mui/material/';
-import { LoadingButton } from '@mui/lab';
-
-import socketFunctions from '@utils/useSocket';
+import AnnounceWinner from '@components/AnnounceWinner';
 import CodeEditor from '@components/CodeEditor';
+import Navbar from '@components/Navbar';
 import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
-import Navbar from '@components/Navbar';
-import editorDefaults from '@data/editorDefaults';
 import darkTheme from '@data/darkTheme';
+import editorDefaults from '@data/editorDefaults';
+import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
-import AnnounceWinner from '@components/AnnounceWinner';
 
 function Battle () {
   const [htmlCode, setHtmlCode] = useState(editorDefaults.htmlTemplate);

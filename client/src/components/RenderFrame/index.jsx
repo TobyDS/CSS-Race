@@ -1,13 +1,13 @@
-import { useRef, useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 
 import styles from './index.module.css';
 
 function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
   const iframeRef = useRef(null);
   const [iframeSrc, setIframeSrc] = useState('');
- 
+
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
     // Create the full HTML string including the script tag in the head
