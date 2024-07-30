@@ -1,6 +1,5 @@
 import { LoadingButton } from '@mui/lab';
 import { Button, Paper } from '@mui/material/';
-import { ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -9,7 +8,6 @@ import CodeEditor from '@components/CodeEditor';
 import Navbar from '@components/Navbar';
 import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
-import darkTheme from '@data/darkTheme';
 import editorDefaults from '@data/editorDefaults';
 import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
@@ -60,9 +58,8 @@ function Battle () {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <>
       <Navbar />
-
       <div className={styles.wrapper}>
         <AnnounceWinner
           announceWinner={announceWinner}
@@ -108,7 +105,7 @@ function Battle () {
           <RenderImage image={image} />
         </div>
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 

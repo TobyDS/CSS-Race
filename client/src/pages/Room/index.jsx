@@ -6,14 +6,12 @@ import {
   Divider,
   Grid,
 } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
-import darkTheme from '@data/darkTheme';
 import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
 
@@ -53,7 +51,7 @@ function Room () {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <>
       <Grid container alignItems='flex-start' minHeight='100vh'>
         <Grid item xs={12}>
           <Navbar />
@@ -103,7 +101,7 @@ function Room () {
           </Card>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </>
   );
 }
 
