@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import { Avatar, Chip, Tooltip } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Avatar, Chip, Tooltip } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 function ClickableChips ({ colors }) {

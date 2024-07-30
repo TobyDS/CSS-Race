@@ -1,9 +1,9 @@
-// src/components/CodeEditor.js
-import { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
+import { useRef, useState } from 'react';
+
+import editorDefaults from '@data/editorDefaults';
 import styles from './index.module.css';
-import editorDefaults from '/src/data/editorDefaults';
 
 function CodeEditor ({ language, setValue }) {
   const editorRef = useRef();

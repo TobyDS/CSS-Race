@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
 import { Box, Grid } from '@mui/material';
+import { useState } from 'react';
 
 import Navbar from '@components/Navbar';
 import Tabs from '@components/Tabs';
-import darkTheme from '@data/darkTheme';
 
 function Dashboard () {
   const [selectedTab, setSelectedTab] = useState('1');
@@ -14,7 +12,7 @@ function Dashboard () {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <>
       <Grid container alignItems='flex-start' minHeight='100vh'>
         <Grid item xs={12}>
           <Navbar />
@@ -34,7 +32,7 @@ function Dashboard () {
           </Grid>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </>
   );
 }
 

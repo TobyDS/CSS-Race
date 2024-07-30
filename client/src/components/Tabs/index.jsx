@@ -1,9 +1,10 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import Tab from '@mui/material/Tab';
-import JoinGameTab from '@components/Tabs/joinGameTab';
-import CreateGameTab from '@components/Tabs/createGameTab';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import PropTypes from 'prop-types';
+
+import CreateGameTab from '@components/Tabs/createGameTab';
+import JoinGameTab from '@components/Tabs/joinGameTab';
 
 function Tabs ({ value, onChange }) {
   return (

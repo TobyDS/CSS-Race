@@ -1,8 +1,8 @@
+import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import PropTypes from 'prop-types';
-import { userStatusUtils } from '@utils/userStatusUtils';
 
+import { userStatusUtils } from '@utils/userStatusUtils';
 import styles from './index.module.css';
 
 function UserStatus ({ playerNum, isHost, isReady, setIsReady }) {

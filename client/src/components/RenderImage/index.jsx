@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 
 import ClickableChips from '@components/ClickableChips';
-import renderStyles from '../RenderFrame/index.module.css';
-import styles from './index.module.css';
+import styles from '@components/RenderFrame/index.module.css';
 
 function RenderImage ({ image }) {
   if (!image || !image.img) {
@@ -10,9 +9,9 @@ function RenderImage ({ image }) {
   }
 
   return (
-    <div className={styles.flexContainer}>
-      <div className={renderStyles.renderFrameContainer}>
-        <div className={renderStyles.flexRow}>
+    <div>
+      <div className={styles.renderFrameContainer}>
+        <div className={styles.flexRow}>
           <p>Target</p>
           <p>400px x 300px</p>
         </div>

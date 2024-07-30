@@ -1,37 +1,32 @@
 import { useEffect } from 'react';
 import {
-  BrowserRouter as Router,
   Route,
+  BrowserRouter as Router,
   Routes,
-  useNavigate,
+  Navigate,
 } from 'react-router-dom';
-import { initMonaco } from './utils/monacoLoader';
-import Battle from '@pages/Room/Battle';
+
 import Dashboard from '@pages/Dashboard';
 import Room from '@pages/Room';
+import Battle from '@pages/Room/Battle';
+import Providers from '@providers';
+import { initMonaco } from '@utils/monacoLoader';
 
-function RedirectToDashboard () {
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    navigate('/');
-  }, [navigate]);
-
-  return null;
-}
 function App () {
   useEffect(() => {
     initMonaco();
   }, []);
   return (
-    <Router>
-      <Routes>
-        <Route path='/battle' element={<Battle />} />
-        <Route path='/room' element={<Room />} />
-        <Route path='/' element={<Dashboard />} />
-        <Route path='*' element={<RedirectToDashboard />} />
-      </Routes>
-    </Router>
+    <Providers>
+      <Router>
+        <Routes>
+          <Route path='/battle' element={<Battle />} />
+          <Route path='/room' element={<Room />} />
+          <Route path='/' element={<Dashboard />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+      </Router>
+    </Providers>
   );
 }
 
