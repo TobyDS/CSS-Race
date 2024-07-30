@@ -3,7 +3,7 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
-  useNavigate,
+  Navigate,
 } from 'react-router-dom';
 
 import Dashboard from '@pages/Dashboard';
@@ -11,16 +11,6 @@ import Room from '@pages/Room';
 import Battle from '@pages/Room/Battle';
 import Providers from '@providers';
 import { initMonaco } from '@utils/monacoLoader';
-
-function RedirectToDashboard () {
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    navigate('/');
-  }, [navigate]);
-
-  return null;
-}
 
 function App () {
   useEffect(() => {
@@ -33,7 +23,7 @@ function App () {
           <Route path='/battle' element={<Battle />} />
           <Route path='/room' element={<Room />} />
           <Route path='/' element={<Dashboard />} />
-          <Route path='*' element={<RedirectToDashboard />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
       </Router>
     </Providers>
