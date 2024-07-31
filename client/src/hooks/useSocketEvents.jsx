@@ -5,10 +5,10 @@ import createEventHandlers from '@utils/socketEventHandlers';
 import manageSocketEvents from '@utils/socketEventManager';
 import useStore from '@store/useStore';
 
-const useSocketEvents = (isHost) => {
+function useSocketEvents () {
   const socket = useSocket();
   const navigate = useNavigate();
-  const { roomId, setRoomId, userIsReady } = useStore();
+  const { roomId, localUserReady, isHost } = useStore();
 
   const handleCreateRoom = useCallback(() => {
     if (socket && isHost && !roomId) {
@@ -34,7 +34,7 @@ const useSocketEvents = (isHost) => {
 
   useEffect(() => {
     if (socket) {
-      const eventHandlers = createEventHandlers(isHost, navigate);
+      const eventHandlers = createEventHandlers(navigate);
 
       manageSocketEvents(socket, eventHandlers, 'on');
 
@@ -46,13 +46,13 @@ const useSocketEvents = (isHost) => {
 
   useEffect(() => {
     if (socket) {
-      if (userIsReady) {
+      if (localUserReady) {
         socket.emit('ready');
       } else {
         socket.emit('not_ready');
       }
     }
-  }, [userIsReady, socket]);
-};
+  }, [localUserReady, socket]);
+}
 
 export default useSocketEvents;

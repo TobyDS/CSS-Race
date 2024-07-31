@@ -6,12 +6,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import useStore from '@store/useStore';
 import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {
   const navigate = useNavigate();
-  const [roomId, setRoomId] = useState('');
+  const { roomId, setRoomId } = useStore();
 
   function handleButtonClick () {
     navigate('/room', { state: { tabValue: 'Join', roomId: roomId } });

@@ -20,14 +20,22 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'http://localhost';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-instrument(io, {
-  auth: {
-    type: 'basic',
-    username: 'admin',
-    password: ADMIN_PASSWORD,
-  },
-  mode: 'development',
-});
+
+if (process.env.NODE_ENV === 'production') {
+  instrument(io, {
+    auth: {
+      type: 'basic',
+      username: 'admin',
+      password: ADMIN_PASSWORD,
+    },
+    mode: 'production',
+  });
+} else {
+  instrument(io, {
+    auth: false,
+    mode: 'development',
+  });
+}
 
 // Serve static files for the admin UI
 app.use(

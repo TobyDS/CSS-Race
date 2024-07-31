@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import useStore from '@store/useStore';
 
 import { userStatusUtils } from '@utils/userStatusUtils';
 import styles from './index.module.css';
 
-function UserStatus ({ playerNum, isHost, isReady, setIsReady }) {
-  const userSvg = userStatusUtils.getSVG({ playerNum, isReady });
-  const userStatusText = userStatusUtils.getUserStatusText(isReady);
+function UserStatus ({ isLocalUser }) {
+  const { isHost, localUserReady, setLocalUserReady, opponentReady } =
+    useStore();
+  const targetUserReady = isLocalUser ? localUserReady : opponentReady;
+  const playerNum = !(isHost ^ isLocalUser) ? 1 : 2;
+  const userSvg = userStatusUtils.getSVG({ playerNum, targetUserReady });
+  const userStatusText = userStatusUtils.getUserStatusText(targetUserReady);
 
   return (
     <div className={styles.flexCol}>
@@ -15,14 +20,14 @@ function UserStatus ({ playerNum, isHost, isReady, setIsReady }) {
         Player {playerNum}: {userStatusText}
       </Typography>
       {userSvg}
-      {((isHost && playerNum === 1) || (!isHost && playerNum === 2)) && (
+      {isLocalUser && (
         <Button
           className={styles.button}
-          onClick={() => setIsReady(!isReady)}
-          variant={isReady ? 'contained' : 'outlined'}
+          onClick={() => setLocalUserReady(!localUserReady)}
+          variant={localUserReady ? 'contained' : 'outlined'}
           color={isHost ? 'primary' : 'error'}
         >
-          {isReady ? 'Cancel' : 'Ready Up'}
+          {localUserReady ? 'Cancel' : 'Ready Up'}
         </Button>
       )}
     </div>
@@ -30,10 +35,7 @@ function UserStatus ({ playerNum, isHost, isReady, setIsReady }) {
 }
 
 UserStatus.propTypes = {
-  playerNum: PropTypes.number.isRequired,
-  isHost: PropTypes.bool.isRequired,
-  isReady: PropTypes.bool,
-  setIsReady: PropTypes.func,
+  isLocalUser: PropTypes.bool.isRequired,
 };
 
 export default UserStatus;

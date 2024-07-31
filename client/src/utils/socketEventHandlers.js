@@ -1,18 +1,18 @@
-// utils/socketEventHandlers.js
 import useStore from '@store/useStore';
 
-const createEventHandlers = (isHost, navigate) => {
+const createEventHandlers = (navigate) => {
   const {
-    image,
+    targetImage,
+    isHost,
     setRoomId,
     setOpponentReady,
     setStartEnabled,
-    setImage,
-    setUserBestScore,
-    setIsSubmitting,
+    setTargetImage,
+    setLocalUserBestScore,
+    setCodeIsSubmitting,
     setOpponentCode,
     setOpponentBestScore,
-    setAnnounceWinner,
+    setGameOver,
   } = useStore.getState();
 
   return {
@@ -22,20 +22,20 @@ const createEventHandlers = (isHost, navigate) => {
     opponent_not_ready: () => setOpponentReady(false),
     all_ready: () => setStartEnabled(true),
     not_all_ready: () => setStartEnabled(false),
-    image: setImage,
+    targetImage: setTargetImage,
     start_game: () => {
       const playerNumber = isHost ? 1 : 2;
-      navigate('/battle', { state: { image: image, playerNumber } });
+      navigate('/battle', { state: { image: targetImage, playerNumber } });
     },
     user_score: (score) => {
-      setIsSubmitting(false);
-      setUserBestScore((prev) => Math.max(prev, score));
+      setCodeIsSubmitting(false);
+      setLocalUserBestScore((prev) => Math.max(prev, score));
     },
     opponent_score: (score) => {
       setOpponentBestScore((prev) => Math.max(prev, score));
     },
     code_update: setOpponentCode,
-    game_over: () => setAnnounceWinner(true),
+    game_over: () => setGameOver(true),
   };
 };
 

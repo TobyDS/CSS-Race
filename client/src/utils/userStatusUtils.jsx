@@ -5,23 +5,23 @@ import userSolidBlue from '@images/user-solid-blue.svg';
 import userSolidRed from '@images/user-solid-red.svg';
 
 export const userStatusUtils = {
-  getSVG: function ({ playerNum, isReady }) {
+  getSVG: function ({ playerNum, targetUserReady }) {
     let imgSrc = userOutlineGrey;
     let altText = 'user not connected';
 
-    if (isReady !== undefined) {
+    if (targetUserReady !== undefined) {
       if (playerNum === 1) {
-        imgSrc = isReady ? userSolidBlue : userOutlineBlue;
+        imgSrc = targetUserReady ? userSolidBlue : userOutlineBlue;
       } else {
-        imgSrc = isReady ? userSolidRed : userOutlineRed;
+        imgSrc = targetUserReady ? userSolidRed : userOutlineRed;
       }
-      altText = `user ${isReady ? 'ready' : 'not ready'}`;
+      altText = `user ${targetUserReady ? 'ready' : 'not ready'}`;
     }
 
     return <img src={imgSrc} alt={altText} />;
   },
-  getUserStatusText: function (isReady) {
-    switch (isReady) {
+  getUserStatusText: function (targetUserReady) {
+    switch (targetUserReady) {
     case false:
       return 'Not Ready';
     case true:

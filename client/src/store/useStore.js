@@ -3,15 +3,16 @@ import editorDefaults from '@data/editorDefaults';
 
 const useStore = create((set) => ({
   // State
-  roomId: null,
-  image: null,
-  userReady: false,
-  opponentReady: false,
+  roomId: '',
+  targetImage: null,
+  localUserReady: false,
+  isHost: false,
+  opponentReady: undefined,
   startEnabled: false,
   htmlCode: editorDefaults.htmlTemplate,
   cssCode: editorDefaults.cssTemplate,
   combinedCode: `${editorDefaults.htmlTemplate}<style>${editorDefaults.cssTemplate}</style>`,
-  isSubmitting: false,
+  codeIsSubmitting: false,
   opponentCode: '',
   userBestScore: 0,
   opponentBestScore: 0,
@@ -19,8 +20,9 @@ const useStore = create((set) => ({
 
   // Actions
   setRoomId: (roomId) => set({ roomId }),
-  setImage: (image) => set({ image }),
-  setUserReady: (userReady) => set({ userReady }),
+  setTargetImage: (targetImage) => set({ targetImage }),
+  setLocalUserReady: (localUserReady) => set({ localUserReady }),
+  setIsHost: (isHost) => set({ isHost }),
   setOpponentReady: (opponentReady) => set({ opponentReady }),
   setStartEnabled: (startEnabled) => set({ startEnabled }),
   setHtmlCode: (htmlCode) => {
@@ -35,9 +37,9 @@ const useStore = create((set) => ({
       return { cssCode, combinedCode };
     });
   },
-  setIsSubmitting: (isSubmitting) => set({ isSubmitting }),
+  setCodeIsSubmitting: (codeIsSubmitting) => set({ codeIsSubmitting }),
   setOpponentCode: (opponentCode) => set({ opponentCode }),
-  setUserBestScore: (userBestScore) => set({ userBestScore }),
+  setLocalUserBestScore: (localUserBestScore) => set({ localUserBestScore }),
   setOpponentBestScore: (opponentBestScore) => set({ opponentBestScore }),
   setGameOver: (gameOver) => set({ gameOver }),
 }));

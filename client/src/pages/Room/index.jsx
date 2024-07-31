@@ -6,7 +6,7 @@ import {
   Divider,
   Grid,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import CopyClipboardButton from '@components/CopyClipboardButton';
@@ -15,35 +15,38 @@ import UserStatus from '@components/UserStatus';
 import useStore from '@store/useStore';
 import useSocketEvents from '@hooks/useSocketEvents';
 import styles from './index.module.css';
+import useSocket from '@hooks/useSocket';
 
 function Room () {
-  const {
-    userReady,
-    setUserReady,
-    opponentReady,
-    roomId,
-    setRoomId,
-    startEnabled,
-  } = useStore();
+  const { roomId, setRoomId, startEnabled, isHost, setIsHost } = useStore();
   const location = useLocation();
   const navigate = useNavigate();
+  const socket = useSocket();
 
-  const tabValue = location.state?.tabValue;
+  const tabValue = useRef(location.state?.tabValue);
   const retrievedRoomId = location.state?.roomId || '';
-  const isHost = tabValue === 'Create';
 
-  useSocketEvents(isHost);
+  useSocketEvents();
 
   useEffect(() => {
     if (!tabValue) {
       navigate('/');
-    } else if (!roomId && retrievedRoomId) {
-      setRoomId(retrievedRoomId);
+    } else {
+      if (!roomId && retrievedRoomId) {
+        setRoomId(retrievedRoomId);
+      }
+      if (tabValue.current === 'Create') {
+        setIsHost(true);
+      } else {
+        setIsHost(false);
+      }
     }
-  }, [tabValue, roomId, retrievedRoomId, setRoomId, navigate]);
+  }, [tabValue, roomId, setIsHost, retrievedRoomId, setRoomId, navigate]);
 
   function handleGameStart () {
-    useSocketEvents.startGame();
+    if (socket) {
+      socket.emit('start_game');
+    }
   }
 
   return (
@@ -66,21 +69,9 @@ function Room () {
                 <CopyClipboardButton roomId={roomId} />
               </div>
               <div className={styles.usersContainer}>
-                <UserStatus
-                  playerNum={1}
-                  isHost={isHost}
-                  isUser={isHost ? true : false}
-                  isReady={isHost ? userReady : opponentReady}
-                  setIsReady={setUserReady}
-                />
+                <UserStatus isLocalUser={isHost} />
                 <Divider orientation='vertical' flexItem />
-                <UserStatus
-                  playerNum={2}
-                  isHost={isHost}
-                  isUser={isHost ? false : true}
-                  isReady={isHost ? opponentReady : userReady}
-                  setIsReady={setUserReady}
-                />
+                <UserStatus isLocalUser={!isHost} />
               </div>
             </CardContent>
             <CardActions sx={{ mb: 3, justifyContent: 'center' }}>
