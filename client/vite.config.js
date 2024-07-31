@@ -13,7 +13,8 @@ export default defineConfig({
     alias: {
       '@components': new URL('/src/components', import.meta.url).pathname,
       '@pages': new URL('/src/pages', import.meta.url).pathname,
-      '@providers': new URL('/src/providers', import.meta.url).pathname,
+      '@context': new URL('/src/context', import.meta.url).pathname,
+      '@hooks': new URL('/src/hooks', import.meta.url).pathname,
       '@services': new URL('/src/services', import.meta.url).pathname,
       '@data': new URL('/src/data', import.meta.url).pathname,
       '@utils': new URL('/src/utils', import.meta.url).pathname,

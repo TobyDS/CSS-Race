@@ -17,7 +17,6 @@ module.exports = {
     'no-undef': 'warn',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     eqeqeq: 'warn',
-    'func-style': ['error', 'declaration'],
     'object-shorthand': 'off',
     'keyword-spacing': 'error',
     'linebreak-style': ['error', 'unix'],
