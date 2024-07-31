@@ -8,7 +8,7 @@ import {
 
 import Dashboard from '@pages/Dashboard';
 import Room from '@pages/Room';
-import Battle from '@pages/Room/Battle';
+import Battle from '@pages/Battle';
 import Providers from '@context/Providers';
 import { initMonaco } from '@utils/monacoLoader';
 
