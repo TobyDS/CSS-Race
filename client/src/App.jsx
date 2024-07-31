@@ -1,3 +1,4 @@
+// App.jsx
 import { useEffect } from 'react';
 import {
   Route,
@@ -16,6 +17,7 @@ function App () {
   useEffect(() => {
     initMonaco();
   }, []);
+
   return (
     <Providers>
       <Router>

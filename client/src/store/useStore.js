@@ -4,7 +4,7 @@ import editorDefaults from '@data/editorDefaults';
 const useStore = create((set) => ({
   // State
   roomId: null,
-  targetImage: null,
+  image: null,
   userReady: false,
   opponentReady: false,
   startEnabled: false,
@@ -19,7 +19,7 @@ const useStore = create((set) => ({
 
   // Actions
   setRoomId: (roomId) => set({ roomId }),
-  setTargetImage: (targetImage) => set({ targetImage }),
+  setImage: (image) => set({ image }),
   setUserReady: (userReady) => set({ userReady }),
   setOpponentReady: (opponentReady) => set({ opponentReady }),
   setStartEnabled: (startEnabled) => set({ startEnabled }),

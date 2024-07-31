@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
-import SocketContext from '@context/SocketContext';
+import { SocketProvider } from '@context/SocketContext';
 import { PropTypes } from 'prop-types';
 
 import darkTheme from '@data/darkTheme';
@@ -7,9 +7,9 @@ import darkTheme from '@data/darkTheme';
 export default function Providers ({ children }) {
   return (
     <>
-      <SocketContext>
+      <SocketProvider>
         <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>
-      </SocketContext>
+      </SocketProvider>
     </>
   );
 }

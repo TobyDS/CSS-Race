@@ -1,30 +1,25 @@
-import PropTypes from 'prop-types';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
 const SOCKET_SERVER_URL =
   import.meta.env.VITE_SOCKET_SERVER_URL || 'http://localhost:3000';
 
-const SocketContext = createContext();
+export const SocketContext = createContext();
 
-export default function SocketProvider ({ children }) {
-  const [socket] = useState(() =>
-    io(SOCKET_SERVER_URL, {
-      reconnectionDelay: 1000,
-    })
-  );
+// eslint-disable-next-line react/prop-types
+export const SocketProvider = ({ children }) => {
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+    const socketIo = io(SOCKET_SERVER_URL);
+    setSocket(socketIo);
+
     return () => {
-      socket.disconnect();
+      socketIo.disconnect();
     };
-  }, [socket]);
+  }, []); // Empty dependency array to ensure this runs only once
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
-}
-
-SocketProvider.propTypes = {
-  children: PropTypes.node,
 };

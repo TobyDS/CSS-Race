@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSocket } from '@hooks/useSocket';
+import useSocket from '@hooks/useSocket';
 import createEventHandlers from '@utils/socketEventHandlers';
 import manageSocketEvents from '@utils/socketEventManager';
 import useStore from '@store/useStore';
@@ -11,37 +11,46 @@ const useSocketEvents = (isHost) => {
   const { roomId, setRoomId, userIsReady } = useStore();
 
   const handleCreateRoom = useCallback(() => {
-    socket.emit('create_room');
-  }, [socket]);
+    if (socket && isHost && !roomId) {
+      socket.emit('create_room');
+    }
+  }, [socket, isHost, roomId]);
 
   const handleJoinRoom = useCallback(() => {
-    setRoomId(roomId);
-    socket.emit('join_room', roomId);
-  }, [socket, roomId, setRoomId]);
-
-  useEffect(() => {
-    if (isHost) {
-      handleCreateRoom();
-    } else if (roomId) {
-      handleJoinRoom();
+    if (socket && !isHost && roomId) {
+      socket.emit('join_room', roomId);
     }
-  }, [isHost, roomId, handleCreateRoom, handleJoinRoom]);
+  }, [socket, isHost, roomId]);
 
   useEffect(() => {
-    const eventHandlers = createEventHandlers(isHost, navigate);
+    if (socket) {
+      if (isHost) {
+        handleCreateRoom();
+      } else if (roomId) {
+        handleJoinRoom();
+      }
+    }
+  }, [socket, isHost, roomId, handleCreateRoom, handleJoinRoom]);
 
-    manageSocketEvents(socket, eventHandlers, 'on');
+  useEffect(() => {
+    if (socket) {
+      const eventHandlers = createEventHandlers(isHost, navigate);
 
-    return () => {
-      manageSocketEvents(socket, eventHandlers, 'off');
-    };
+      manageSocketEvents(socket, eventHandlers, 'on');
+
+      return () => {
+        manageSocketEvents(socket, eventHandlers, 'off');
+      };
+    }
   }, [socket, isHost, navigate]);
 
   useEffect(() => {
-    if (userIsReady) {
-      socket.emit('ready');
-    } else {
-      socket.emit('not_ready');
+    if (socket) {
+      if (userIsReady) {
+        socket.emit('ready');
+      } else {
+        socket.emit('not_ready');
+      }
     }
   }, [userIsReady, socket]);
 };

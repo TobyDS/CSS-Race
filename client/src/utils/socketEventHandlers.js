@@ -1,12 +1,13 @@
+// utils/socketEventHandlers.js
 import useStore from '@store/useStore';
 
 const createEventHandlers = (isHost, navigate) => {
   const {
-    targetImage,
+    image,
     setRoomId,
     setOpponentReady,
     setStartEnabled,
-    setTargetImage,
+    setImage,
     setUserBestScore,
     setIsSubmitting,
     setOpponentCode,
@@ -21,10 +22,10 @@ const createEventHandlers = (isHost, navigate) => {
     opponent_not_ready: () => setOpponentReady(false),
     all_ready: () => setStartEnabled(true),
     not_all_ready: () => setStartEnabled(false),
-    image: setTargetImage,
+    image: setImage,
     start_game: () => {
       const playerNumber = isHost ? 1 : 2;
-      navigate('/battle', { state: { image: targetImage, playerNumber } });
+      navigate('/battle', { state: { image: image, playerNumber } });
     },
     user_score: (score) => {
       setIsSubmitting(false);

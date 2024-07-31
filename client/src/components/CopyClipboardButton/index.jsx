@@ -50,7 +50,7 @@ function CopyClipboardButton ({ roomId }) {
 }
 
 CopyClipboardButton.propTypes = {
-  roomId: PropTypes.string.isRequired,
+  roomId: PropTypes.string,
 };
 
 export default CopyClipboardButton;

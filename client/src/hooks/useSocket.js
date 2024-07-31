@@ -1,6 +1,7 @@
+// hooks/useSocket.js
 import { useContext } from 'react';
-import SocketProvider from '@context/SocketContext';
+import { SocketContext } from '@context/SocketContext';
 
 export default function useSocket () {
-  return useContext(SocketProvider);
+  return useContext(SocketContext);
 }

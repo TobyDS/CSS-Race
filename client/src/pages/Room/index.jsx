@@ -6,48 +6,44 @@ import {
   Divider,
   Grid,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
-import socketFunctions from '@utils/useSocket';
+import useStore from '@store/useStore';
+import useSocketEvents from '@hooks/useSocketEvents';
 import styles from './index.module.css';
 
 function Room () {
-  const [userIsReady, setUserIsReady] = useState(false);
-  const [opponentIsReady, setOpponentIsReady] = useState();
-  const [roomId, setRoomId] = useState('');
-  const [startEnabled, setStartEnabled] = useState(false);
-  const [image, setImage] = useState();
+  const {
+    userReady,
+    setUserReady,
+    opponentReady,
+    roomId,
+    setRoomId,
+    startEnabled,
+  } = useStore();
   const location = useLocation();
+  const navigate = useNavigate();
+
   const tabValue = location.state?.tabValue;
   const retrievedRoomId = location.state?.roomId || '';
   const isHost = tabValue === 'Create';
 
-  const navigate = useNavigate();
+  useSocketEvents(isHost);
 
   useEffect(() => {
     if (!tabValue) {
       navigate('/');
+    } else if (!roomId && retrievedRoomId) {
+      setRoomId(retrievedRoomId);
     }
-  });
-
-  // Custom hook
-  socketFunctions.useSocket(
-    isHost,
-    setRoomId,
-    setOpponentIsReady,
-    userIsReady,
-    retrievedRoomId,
-    setStartEnabled,
-    image,
-    setImage
-  );
+  }, [tabValue, roomId, retrievedRoomId, setRoomId, navigate]);
 
   function handleGameStart () {
-    socketFunctions.startGame();
+    useSocketEvents.startGame();
   }
 
   return (
@@ -74,16 +70,16 @@ function Room () {
                   playerNum={1}
                   isHost={isHost}
                   isUser={isHost ? true : false}
-                  isReady={isHost ? userIsReady : opponentIsReady}
-                  setIsReady={setUserIsReady}
+                  isReady={isHost ? userReady : opponentReady}
+                  setIsReady={setUserReady}
                 />
                 <Divider orientation='vertical' flexItem />
                 <UserStatus
                   playerNum={2}
                   isHost={isHost}
                   isUser={isHost ? false : true}
-                  isReady={isHost ? opponentIsReady : userIsReady}
-                  setIsReady={setUserIsReady}
+                  isReady={isHost ? opponentReady : userReady}
+                  setIsReady={setUserReady}
                 />
               </div>
             </CardContent>
