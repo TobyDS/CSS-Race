@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 
 import logoImg from '@images/CSS Logo Dark Mode.svg';
 import styles from './index.module.css';
+import useStore from '@store/useStore';
 
 function Navbar () {
+  const { resetState } = useStore();
   return (
     <AppBar position='static' className={styles.Navbar}>
       <Toolbar>
-        <Link to='/' className={styles.Logo}>
+        <Link to='/' onClick={resetState} className={styles.Logo}>
           <img data-testid='nav-logo' alt='Logo' src={logoImg} height='30px' />
         </Link>
       </Toolbar>

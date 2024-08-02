@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import styles from './index.module.css';
 
-function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
+function RenderFrame ({ combinedCode, bestScore, isLocalUser }) {
   const iframeRef = useRef(null);
   const [iframeSrc, setIframeSrc] = useState('');
 
@@ -25,7 +25,7 @@ function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
     <div className={styles.flexContainer}>
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
-          <p>{isUser ? 'Your' : 'Opponents'} Code</p>
+          <p>{isLocalUser ? 'Your' : 'Opponents'} Code</p>
         </div>
         <div className={styles.iframeContainer}>
           <iframe
@@ -52,8 +52,7 @@ function RenderFrame ({ combinedCode, bestScore, latestScore, isUser }) {
 RenderFrame.propTypes = {
   combinedCode: PropTypes.string.isRequired,
   bestScore: PropTypes.number.isRequired,
-  latestScore: PropTypes.number.isRequired,
-  isUser: PropTypes.bool.isRequired,
+  isLocalUser: PropTypes.bool.isRequired,
 };
 
 export default RenderFrame;

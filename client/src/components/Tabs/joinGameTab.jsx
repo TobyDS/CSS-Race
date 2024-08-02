@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {
   const navigate = useNavigate();
-  const { roomId, setRoomId } = useStore();
+  const { roomId, setRoomId, resetState } = useStore();
 
   function handleButtonClick () {
+    resetState();
     navigate('/room', { state: { tabValue: 'Join', roomId: roomId } });
   }
 

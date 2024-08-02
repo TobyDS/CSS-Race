@@ -29,7 +29,7 @@ function Room () {
   useSocketEvents();
 
   useEffect(() => {
-    if (!tabValue) {
+    if (!tabValue.current) {
       navigate('/');
     } else {
       if (!roomId && retrievedRoomId) {

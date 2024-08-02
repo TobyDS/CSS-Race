@@ -4,11 +4,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import useStore from '@store/useStore';
 
 function CreateGameTab () {
   const navigate = useNavigate();
+  const { resetState } = useStore();
 
   function handleButtonClick () {
+    resetState();
     navigate('/room', { state: { tabValue: 'Create' } });
   }
 

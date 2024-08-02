@@ -15,14 +15,14 @@ function Tabs ({ value, onChange }) {
           onChange={onChange}
           aria-label='Join or Create a Game'
         >
-          <Tab label='Join a Game' value='1' />
-          <Tab label='Create a New Game' value='2' />
+          <Tab label='Join a Game' value='Join' />
+          <Tab label='Create a New Game' value='Create' />
         </TabList>
       </Box>
-      <TabPanel value='1' sx={{ p: 0, m: 0, height: '250px' }}>
+      <TabPanel value='Join' sx={{ p: 0, m: 0, height: '250px' }}>
         <JoinGameTab />
       </TabPanel>
-      <TabPanel value='2' sx={{ p: 0, m: 0, height: '250px' }}>
+      <TabPanel value='Create' sx={{ p: 0, m: 0, height: '250px' }}>
         <CreateGameTab />
       </TabPanel>
     </TabContext>

@@ -1,60 +1,49 @@
 import { LoadingButton } from '@mui/lab';
 import { Button, Paper } from '@mui/material/';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AnnounceWinner from '@components/AnnounceWinner';
 import CodeEditor from '@components/CodeEditor';
 import Navbar from '@components/Navbar';
 import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
-import editorDefaults from '@data/editorDefaults';
-import socketFunctions from '@utils/useSocket';
 import styles from './index.module.css';
+import useStore from '@store/useStore';
+import useSocket from '@hooks/useSocket';
 
 function Battle () {
-  const [htmlCode, setHtmlCode] = useState(editorDefaults.htmlTemplate);
-  const [cssCode, setCssCode] = useState(editorDefaults.cssTemplate);
-  const [loading, setLoading] = useState(false);
-  const [combinedCode, setCombinedCode] = useState('');
-  const [userBestScore, setUserBestScore] = useState(0);
-  const [userLatestScore, setUserLatestScore] = useState(0);
-  const [opponentCode, setOpponentCode] = useState('');
-  const [opponentBestScore, setOpponentBestScore] = useState(0);
-  const [opponentLatestScore, setOpponentLatestScore] = useState(0);
-  const [announceWinner, setAnnounceWinner] = useState(false);
-  const location = useLocation();
-
-  const image = location.state?.image || '';
-  const playerNumber = location.state?.playerNumber;
-
+  const {
+    isHost,
+    targetImage,
+    combinedCode,
+    opponentCode,
+    localUserBestScore,
+    opponentBestScore,
+    codeIsSubmitting,
+    gameOver,
+    setCodeIsSubmitting,
+    setHtmlCode,
+    setCssCode,
+    setGameOver,
+  } = useStore();
   const navigate = useNavigate();
+  const socket = useSocket();
 
   useEffect(() => {
-    if (!location.state?.image) {
+    if (!targetImage) {
+      console.error('No target image found, redirecting to home');
       navigate('/');
     }
-  }, [location.state?.image, navigate]);
+  }, [targetImage, navigate]);
 
   useEffect(() => {
-    socketFunctions.setSetLoadingFunction(setLoading);
-    socketFunctions.setSetOpponentCodeFunction(setOpponentCode);
-    socketFunctions.setSetUserBestScoreFunction(setUserBestScore);
-    socketFunctions.setSetUserLatestScoreFunction(setUserLatestScore);
-    socketFunctions.setSetOpponentBestScoreFunction(setOpponentBestScore);
-    socketFunctions.setSetOpponentLatestScoreFunction(setOpponentLatestScore);
-    socketFunctions.setSetAnnounceWinnerFunction(setAnnounceWinner);
-  }, []);
-
-  useEffect(() => {
-    const newCombinedCode = `${htmlCode}<style>${cssCode}</style>`;
-    setCombinedCode(newCombinedCode);
-    socketFunctions.emitCodeUpdate(newCombinedCode);
-  }, [htmlCode, cssCode]);
+    socket.emit('code_update', combinedCode);
+  }, [combinedCode, socket]);
 
   function handleCheckCode () {
-    setLoading(true);
-    socketFunctions.emitCheckCode(combinedCode);
+    setCodeIsSubmitting(true);
+    socket.emit('code_submit', combinedCode);
   }
 
   return (
@@ -62,17 +51,17 @@ function Battle () {
       <Navbar />
       <div className={styles.wrapper}>
         <AnnounceWinner
-          announceWinner={announceWinner}
-          setAnnounceWinner={setAnnounceWinner}
-          playerNumber={playerNumber}
-          userBestScore={userBestScore}
+          announceWinner={gameOver}
+          setAnnounceWinner={setGameOver}
+          playerNumber={isHost ? 1 : 2}
+          userBestScore={localUserBestScore}
           opponentBestScore={opponentBestScore}
         />
         <div className={styles.leftContainer}>
           <CodeEditor language={'html'} setValue={setHtmlCode} />
           <CodeEditor language={'css'} setValue={setCssCode} />
           <Paper className={styles.bottomBar} variant='elevation'>
-            {loading ? (
+            {codeIsSubmitting ? (
               <LoadingButton loading variant='contained'>
                 Check Score
               </LoadingButton>
@@ -89,20 +78,18 @@ function Battle () {
         </div>
         <div className={styles.centerContainer}>
           <RenderFrame
-            isUser={true}
+            isLocalUser={true}
             combinedCode={combinedCode}
-            bestScore={Math.round(userBestScore * 10) / 10}
-            latestScore={Math.round(userLatestScore * 10) / 10}
+            bestScore={Math.round(localUserBestScore * 10) / 10}
           />
           <RenderFrame
-            isUser={false}
+            isLocalUser={false}
             combinedCode={opponentCode}
             bestScore={Math.round(opponentBestScore * 10) / 10}
-            latestScore={Math.round(opponentLatestScore * 10) / 10}
           />
         </div>
         <div className={styles.rightContainer}>
-          <RenderImage image={image} />
+          <RenderImage image={targetImage} />
         </div>
       </div>
     </>

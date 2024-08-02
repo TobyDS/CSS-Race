@@ -5,7 +5,7 @@ import Navbar from '@components/Navbar';
 import Tabs from '@components/Tabs';
 
 function Dashboard () {
-  const [selectedTab, setSelectedTab] = useState('1');
+  const [selectedTab, setSelectedTab] = useState('Join');
 
   function handleChange (_event, newValue) {
     setSelectedTab(newValue);
