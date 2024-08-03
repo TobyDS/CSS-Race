@@ -1,37 +1,45 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useSocket from '@hooks/useSocket';
+import useSocketInit from '@hooks/useSocketInit';
 import createEventHandlers from '@utils/socketEventHandlers';
 import manageSocketEvents from '@utils/socketEventManager';
 import useStore from '@store/useStore';
+import {
+  handleCreateRoom,
+  handleJoinRoom,
+  handleUserReady,
+} from '@utils/socketEmitHandlers';
 
-function useSocketEvents () {
-  const socket = useSocket();
+function useSocket () {
+  const socket = useSocketInit();
   const navigate = useNavigate();
   const { roomId, localUserReady, isHost } = useStore();
 
-  const handleCreateRoom = useCallback(() => {
-    if (socket && isHost && !roomId) {
-      socket.emit('create_room');
-    }
+  const handleCreateRoomCallback = useCallback(() => {
+    handleCreateRoom(socket, isHost, roomId);
   }, [socket, isHost, roomId]);
 
-  const handleJoinRoom = useCallback(() => {
-    if (socket && !isHost && roomId) {
-      socket.emit('join_room', roomId);
-    }
+  const handleJoinRoomCallback = useCallback(() => {
+    handleJoinRoom(socket, isHost, roomId);
   }, [socket, isHost, roomId]);
-
+  
+  
   useEffect(() => {
     if (socket) {
       if (isHost) {
-        handleCreateRoom();
+        handleCreateRoomCallback();
       } else if (roomId) {
-        handleJoinRoom();
+        handleJoinRoomCallback();
       }
     }
-  }, [socket, isHost, roomId, handleCreateRoom, handleJoinRoom]);
-
+  }, [
+    socket,
+    isHost,
+    roomId,
+    handleCreateRoomCallback,
+    handleJoinRoomCallback,
+  ]);
+  
   useEffect(() => {
     if (socket) {
       const eventHandlers = createEventHandlers(navigate);
@@ -45,14 +53,10 @@ function useSocketEvents () {
   }, [socket, isHost, navigate]);
 
   useEffect(() => {
-    if (socket) {
-      if (localUserReady) {
-        socket.emit('ready');
-      } else {
-        socket.emit('not_ready');
-      }
-    }
+    handleUserReady(socket, localUserReady);
   }, [localUserReady, socket]);
+  
+  return socket;
 }
 
-export default useSocketEvents;
+export default useSocket;

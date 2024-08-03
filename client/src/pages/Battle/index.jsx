@@ -10,7 +10,8 @@ import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
 import styles from './index.module.css';
 import useStore from '@store/useStore';
-import useSocket from '@hooks/useSocket';
+import { handleCodeSubmit, handleCodeUpdate } from '@utils/socketEmitHandlers';
+import useSocketInit from '@hooks/useSocketInit';
 
 function Battle () {
   const {
@@ -28,7 +29,7 @@ function Battle () {
     setGameOver,
   } = useStore();
   const navigate = useNavigate();
-  const socket = useSocket();
+  const socket = useSocketInit();
 
   useEffect(() => {
     if (!targetImage) {
@@ -38,13 +39,8 @@ function Battle () {
   }, [targetImage, navigate]);
 
   useEffect(() => {
-    socket.emit('code_update', combinedCode);
+    handleCodeUpdate(socket, combinedCode);
   }, [combinedCode, socket]);
-
-  function handleCheckCode () {
-    setCodeIsSubmitting(true);
-    socket.emit('code_submit', combinedCode);
-  }
 
   return (
     <>
@@ -69,7 +65,9 @@ function Battle () {
               <Button
                 variant='contained'
                 size='small'
-                onClick={handleCheckCode}
+                onClick={() =>
+                  handleCodeSubmit(socket, setCodeIsSubmitting, combinedCode)
+                }
               >
                 Check Score
               </Button>

@@ -13,9 +13,9 @@ import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
 import useStore from '@store/useStore';
-import useSocketEvents from '@hooks/useSocketEvents';
-import styles from './index.module.css';
 import useSocket from '@hooks/useSocket';
+import { handleGameStart } from '@utils/socketEmitHandlers';
+import styles from './index.module.css';
 
 function Room () {
   const { roomId, setRoomId, startEnabled, isHost, setIsHost } = useStore();
@@ -25,8 +25,6 @@ function Room () {
 
   const tabValue = useRef(location.state?.tabValue);
   const retrievedRoomId = location.state?.roomId || '';
-
-  useSocketEvents();
 
   useEffect(() => {
     if (!tabValue.current) {
@@ -42,12 +40,6 @@ function Room () {
       }
     }
   }, [tabValue, roomId, setIsHost, retrievedRoomId, setRoomId, navigate]);
-
-  function handleGameStart () {
-    if (socket) {
-      socket.emit('start_game');
-    }
-  }
 
   return (
     <>
@@ -76,7 +68,10 @@ function Room () {
             </CardContent>
             <CardActions sx={{ mb: 3, justifyContent: 'center' }}>
               {startEnabled ? (
-                <Button variant='contained' onClick={handleGameStart}>
+                <Button
+                  variant='contained'
+                  onClick={() => handleGameStart(socket)}
+                >
                   Start Game
                 </Button>
               ) : (

@@ -1,5 +1,14 @@
 import useStore from '@store/useStore';
 
+/**
+ * Creates event handlers for socket.io messages.
+ *
+ * This function defines a set of event handlers that will be triggered based on the received socket.io messages.
+ * Each handler updates the application state using Zustand's state management.
+ *
+ * @param {function} navigate - A function to navigate to different routes in the application.
+ * @returns {Object} An object containing the event handlers for various socket.io messages.
+ */
 const createEventHandlers = (navigate) => {
   const {
     localUserBestScore,
