@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 declare global {
   type Monaco = typeof monaco;

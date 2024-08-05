@@ -1,26 +1,13 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [tsconfigPaths(), react()],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['src/__tests__/setup.ts'],
-  },
-  resolve: {
-    alias: {
-      '@components': new URL('/src/components', import.meta.url).pathname,
-      '@pages': new URL('/src/pages', import.meta.url).pathname,
-      '@context': new URL('/src/context', import.meta.url).pathname,
-      '@hooks': new URL('/src/hooks', import.meta.url).pathname,
-      '@store': new URL('/src/store', import.meta.url).pathname,
-      '@services': new URL('/src/services', import.meta.url).pathname,
-      '@data': new URL('/src/data', import.meta.url).pathname,
-      '@utils': new URL('/src/utils', import.meta.url).pathname,
-      '@styles': new URL('/src/assets/styles', import.meta.url).pathname,
-      '@images': new URL('/src/assets/images', import.meta.url).pathname,
-    },
   },
 });
