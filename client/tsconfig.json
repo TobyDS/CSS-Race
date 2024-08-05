@@ -35,7 +35,8 @@
       "@styles/*": ["./src/styles/*"],
       "@images/*": ["./src/assets/images/*"]
     },
-    "types": ["jest", "node", "vitest/globals"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["jest", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "build", "coverage", "public"],
