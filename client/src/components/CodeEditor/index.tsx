@@ -1,24 +1,30 @@
-import Editor from '@monaco-editor/react';
-import PropTypes from 'prop-types';
+import Editor, { OnChange } from '@monaco-editor/react';
 import { useRef, useState } from 'react';
 
 import editorDefaults from '@data/editorDefaults';
 import styles from './index.module.css';
 
-function CodeEditor ({ language, setValue }) {
-  const editorRef = useRef();
-  const [timeoutId, setTimeoutId] = useState();
+interface CodeEditorProps {
+  language: 'html' | 'css';
+  setValue: (value: string) => void;
+}
 
-  function handleOnMount (editor) {
+function CodeEditor ({ language, setValue }: CodeEditorProps) {
+  const editorRef = useRef<Editor>();
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>();
+
+  function handleOnMount (editor: Editor) {
     editorRef.current = editor;
   }
 
-  function handleChange (newValue) {
+  const handleChange: OnChange = (newValue: string | undefined) => {
     clearTimeout(timeoutId);
-    setTimeoutId(setTimeout(() => setValue(newValue), 1000)); // 1000ms delay
-  }
+    if (newValue !== undefined) {
+      setTimeoutId(setTimeout(() => setValue(newValue), 1000)); // 1000ms delay
+    }
+  };
 
-  const editorTemplate =
+  const editorTemplate: string =
     language === 'html'
       ? editorDefaults.htmlTemplate
       : editorDefaults.cssTemplate;
@@ -38,10 +44,5 @@ function CodeEditor ({ language, setValue }) {
     </div>
   );
 }
-
-CodeEditor.propTypes = {
-  language: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
-};
 
 export default CodeEditor;
