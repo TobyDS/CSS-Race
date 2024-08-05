@@ -1,7 +1,47 @@
 import { create } from 'zustand';
 import editorDefaults from '@data/editorDefaults';
 
-const useStore = create((set) => {
+interface StoreState {
+  // State
+  roomId: string;
+  targetImage: string | null;
+  localUserReady: boolean;
+  isHost: boolean;
+  opponentReady: boolean | undefined;
+  startEnabled: boolean;
+  htmlCode: string;
+  cssCode: string;
+  combinedCode: string;
+  codeIsSubmitting: boolean;
+  opponentCode: string;
+  localUserBestScore: number;
+  opponentBestScore: number;
+  gameOver: boolean;
+
+  // Actions
+  setRoomId: (roomId: StoreState['roomId']) => void;
+  setTargetImage: (targetImage: StoreState['targetImage']) => void;
+  setLocalUserReady: (localUserReady: StoreState['localUserReady']) => void;
+  setIsHost: (isHost: StoreState['isHost']) => void;
+  setOpponentReady: (opponentReady: StoreState['opponentReady']) => void;
+  setStartEnabled: (startEnabled: StoreState['startEnabled']) => void;
+  setHtmlCode: (htmlCode: StoreState['htmlCode']) => void;
+  setCssCode: (cssCode: StoreState['cssCode']) => void;
+  setCodeIsSubmitting: (
+    codeIsSubmitting: StoreState['codeIsSubmitting']
+  ) => void;
+  setOpponentCode: (opponentCode: StoreState['opponentCode']) => void;
+  setLocalUserBestScore: (
+    localUserBestScore: StoreState['localUserBestScore']
+  ) => void;
+  setOpponentBestScore: (
+    opponentBestScore: StoreState['opponentBestScore']
+  ) => void;
+  setGameOver: (gameOver: StoreState['gameOver']) => void;
+  resetState: () => void;
+}
+
+const useStore = create<StoreState>()((set) => {
   return {
     // State
     roomId: '',
