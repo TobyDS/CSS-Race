@@ -1,4 +1,4 @@
-import loader from '@monaco-editor/loader';
+import { loader } from '@monaco-editor/react';
 import { emmetHTML, emmetCSS } from 'emmet-monaco-es';
 
 // Configure the loader to use the locally installed Monaco Editor when in development
