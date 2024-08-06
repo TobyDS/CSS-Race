@@ -1,4 +1,5 @@
 import useStore from '@store/useStore';
+import type { NavigateFunction } from 'react-router-dom';
 
 /**
  * Creates event handlers for socket.io messages.
@@ -9,7 +10,7 @@ import useStore from '@store/useStore';
  * @param {function} navigate - A function to navigate to different routes in the application.
  * @returns {Object} An object containing the event handlers for various socket.io messages.
  */
-const createEventHandlers = (navigate) => {
+const createEventHandlers = (navigate: NavigateFunction) => {
   const {
     localUserBestScore,
     opponentBestScore,
@@ -35,12 +36,12 @@ const createEventHandlers = (navigate) => {
     start_game: () => {
       navigate('/battle');
     },
-    user_score: async (score) => {
+    user_score: async (score: number) => {
       const newScore = Math.max(localUserBestScore, score);
       setLocalUserBestScore(newScore);
       setCodeIsSubmitting(false);
     },
-    opponent_score: async (score) => {
+    opponent_score: async (score: number) => {
       const newScore = Math.max(opponentBestScore, score);
       setOpponentBestScore(newScore);
     },

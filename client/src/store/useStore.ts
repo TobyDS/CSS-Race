@@ -1,10 +1,17 @@
 import { create } from 'zustand';
 import editorDefaults from '@data/editorDefaults';
 
+export interface TargetImage {
+  colors: string[];
+  img: string;
+  img_2x?: string;
+  id: string;
+}
+
 interface StoreState {
   // State
   roomId: string;
-  targetImage: string | null;
+  targetImage: TargetImage | null;
   localUserReady: boolean;
   isHost: boolean;
   opponentReady: boolean | undefined;
