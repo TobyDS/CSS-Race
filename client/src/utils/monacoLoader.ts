@@ -6,10 +6,9 @@ if (import.meta.env.MODE === 'development') {
   loader.config({ paths: { vs: '/node_modules/monaco-editor/min/vs' } });
 }
 
-export function initMonaco () {
-  return loader.init().then((monacoInstance) => {
-    emmetHTML(monacoInstance, ['html']);
-    emmetCSS(monacoInstance, ['css']);
-    return monacoInstance;
-  });
+export async function initMonaco () {
+  const monacoInstance = await loader.init();
+  emmetHTML(monacoInstance, ['html']);
+  emmetCSS(monacoInstance, ['css']);
+  return monacoInstance;
 }
