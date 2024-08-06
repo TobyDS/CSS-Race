@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import { useState } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 
 import Navbar from '@components/Navbar';
 import Tabs from '@components/Tabs';
@@ -7,7 +7,7 @@ import Tabs from '@components/Tabs';
 function Dashboard () {
   const [selectedTab, setSelectedTab] = useState('Join');
 
-  function handleChange (_event, newValue) {
+  function handleChange (_event: SyntheticEvent, newValue: string): void {
     setSelectedTab(newValue);
   }
 
