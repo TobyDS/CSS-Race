@@ -1,10 +1,14 @@
+import { ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { SocketProvider } from '@context/SocketContext';
-import { PropTypes } from 'prop-types';
 
 import darkTheme from '@data/darkTheme';
 
-export default function Providers ({ children }) {
+interface ProvidersProps {
+  children: ReactNode;
+}
+
+export default function Providers ({ children }: ProvidersProps) {
   return (
     <>
       <SocketProvider>
@@ -13,7 +17,3 @@ export default function Providers ({ children }) {
     </>
   );
 }
-
-Providers.propTypes = {
-  children: PropTypes.node,
-};
