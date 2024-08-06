@@ -1,14 +1,18 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [tsconfigPaths(), react(), sentryVitePlugin({
-    org: "toby-dixon-smith",
-    project: "css-race"
-  })],
+  plugins: [
+    tsconfigPaths(),
+    react(),
+    sentryVitePlugin({
+      org: 'toby-dixon-smith',
+      project: 'css-race',
+    }),
+  ],
 
   test: {
     globals: true,
@@ -17,6 +21,6 @@ export default defineConfig({
   },
 
   build: {
-    sourcemap: true
-  }
+    sourcemap: true,
+  },
 });

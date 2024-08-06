@@ -45,6 +45,12 @@ app.use(
   )
 );
 
+// Middleware to set Document-Policy header
+app.use((req, res, next) => {
+  res.set('Document-Policy', 'js-profiling');
+  next();
+});
+
 app.use(express.json());
 app.use(cors());
 

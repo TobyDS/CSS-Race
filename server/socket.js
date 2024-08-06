@@ -124,7 +124,6 @@ module.exports = function (io) {
               Object.values(room.users).every((user) => user.isReady)
             ) {
               io.to(room.id).emit('all_ready');
-              console.log(room.users[socket.id]);
             }
           } else {
             console.error('Error: room.users is undefined');
