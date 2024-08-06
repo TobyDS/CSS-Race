@@ -26,6 +26,8 @@
     "@mui/material": "^5.15.15",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@redux-devtools/extension": "^3.3.0",
+    "@sentry/react": "^8.24.0",
+    "@sentry/vite-plugin": "^2.21.1",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.6.8",
     "dompurify": "^3.1.0",
