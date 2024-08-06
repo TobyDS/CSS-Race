@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
+import zustymiddlewarets from 'zustymiddlewarets';
 import editorDefaults from '@data/editorDefaults';
 
-const useGameStore = create<GameStore>()((set) => {
-  return {
+const useGameStore = create<GameStore>(
+  zustymiddlewarets((set) => ({
     // State
     roomId: '',
     targetImage: null,
@@ -61,11 +62,18 @@ const useGameStore = create<GameStore>()((set) => {
         opponentBestScore: 0,
         gameOver: false,
       }),
-  };
-});
+  }))
+);
+
+declare global {
+  interface Window {
+    store: typeof useGameStore;
+  }
+}
 
 if (import.meta.env.MODE === 'development') {
   mountStoreDevtool('Game Store', useGameStore);
 }
 
+window.store = useGameStore;
 export default useGameStore;
