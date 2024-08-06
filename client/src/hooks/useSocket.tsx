@@ -22,8 +22,7 @@ function useSocket () {
   const handleJoinRoomCallback = useCallback(() => {
     handleJoinRoom(socket, isHost, roomId);
   }, [socket, isHost, roomId]);
-  
-  
+
   useEffect(() => {
     if (socket) {
       if (isHost) {
@@ -39,7 +38,7 @@ function useSocket () {
     handleCreateRoomCallback,
     handleJoinRoomCallback,
   ]);
-  
+
   useEffect(() => {
     if (socket) {
       const eventHandlers = createEventHandlers(navigate);
@@ -55,7 +54,7 @@ function useSocket () {
   useEffect(() => {
     handleUserReady(socket, localUserReady);
   }, [localUserReady, socket]);
-  
+
   return socket;
 }
 
