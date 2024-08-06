@@ -36,7 +36,6 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      ignorePatterns: ['vite-env.d.ts'],
       parser: '@typescript-eslint/parser',
       extends: [
         'eslint:recommended',
