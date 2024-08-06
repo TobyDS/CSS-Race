@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import logoImg from '@images/CSS Logo Dark Mode.svg';
 import styles from './index.module.css';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 
 function Navbar () {
-  const { resetState } = useStore();
+  const { resetState } = useGameStore();
   return (
     <AppBar position='static' className={styles.Navbar}>
       <Toolbar>

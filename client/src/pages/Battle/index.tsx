@@ -9,7 +9,7 @@ import Navbar from '@components/Navbar';
 import RenderFrame from '@components/RenderFrame';
 import RenderImage from '@components/RenderImage';
 import styles from './index.module.css';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 import { handleCodeSubmit, handleCodeUpdate } from '@utils/socketEmitHandlers';
 import useSocketInit from '@hooks/useSocketInit';
 
@@ -27,7 +27,7 @@ function Battle () {
     setHtmlCode,
     setCssCode,
     setGameOver,
-  } = useStore();
+  } = useGameStore();
   const navigate = useNavigate();
   const socket = useSocketInit();
 

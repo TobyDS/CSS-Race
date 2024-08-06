@@ -4,11 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 
 function CreateGameTab () {
   const navigate = useNavigate();
-  const { resetState } = useStore();
+  const { resetState } = useGameStore();
 
   function handleButtonClick () {
     resetState();

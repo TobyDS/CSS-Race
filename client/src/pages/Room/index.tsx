@@ -12,13 +12,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
 import UserStatus from '@components/UserStatus';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 import useSocket from '@hooks/useSocket';
 import { handleGameStart } from '@utils/socketEmitHandlers';
 import styles from './index.module.css';
 
 function Room () {
-  const { roomId, setRoomId, startEnabled, isHost, setIsHost } = useStore();
+  const { roomId, setRoomId, startEnabled, isHost, setIsHost } = useGameStore();
   const location = useLocation();
   const navigate = useNavigate();
   const socket = useSocket();

@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 
 import { userStatusUtils } from '@utils/userStatusUtils';
 import styles from './index.module.css';
 
 function UserStatus ({ isLocalUser }) {
   const { isHost, localUserReady, setLocalUserReady, opponentReady } =
-    useStore();
+    useGameStore();
   const targetUserReady = isLocalUser ? localUserReady : opponentReady;
   const playerNum = !(isHost ^ isLocalUser) ? 1 : 2;
   const userSvg = userStatusUtils.getSVG({ playerNum, targetUserReady });

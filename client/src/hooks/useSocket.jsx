@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useSocketInit from '@hooks/useSocketInit';
 import createEventHandlers from '@utils/socketEventHandlers';
 import manageSocketEvents from '@utils/socketEventManager';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 import {
   handleCreateRoom,
   handleJoinRoom,
@@ -14,7 +14,7 @@ import {
 function useSocket () {
   const socket = useSocketInit();
   const navigate = useNavigate();
-  const { roomId, localUserReady, isHost } = useStore();
+  const { roomId, localUserReady, isHost } = useGameStore();
 
   const handleCreateRoomCallback = useCallback(() => {
     handleCreateRoom(socket, isHost, roomId);

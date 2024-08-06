@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import editorDefaults from '@data/editorDefaults';
 
-const useStore = create<GameStore>()((set) => {
+const useGameStore = create<GameStore>()((set) => {
   return {
     // State
     roomId: '',
@@ -65,7 +65,7 @@ const useStore = create<GameStore>()((set) => {
 });
 
 if (import.meta.env.MODE === 'development') {
-  mountStoreDevtool('Store', useStore);
+  mountStoreDevtool('Game Store', useGameStore);
 }
 
-export default useStore;
+export default useGameStore;

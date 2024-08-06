@@ -6,12 +6,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 import { useNavigate } from 'react-router-dom';
 
 function JoinGameTab () {
   const navigate = useNavigate();
-  const { roomId, setRoomId, resetState } = useStore();
+  const { roomId, setRoomId, resetState } = useGameStore();
 
   function handleButtonClick () {
     resetState();

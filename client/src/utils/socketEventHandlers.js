@@ -1,4 +1,4 @@
-import useStore from '@store/useStore';
+import useGameStore from '@store/useGameStore';
 
 /**
  * Creates event handlers for socket.io messages.
@@ -22,7 +22,7 @@ const createEventHandlers = (navigate) => {
     setOpponentCode,
     setOpponentBestScore,
     setGameOver,
-  } = useStore.getState();
+  } = useGameStore.getState();
 
   return {
     room_id: setRoomId,
