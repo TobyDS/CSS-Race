@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import editorDefaults from '@data/editorDefaults';
 
-const useStore = create((set) => {
+const useStore = create<GameStore>()((set) => {
   return {
     // State
     roomId: '',
