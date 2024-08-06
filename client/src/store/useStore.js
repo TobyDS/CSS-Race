@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import editorDefaults from '@data/editorDefaults';
 
 const useStore = create((set) => {
@@ -62,5 +63,9 @@ const useStore = create((set) => {
       }),
   };
 });
+
+if (import.meta.env.MODE === 'development') {
+  mountStoreDevtool('Store', useStore);
+}
 
 export default useStore;
