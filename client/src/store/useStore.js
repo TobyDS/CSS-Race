@@ -23,10 +23,10 @@ const useStore = create((set) => {
     // Actions
     setRoomId: (roomId) => set({ roomId }),
     setTargetImage: (targetImage) => set({ targetImage }),
-    setLocalUserReady: (localUserReady) => set({ localUserReady }),
+    setLocalUserReady: (isReady) => set({ localUserReady: isReady }),
     setIsHost: (isHost) => set({ isHost }),
-    setOpponentReady: (opponentReady) => set({ opponentReady }),
-    setStartEnabled: (startEnabled) => set({ startEnabled }),
+    setOpponentReady: (isReady) => set({ opponentReady: isReady }),
+    setStartEnabled: (isEnabled) => set({ startEnabled: isEnabled }),
     setHtmlCode: (htmlCode) => {
       set((state) => {
         const combinedCode = `${htmlCode}<style>${state.cssCode}</style>`;

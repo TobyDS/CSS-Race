@@ -36,6 +36,12 @@ export const handleUserReady = (socket, localUserReady) => {
   }
 };
 
+export const handleUserNotReady = (socket, localUserReady) => {
+  if (socket && !localUserReady) {
+    socket.emit('not_ready');
+  }
+};
+
 /**
  * Emits a 'start_game' event if the socket is connected.
  *
@@ -62,7 +68,7 @@ export const handleCodeSubmit = (socket, setCodeIsSubmitting, combinedCode) => {
 
 /**
  * Handles the code update event by emitting the combined code to the socket.
- * 
+ *
  * @param {SocketIO.Socket} socket - The socket to emit the code update event to.
  * @param {string} combinedCode - The combined code to be emitted.
  */
