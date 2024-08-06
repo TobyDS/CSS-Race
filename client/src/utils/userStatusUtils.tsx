@@ -4,8 +4,13 @@ import userOutlineRed from '@images/user-outline-red.svg';
 import userSolidBlue from '@images/user-solid-blue.svg';
 import userSolidRed from '@images/user-solid-red.svg';
 
+interface UserStatusUtilsProps {
+  playerNum: 1 | 2;
+  targetUserReady: boolean | undefined;
+}
+
 export const userStatusUtils = {
-  getSVG: function ({ playerNum, targetUserReady }) {
+  getSVG: function ({ playerNum, targetUserReady }: UserStatusUtilsProps) {
     let imgSrc = userOutlineGrey;
     let altText = 'user not connected';
 
@@ -20,7 +25,9 @@ export const userStatusUtils = {
 
     return <img src={imgSrc} alt={altText} />;
   },
-  getUserStatusText: function (targetUserReady) {
+  getUserStatusText: function (
+    targetUserReady: UserStatusUtilsProps['targetUserReady']
+  ) {
     switch (targetUserReady) {
     case false:
       return 'Not Ready';

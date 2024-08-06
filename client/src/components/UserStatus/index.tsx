@@ -1,16 +1,18 @@
-import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import useStore from '@store/useStore';
-
 import { userStatusUtils } from '@utils/userStatusUtils';
 import styles from './index.module.css';
 
-function UserStatus ({ isLocalUser }) {
+interface UserStatusProps {
+  isLocalUser: boolean;
+}
+
+function UserStatus ({ isLocalUser }: UserStatusProps) {
   const { isHost, localUserReady, setLocalUserReady, opponentReady } =
     useStore();
   const targetUserReady = isLocalUser ? localUserReady : opponentReady;
-  const playerNum = !(isHost ^ isLocalUser) ? 1 : 2;
+  const playerNum = !(isHost !== isLocalUser) ? 1 : 2;
   const userSvg = userStatusUtils.getSVG({ playerNum, targetUserReady });
   const userStatusText = userStatusUtils.getUserStatusText(targetUserReady);
 
@@ -33,9 +35,4 @@ function UserStatus ({ isLocalUser }) {
     </div>
   );
 }
-
-UserStatus.propTypes = {
-  isLocalUser: PropTypes.bool.isRequired,
-};
-
 export default UserStatus;
