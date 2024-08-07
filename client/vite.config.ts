@@ -22,13 +22,22 @@ export default defineConfig({
     setupFiles: ['src/__tests__/setup.ts'],
   },
   build: {
+    sourcemap: true,
+    
     rollupOptions: {
       output: {
         manualChunks: {
           '@mui/material': ['@mui/material'],
           '@mui/styled-engine-sc': ['@mui/styled-engine-sc'],
         }
-      }
+      },
+      onwarn(warning, defaultHandler) {
+        if (warning.code === 'SOURCEMAP_ERROR') {
+          return
+        }
+
+        defaultHandler(warning)
+      },
     }
   }
 });
