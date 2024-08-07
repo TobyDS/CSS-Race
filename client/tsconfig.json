@@ -33,12 +33,13 @@
       "@data/*": ["./src/data/*"],
       "@utils/*": ["./src/utils/*"],
       "@styles/*": ["./src/styles/*"],
-      "@images/*": ["./src/assets/images/*"]
+      "@images/*": ["./src/assets/images/*"],
+      "@/*": ["./src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "types": ["jest", "node"]
   },
-  "include": ["src"],
+  "include": ["src", "src/__tests__/**/*.ts", "src/__tests__/**/*.tsx"],
   "exclude": ["node_modules", "dist", "build", "coverage", "public"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
