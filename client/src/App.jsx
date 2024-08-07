@@ -18,9 +18,19 @@ function App () {
   useEffect(() => {
     initMonaco();
   }, []);
+
+  const logError = (error, info) => {
+    if (error.message !== 'Simulated error coming from DevTools') {
+      console.error(error, info);
+    }
+  };
+
   return (
     <Providers>
-      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+      <ErrorBoundary
+        FallbackComponent={ErrorBoundaryFallback}
+        onError={logError}
+      >
         <Router>
           <Routes>
             <Route path='/battle' element={<Battle />} />

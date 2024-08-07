@@ -32,8 +32,14 @@ export default function ErrorBoundaryFallback ({
         <CardContent>
           <pre style={{ color: theme.palette.error.main }}>{error.message}</pre>
         </CardContent>
-        <CardActions sx={{ flex: 'flex', justifyContent: 'center', paddingBottom: 2}}>
-          <Button variant='outlined' startIcon={<RefreshIcon />} onClick={resetErrorBoundary}>
+        <CardActions
+          sx={{ flex: 'flex', justifyContent: 'center', paddingBottom: 2 }}
+        >
+          <Button
+            variant='outlined'
+            startIcon={<RefreshIcon />}
+            onClick={resetErrorBoundary}
+          >
             Refresh Page
           </Button>
         </CardActions>
