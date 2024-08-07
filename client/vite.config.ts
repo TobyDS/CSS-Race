@@ -23,21 +23,21 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    
+
     rollupOptions: {
       output: {
         manualChunks: {
           '@mui/material': ['@mui/material'],
           '@mui/styled-engine-sc': ['@mui/styled-engine-sc'],
-        }
+        },
       },
-      onwarn(warning, defaultHandler) {
+      onwarn (warning, defaultHandler) {
         if (warning.code === 'SOURCEMAP_ERROR') {
-          return
+          return;
         }
 
-        defaultHandler(warning)
+        defaultHandler(warning);
       },
-    }
-  }
+    },
+  },
 });
