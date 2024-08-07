@@ -5,6 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    include: ['@emotion/react', '@emotion/styled', '@mui/material/Tooltip'],
+  },
   plugins: [
     tsconfigPaths(),
     react(),
@@ -19,6 +22,13 @@ export default defineConfig({
     setupFiles: ['src/__tests__/setup.ts'],
   },
   build: {
-    sourcemap: true,
-  },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          '@mui/material': ['@mui/material'],
+          '@mui/styled-engine-sc': ['@mui/styled-engine-sc'],
+        }
+      }
+    }
+  }
 });
