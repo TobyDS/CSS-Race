@@ -15,7 +15,10 @@ function RenderImage ({ image }) {
           <p>Target</p>
           <p>400px x 300px</p>
         </div>
-        <img src={`data:image/jpeg;base64,${image.img}`} />
+        <img
+          src={`data:image/jpeg;base64,${image.img}`}
+          srcSet={`data:image/jpeg;base64,${image.img_2x} 2x`}
+        />
       </div>
       <ClickableChips colors={image.colors} />
     </div>
@@ -25,6 +28,7 @@ function RenderImage ({ image }) {
 RenderImage.propTypes = {
   image: PropTypes.shape({
     img: PropTypes.string.isRequired,
+    img_2x: PropTypes.string,
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
 };
