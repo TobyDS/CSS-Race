@@ -2,9 +2,36 @@
   margin: 0;
 }
 
+.checkBoxLabel {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  margin: 8px;
+}
+
+.targetOverlayContainer {
+  position: relative;
+  /* cursor: col-resize; */
+  touch-action: none;
+  --scale-down: 0.9975;
+}
+
 .iframeContainer {
+  position: relative;
   height: 300px;
   width: 400px;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.imgContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(0px, 400px, 100%);
+  pointer-events: none;
 }
 
 .renderFrameContainer {

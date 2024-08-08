@@ -79,11 +79,13 @@ function Battle () {
             isLocalUser={true}
             combinedCode={combinedCode}
             bestScore={Math.round(localUserBestScore * 10) / 10}
+            image={targetImage}
           />
           <RenderFrame
             isLocalUser={false}
             combinedCode={opponentCode}
             bestScore={Math.round(opponentBestScore * 10) / 10}
+            image={targetImage}
           />
         </div>
         <div className={styles.rightContainer}>

@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 
 import styles from './index.module.css';
 
-function RenderFrame ({ combinedCode, bestScore, isLocalUser }) {
+function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
   const iframeRef = useRef(null);
   const [iframeSrc, setIframeSrc] = useState('');
+  const [diffChecked, setDiffIsChecked] = useState(false);
+
+  const handleDiffChange = () => {
+    setDiffIsChecked(!diffChecked);
+  };
 
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
@@ -26,22 +31,46 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser }) {
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
           <p>{isLocalUser ? 'Your' : 'Opponents'} Code</p>
+          <label className={styles.checkBoxLabel}>
+            <input
+              type='checkbox'
+              checked={diffChecked}
+              onChange={handleDiffChange}
+            />{' '}
+            Diff
+          </label>
         </div>
-        <div className={styles.iframeContainer}>
-          <iframe
-            ref={iframeRef}
-            className={styles.frame}
+        <div className={styles.targetOverlayContainer}>
+          <div
+            className={styles.iframeContainer}
+            style={{ mixBlendMode: diffChecked ? 'difference' : 'normal' }}
+          >
+            <iframe
+              ref={iframeRef}
+              className={styles.frame}
+              style={{
+                background: 'white',
+                width: '400px',
+                height: '300px',
+                border: '0px',
+                outline: '0px',
+                pointerEvents: 'none',
+              }}
+              src={iframeSrc}
+              title='Render Frame'
+            ></iframe>
+          </div>
+          <img
             style={{
-              background: 'white',
-              width: '400px',
-              height: '300px',
-              border: '0px',
-              outline: '0px',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: 'clamp(0px, 400px, 100%)',
               pointerEvents: 'none',
             }}
-            src={iframeSrc}
-            title='Render Frame'
-          ></iframe>
+            src={`data:image/jpeg;base64,${image.img}`}
+            srcSet={`data:image/jpeg;base64,${image.img_2x} 2x`}
+          />
         </div>
       </div>
       <p>Match {bestScore}%</p>
@@ -53,6 +82,10 @@ RenderFrame.propTypes = {
   combinedCode: PropTypes.string.isRequired,
   bestScore: PropTypes.number.isRequired,
   isLocalUser: PropTypes.bool.isRequired,
+  image: PropTypes.shape({
+    img: PropTypes.string.isRequired,
+    img_2x: PropTypes.string,
+  }),
 };
 
 export default RenderFrame;
