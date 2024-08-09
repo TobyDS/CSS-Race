@@ -36,7 +36,7 @@ function ClickableChips ({ colors }: ClickableChipsProps) {
 
   const handleClick = async (color: string) => {
     try {
-      await navigator.clipboard.writeText(color.slice(1)); // Copy the color code without the #
+      // await navigator.clipboard.writeText(color.slice(1)); // Copy the color code without the #
 
       // Update tooltip state to "Copied" and set it to open
       setTooltipStates((prevState) => ({
