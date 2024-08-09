@@ -8,24 +8,27 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
   const iframeRef = useRef(null);
   const [iframeSrc, setIframeSrc] = useState('');
   const [diffChecked, setDiffIsChecked] = useState(false);
+  const [showSlider, setShowSlider] = useState(false);
+  const [cursorXPosition, setCursorXPosition] = useState(400);
+  const [cursorYPosition, setCursorYPosition] = useState(300);
 
   const handleDiffChange = () => {
     setDiffIsChecked(!diffChecked);
   };
 
   const handleHover = () => {
-    console.log('hover');
+    setShowSlider(true);
   };
 
   const handleMouseOut = () => {
-    console.log('out');
+    setShowSlider(false);
   };
 
   const handleMouseMove = (event) => {
     let bounds = event.target.getBoundingClientRect();
-    let x = Math.floor(event.clientX - bounds.left);
-    let y = Math.floor(event.clientY - bounds.top);
-    console.log('x: ' + x, 'y: ' + y);
+    setCursorXPosition(Math.floor(event.clientX - bounds.left));
+    setCursorYPosition(Math.floor(event.clientY - bounds.top));
+    console.log('x: ' + cursorXPosition, 'y: ' + cursorYPosition);
   };
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
@@ -41,7 +44,7 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
   }, [combinedCode]);
 
   return (
-    <div className={styles.flexContainer}>
+    <div className={styles.flexContainer} style={{ cursor: 'col-resize' }}>
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
           <p>{isLocalUser ? 'Your' : 'Opponents'} Code</p>
@@ -62,31 +65,34 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
         >
           <div
             className={styles.iframeContainer}
-            style={{ mixBlendMode: diffChecked ? 'difference' : 'normal' }}
+            style={{
+              width: showSlider ? cursorXPosition : 400,
+              mixBlendMode: diffChecked ? 'difference' : 'normal',
+              opacity: showSlider ? '0.9' : '1',
+              transition: showSlider ? 'all' : '0.3s',
+              boxShadow: showSlider ? '2px 0 0 rgb(255, 34, 34)' : 'none',
+            }}
           >
             <iframe
               ref={iframeRef}
-              className={styles.frame}
-              style={{
-                background: 'white',
-                width: '400px',
-                height: '300px',
-                border: '0px',
-                outline: '0px',
-                pointerEvents: 'none',
-              }}
+              className={styles.iframe}
               src={iframeSrc}
               title='Render Frame'
             ></iframe>
           </div>
-          <img
+          <div
+            className={styles.overlaySlider}
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: 'clamp(0px, 400px, 100%)',
-              pointerEvents: 'none',
+              opacity: showSlider ? '1' : '0',
+              top: '100%',
+              left: showSlider ? cursorXPosition + 'px' : 400 + 'px',
+              transform: 'translate(-50%, 0px)',
             }}
+          >
+            {showSlider ? cursorXPosition : 400}
+          </div>
+          <img
+            className={styles.targetOverlay}
             src={`data:image/jpeg;base64,${image.img}`}
             srcSet={`data:image/jpeg;base64,${image.img_2x} 2x`}
           />

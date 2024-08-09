@@ -1,5 +1,11 @@
-.frame {
+.iframe {
   margin: 0;
+  background: white;
+  width: 400px;
+  height: 300px;
+  border: 0px;
+  outline: 0px;
+  pointer-events: none;
 }
 
 .checkBoxLabel {
@@ -10,20 +16,38 @@
 }
 
 .targetOverlayContainer {
+  width: 400px;
+  height: 300px;
   position: relative;
   /* cursor: col-resize; */
   touch-action: none;
   --scale-down: 0.9975;
 }
 
+.overlaySlider {
+  background: rgb(255, 34, 34);
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+  font-weight: 700;
+  position: absolute;
+  color: #fff;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.targetOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(0px, 400px, 100%);
+  pointer-events: none;
+}
+
 .iframeContainer {
   position: relative;
   height: 300px;
-  width: 400px;
   overflow: hidden;
   z-index: 1;
-  opacity: 1;
-  transition: 0.3s;
 }
 
 .imgContainer {

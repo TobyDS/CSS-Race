@@ -30,7 +30,11 @@ export default function ErrorBoundaryFallback ({
       >
         <CardHeader title='Something went wrong' />
         <CardContent>
-          <pre style={{ color: theme.palette.error.main }}>{error.message}</pre>
+          <pre
+            style={{ color: theme.palette.error.main, whiteSpace: 'pre-wrap' }}
+          >
+            {error.message}
+          </pre>
         </CardContent>
         <CardActions
           sx={{ flex: 'flex', justifyContent: 'center', paddingBottom: 2 }}
