@@ -13,6 +13,20 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
     setDiffIsChecked(!diffChecked);
   };
 
+  const handleHover = () => {
+    console.log('hover');
+  };
+
+  const handleMouseOut = () => {
+    console.log('out');
+  };
+
+  const handleMouseMove = (event) => {
+    let bounds = event.target.getBoundingClientRect();
+    let x = Math.floor(event.clientX - bounds.left);
+    let y = Math.floor(event.clientY - bounds.top);
+    console.log('x: ' + x, 'y: ' + y);
+  };
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
     // Create the full HTML string including the script tag in the head
@@ -40,7 +54,12 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
             Diff
           </label>
         </div>
-        <div className={styles.targetOverlayContainer}>
+        <div
+          className={styles.targetOverlayContainer}
+          onMouseOver={handleHover}
+          onMouseOut={handleMouseOut}
+          onMouseMove={handleMouseMove}
+        >
           <div
             className={styles.iframeContainer}
             style={{ mixBlendMode: diffChecked ? 'difference' : 'normal' }}
