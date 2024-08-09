@@ -9,6 +9,7 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
   const [iframeSrc, setIframeSrc] = useState('');
   const [diffChecked, setDiffIsChecked] = useState(false);
   const [showSlider, setShowSlider] = useState(false);
+  const [horizontal, setHorizontal] = useState(false);
   const [cursorXPosition, setCursorXPosition] = useState(400);
   const [cursorYPosition, setCursorYPosition] = useState(300);
 
@@ -24,12 +25,34 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
     setShowSlider(false);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Shift') {
+      setHorizontal(true);
+    }
+  };
+
+  const handleKeyUp = (event) => {
+    if (event.key === 'Shift') {
+      setHorizontal(false);
+    }
+  };
+
   const handleMouseMove = (event) => {
     let bounds = event.target.getBoundingClientRect();
-    setCursorXPosition(Math.floor(event.clientX - bounds.left));
-    setCursorYPosition(Math.floor(event.clientY - bounds.top));
-    console.log('x: ' + cursorXPosition, 'y: ' + cursorYPosition);
+    setCursorXPosition(event.clientX - bounds.left);
+    setCursorYPosition(event.clientY - bounds.top);
   };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
   useEffect(() => {
     const sanitizedCode = DOMPurify.sanitize(combinedCode);
     // Create the full HTML string including the script tag in the head
@@ -44,7 +67,7 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
   }, [combinedCode]);
 
   return (
-    <div className={styles.flexContainer} style={{ cursor: 'col-resize' }}>
+    <div className={styles.flexContainer}>
       <div className={styles.renderFrameContainer}>
         <div className={styles.flexRow}>
           <p>{isLocalUser ? 'Your' : 'Opponents'} Code</p>
@@ -62,15 +85,21 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
           onMouseOver={handleHover}
           onMouseOut={handleMouseOut}
           onMouseMove={handleMouseMove}
+          style={{ cursor: horizontal ? 'row-resize' : 'col-resize' }}
         >
           <div
             className={styles.iframeContainer}
             style={{
-              width: showSlider ? cursorXPosition : 400,
+              width: showSlider && !horizontal ? cursorXPosition : 400,
+              height: showSlider && horizontal ? cursorYPosition : 300,
               mixBlendMode: diffChecked ? 'difference' : 'normal',
               opacity: showSlider ? '0.9' : '1',
               transition: showSlider ? 'all' : '0.3s',
-              boxShadow: showSlider ? '2px 0 0 rgb(255, 34, 34)' : 'none',
+              boxShadow: showSlider
+                ? horizontal
+                  ? '0 2px 0 rgb(255, 34, 34)'
+                  : '2px 0 0 rgb(255, 34, 34)'
+                : 'none',
             }}
           >
             <iframe
@@ -84,12 +113,20 @@ function RenderFrame ({ combinedCode, bestScore, isLocalUser, image }) {
             className={styles.overlaySlider}
             style={{
               opacity: showSlider ? '1' : '0',
-              top: '100%',
-              left: showSlider ? cursorXPosition + 'px' : 400 + 'px',
-              transform: 'translate(-50%, 0px)',
+              top:
+                showSlider && horizontal ? cursorYPosition + 'px' : 300 + 'px',
+              left:
+                showSlider && !horizontal ? cursorXPosition + 'px' : 400 + 'px',
+              transform: horizontal
+                ? 'translate(-60%, -50%)'
+                : 'translate(-50%, 0px)',
             }}
           >
-            {showSlider ? cursorXPosition : 400}
+            {showSlider
+              ? horizontal
+                ? Math.floor(cursorYPosition)
+                : Math.floor(cursorXPosition)
+              : 400}
           </div>
           <img
             className={styles.targetOverlay}
