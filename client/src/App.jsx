@@ -6,6 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import useGameStore from '@store/useGameStore';
 
 import ErrorBoundaryFallback from '@components/ErrorBoundaryFallback';
 import Dashboard from '@pages/Dashboard';
@@ -15,6 +16,8 @@ import Providers from '@context/Providers';
 import { initMonaco } from '@utils/monacoLoader';
 
 function App () {
+  const { resetState } = useGameStore();
+
   useEffect(() => {
     initMonaco();
   }, []);
@@ -27,19 +30,20 @@ function App () {
 
   return (
     <Providers>
-      <ErrorBoundary
-        FallbackComponent={ErrorBoundaryFallback}
-        onError={logError}
-      >
-        <Router>
+      <Router>
+        <ErrorBoundary
+          FallbackComponent={ErrorBoundaryFallback}
+          onError={logError}
+          onReset={resetState}
+        >
           <Routes>
             <Route path='/battle' element={<Battle />} />
             <Route path='/room' element={<Room />} />
             <Route path='/' element={<Dashboard />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
-        </Router>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Router>
     </Providers>
   );
 }

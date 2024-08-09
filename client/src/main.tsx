@@ -2,6 +2,8 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import * as Sentry from '@sentry/react';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorBoundaryFallbackBasic from './components/ErrorBoundaryFallback/basic';
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -22,6 +24,8 @@ Sentry.init({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary FallbackComponent={ErrorBoundaryFallbackBasic}>
+      <App />
+    </ErrorBoundary>
   </StrictMode>
 );

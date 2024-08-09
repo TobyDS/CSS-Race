@@ -40,7 +40,7 @@ export default function ErrorBoundaryFallback ({
           sx={{ flex: 'flex', justifyContent: 'center', paddingBottom: 2 }}
         >
           <Button
-            variant='outlined'
+            variant='contained'
             startIcon={<RefreshIcon />}
             onClick={resetErrorBoundary}
           >
