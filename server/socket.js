@@ -152,7 +152,7 @@ module.exports = function (io) {
       }
     });
 
-    const TEN_MINUTES_IN_MS = 600000;
+    // const TEN_MINUTES_IN_MS = 600000;
 
     socket.on('start_game', async () => {
       try {
@@ -161,19 +161,19 @@ module.exports = function (io) {
           io.to(room.id).emit('start_game');
 
           // Start the 10-minute countdown
-          setTimeout(() => {
-            // Check if the room is empty
-            if (Object.keys(room.users).length === 0) {
-              return;
-            }
+          // setTimeout(() => {
+          //   // Check if the room is empty
+          //   if (Object.keys(room.users).length === 0) {
+          //     return;
+          //   }
 
-            // Check if any user has reached a score of 100
-            const winner = room.checkForWinner();
+          //   // Check if any user has reached a score of 100
+          //   const winner = room.checkForWinner();
 
-            if (!winner) {
-              io.to(room.id).emit('game_over');
-            }
-          }, TEN_MINUTES_IN_MS);
+          //   if (!winner) {
+          //     io.to(room.id).emit('game_over');
+          //   }
+          // }, TEN_MINUTES_IN_MS);
         }
       } catch (error) {
         console.error(`Error starting game - ${error}`);
