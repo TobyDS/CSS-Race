@@ -8,8 +8,9 @@ function CopyClipboardButton ({ roomId }) {
   const [open, setOpen] = useState(false);
 
   async function handleCopy () {
+    const fullUrl = `${window.location.origin}/room/${roomId}`;
     try {
-      await navigator.clipboard.writeText(roomId);
+      await navigator.clipboard.writeText(fullUrl);
       setTooltipText('Copied');
       handleTooltipOpen();
       setTimeout(() => setTooltipText('Copy'), 2000); // Reset tooltip text after 2 seconds
