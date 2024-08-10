@@ -38,7 +38,7 @@ function App () {
         >
           <Routes>
             <Route path='/battle' element={<Battle />} />
-            <Route path='/room' element={<Room />} />
+            <Route path='/room/:roomId?' element={<Room />} />
             <Route path='/' element={<Dashboard />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>

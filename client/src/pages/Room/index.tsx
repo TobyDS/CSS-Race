@@ -7,7 +7,7 @@ import {
   Grid,
 } from '@mui/material';
 import { useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import CopyClipboardButton from '@components/CopyClipboardButton';
 import Navbar from '@components/Navbar';
@@ -19,27 +19,35 @@ import styles from './index.module.css';
 
 function Room () {
   const { roomId, setRoomId, startEnabled, isHost, setIsHost } = useGameStore();
+  const { roomId: paramRoomId } = useParams<{ roomId?: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const socket = useSocket();
 
   const tabValue = useRef(location.state?.tabValue);
-  const retrievedRoomId = location.state?.roomId || '';
+  const stateRoomId = location.state?.roomId || '';
 
   useEffect(() => {
-    if (!tabValue.current) {
-      navigate('/');
-    } else {
-      if (!roomId && retrievedRoomId) {
-        setRoomId(retrievedRoomId);
-      }
-      if (tabValue.current === 'Create') {
-        setIsHost(true);
-      } else {
-        setIsHost(false);
-      }
+    const effectiveRoomId = paramRoomId || stateRoomId;
+    if (!roomId && effectiveRoomId) {
+      setRoomId(effectiveRoomId);
+      navigate(`/room/${effectiveRoomId}`, { replace: true });
     }
-  }, [tabValue, roomId, setIsHost, retrievedRoomId, setRoomId, navigate]);
+    if (tabValue.current === 'Create') {
+      setIsHost(true);
+      navigate(`/room/${roomId}`, { replace: true });
+    } else {
+      setIsHost(false);
+    }
+  }, [
+    tabValue,
+    roomId,
+    setIsHost,
+    paramRoomId,
+    stateRoomId,
+    setRoomId,
+    navigate,
+  ]);
 
   return (
     <>
