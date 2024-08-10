@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const { createServer } = require('http');
-const { Server } = require('socket.io');
-const { instrument } = require('@socket.io/admin-ui');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import { instrument } from '@socket.io/admin-ui';
 require('dotenv').config();
 
 const router = require(path.join(__dirname, './router.js'));
@@ -19,7 +19,7 @@ const io = new Server(server, {
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'http://localhost';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
 if (process.env.NODE_ENV === 'production') {
   instrument(io, {
