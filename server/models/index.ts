@@ -3,15 +3,17 @@
  * @module models/index
  */
 
-const mongoose = require('mongoose');
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+import mongoose from 'mongoose';
+import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 /**
  * The URI for connecting to the MongoDB database.
  * @type {string}
  */
-const URI =
+const URI: string =
   process.env.MONGO_URI || 'mongodb://localhost:27017/CSSRaceDatabase';
 
 mongoose
@@ -19,8 +21,8 @@ mongoose
   .then(() => {
     console.log('MongoDB Connection Succeeded.');
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.log('Error in DB connection: ' + err);
   });
 
-module.exports = mongoose;
+export default mongoose;

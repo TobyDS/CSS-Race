@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('./');
+import mongoose from './index';
 
 const Schema = mongoose.Schema;
 

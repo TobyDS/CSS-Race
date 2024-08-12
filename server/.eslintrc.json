@@ -8,6 +8,7 @@
   },
   "extends": ["eslint:recommended", "plugin:node/recommended"],
   "parser": "@babel/eslint-parser",
+  "sourceType": "module",
   "parserOptions": {
     "requireConfigFile": false
   },
