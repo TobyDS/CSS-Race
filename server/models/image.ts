@@ -4,7 +4,7 @@ import mongoose from './index';
 
 const { Schema, model } = mongoose;
 
-interface ImageDoc extends mongoose.Document {
+export interface ImageDoc extends mongoose.Document {
   img_Buffer: Buffer;
   img_2x_Buffer: Buffer | null;
   colors: string[];
