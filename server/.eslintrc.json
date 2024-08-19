@@ -31,5 +31,5 @@
     "space-before-function-paren": ["error", "always"],
     "indent": ["error", 2]
   },
-  "ignorePatterns": ["*.ejs"]
+  "ignorePatterns": ["*.ejs", "node_modules/", "dist/"]
 }

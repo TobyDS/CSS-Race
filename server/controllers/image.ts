@@ -1,4 +1,5 @@
-const Image = require('../models/image');
+import type { Request, Response } from 'express';
+import Image, { ImageDoc } from '../models/image';
 
 /**
  * Controller for handling image-related operations.
@@ -10,14 +11,15 @@ const imageController = {
    * @param {Object} res - The response object.
    * @returns {Object} The response object with the images.
    */
-  getImages: async (req, res) => {
+  getImages: async (req: Request, res: Response) => {
     try {
       const images = await Image.find();
       res.status(200).json({ images });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Failed to get images', error: error.message });
+      res.status(500).json({
+        message: 'Failed to get images',
+        error: (error as Error).message,
+      });
     }
   },
 
@@ -27,7 +29,7 @@ const imageController = {
    * @param {Object} res - The response object.
    * @returns {Object} The response object with the image.
    */
-  getImageById: async (req, res) => {
+  getImageById: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const image = await Image.findById(id);
@@ -36,9 +38,10 @@ const imageController = {
       }
       res.status(200).json(image);
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Failed to get image', error: error.message });
+      res.status(500).json({
+        message: 'Failed to get image',
+        error: (error as Error).message,
+      });
     }
   },
 
@@ -48,15 +51,16 @@ const imageController = {
    * @param {Object} res - The response object.
    * @returns {Object} The response object with the random image.
    */
-  getRandomImage: async (req, res) => {
+  getRandomImage: async (req: Request, res: Response) => {
     try {
-      Image.random((image) => {
+      (Image as any).random((image: ImageDoc) => {
         res.status(200).json(image);
       });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Failed to get random image', error: error.message });
+      res.status(500).json({
+        message: 'Failed to get random image',
+        error: (error as Error).message,
+      });
     }
   },
 
@@ -68,7 +72,7 @@ const imageController = {
    * @param {Object} res - The response object.
    * @returns {Object} The response object with the added image.
    */
-  addImage: async (req, res) => {
+  addImage: async (req: Request, res: Response) => {
     try {
       const { base64Image, base64Image_2x } = req.body;
       let newImage;
@@ -82,9 +86,10 @@ const imageController = {
         .status(201)
         .json({ message: 'Image added successfully', image: newImage });
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Failed to add image', error: error.message });
+      res.status(500).json({
+        message: 'Failed to add image',
+        error: (error as Error).message,
+      });
     }
   },
 };
