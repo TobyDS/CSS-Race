@@ -40,6 +40,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#designed-with">Designed With</a></li>
       </ul>
     </li>
     <li>
@@ -69,6 +70,10 @@ CSS Race is a project inspired by [CSSBattle](http://www.cssbattle.dev). CSS Rac
 ### Built With
 
 [![React][React.js]][React-url] [![Express][Express.js]][Express-url] [![Socket.io][SocketIo]][SocketIo-url] [![MUI][MUI]][MUI-url] [![MongoDB][MongoDB]][Mongo-url] [![Node][Node.js]][Node-url] [![ESLint][ESLint]][ESLint-url] [![Prettier][Prettier]][Prettier-url]
+
+### Designed With
+
+**Figma:** Feel free to view the figma files for this project [here](https://www.figma.com/design/b1IhLslf6TQyk2muBMFwBr/CSS-Race?node-id=6-42&t=TTQYTVPIq7a0L4eM-1)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
