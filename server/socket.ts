@@ -1,10 +1,11 @@
-const Room = require('./libs/Room').default;
-const compareImages = require('./utils/compareImages');
-const codeToImage = require('./utils/codeToImage');
+import Room from './libs/Room';
+import compareImages from './utils/compareImages';
+import codeToImage from './utils/codeToImage';
+import { Server as SocketIOServer, type Socket } from 'socket.io';
 
-let activeRooms = [];
+let activeRooms: Array<Room> = [];
 
-function disconnectFromPrevious (socket) {
+function disconnectFromPrevious(socket: Socket) {
   // Find the room that the user is currently in
   const currentRoom = activeRooms.find((room) => room.users[socket.id]);
 
@@ -20,8 +21,7 @@ function disconnectFromPrevious (socket) {
     }
   }
 }
-
-module.exports = function (io) {
+export default function (io: SocketIOServer) {
   io.on('connection', (socket) => {
     // Generate a new room ID and a random image when a user connects without a room ID
     socket.on('create_room', async () => {
@@ -48,15 +48,19 @@ module.exports = function (io) {
       try {
         disconnectFromPrevious(socket);
         const room = activeRooms.find((room) => room.id === roomId);
+        if (!room) {
+          console.error(`Room ${roomId} does not exist`);
+          return;
+        }
         const image = room.targetImage;
-        if (image) {
+        if (typeof image === 'object' && image !== null) {
           socket.emit('image', image);
           socket.join(roomId);
           room.addUser(socket.id);
           const opponent = Object.values(room.users).find(
             (user) => user.id !== socket.id
           );
-          socket.emit('opponent_status', opponent.isReady);
+          socket.emit('opponent_status', opponent!.isReady);
           socket
             .to(roomId)
             .emit('opponent_status', room.users[socket.id].isReady);
@@ -68,35 +72,24 @@ module.exports = function (io) {
       }
     });
 
-    socket.on('code_submit', async (code) => {
+    socket.on('code_submit', async (code: string) => {
       try {
-        // Get the room that the socket is currently connected to
+        // Get the room and user that the socket is currently connected to
         const room = activeRooms.find((room) => room.containsUser(socket.id));
-        // Check if room is defined
-        if (!room) {
-          io.to(room.id).emit('user_score', 0);
-          return;
-        }
+        const user = room?.users[socket.id];
 
-        const user = Object.values(room.users).find(
-          (user) => user.id === socket.id
-        );
-
-        if (!user) {
-          io.to(room.id).emit('user_score', 0);
+        // If room, user, or code is not defined, emit a score of 0 and return
+        if (!room || !user || !code) {
+          socket.emit('user_score', 0);
           return;
-        }
-        // Check code is defined
-        if (!code) {
-          io.to(room.id).emit('user_score', 0);
         }
 
         const userImage = await codeToImage(code);
 
         // Call compareImages with the room's target image and the code
         const score = await compareImages(room.targetImage, userImage);
-        if (score > user.bestScore) {
-          user.bestScore = score;
+        if (score > user.score) {
+          user.score = score;
         }
 
         // Emit the score to the client
@@ -203,7 +196,7 @@ module.exports = function (io) {
         io.to(room.id).emit('opponent_disconnected', socket.id);
 
         // If the room is empty, remove it from the active rooms
-        if (room.users.length === 0) {
+        if (Object.keys(room.users).length === 0) {
           activeRooms = activeRooms.filter(
             (activeRoom) => activeRoom.id !== room.id
           );
@@ -211,4 +204,4 @@ module.exports = function (io) {
       }
     });
   });
-};
+}
