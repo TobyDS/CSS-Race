@@ -1,9 +1,13 @@
-const PNG = require('pngjs').PNG;
-const pixelmatch = require('pixelmatch');
+import { PNG } from 'pngjs';
+import pixelmatch from 'pixelmatch';
+import { type ImageDoc } from '../models/image';
 
-async function compareImages (targetImage, userImage) {
+async function compareImages(targetImage: ImageDoc | null, userImage: Buffer) {
   try {
     // Decode the image buffers to RGBA format
+    if (!targetImage) {
+      throw new Error('No target image provided');
+    }
     const targetPng = PNG.sync.read(targetImage.img_Buffer);
     const userPng = PNG.sync.read(userImage);
 
@@ -31,4 +35,4 @@ async function compareImages (targetImage, userImage) {
   }
 }
 
-module.exports = compareImages;
+export default compareImages;

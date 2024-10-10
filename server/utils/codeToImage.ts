@@ -1,12 +1,12 @@
-const puppeteer = require('puppeteer');
-const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
+import puppeteer from 'puppeteer';
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 require('dotenv').config();
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
-async function codeToImage (htmlCode) {
+async function codeToImage(htmlCode: string) {
   const sanitizedCode = DOMPurify.sanitize(htmlCode);
   const fullHtml = `<html><head><style>html{height:100%;width:100%}body{overflow:clip}</style></head><body>${sanitizedCode}</body></html>`;
   const browser = await puppeteer.launch({
@@ -27,6 +27,9 @@ async function codeToImage (htmlCode) {
   await page.setContent(fullHtml);
 
   const content = await page.$('html');
+  if (!content) {
+    throw new Error('Failed to find the HTML element.');
+  }
   const imageBuffer = await content.screenshot();
 
   await page.close();
@@ -35,4 +38,4 @@ async function codeToImage (htmlCode) {
   return imageBuffer;
 }
 
-module.exports = codeToImage;
+export default codeToImage;
