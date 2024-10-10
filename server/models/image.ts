@@ -2,9 +2,9 @@
 
 import mongoose from './index';
 
-const { Schema, model } = mongoose;
+import { Schema, Document, Model } from 'mongoose';
 
-export interface ImageDoc extends mongoose.Document {
+export interface ImageDoc extends Document {
   img_Buffer: Buffer;
   img_2x_Buffer: Buffer | null;
   colors: string[];
@@ -12,7 +12,11 @@ export interface ImageDoc extends mongoose.Document {
   img_2x: string | null;
 }
 
-const imageSchema = new Schema<ImageDoc>({
+interface ImageModel extends Model<ImageDoc> {
+  random(): Promise<ImageDoc | null>;
+}
+
+const imageSchema = new Schema<ImageDoc, ImageModel>({
   img_Buffer: {
     type: Buffer,
     required: true,
@@ -54,20 +58,18 @@ imageSchema.set('toJSON', {
   },
 });
 
-imageSchema.statics.random = function (
-  callback: (image: ImageDoc | null) => void
-) {
-  this.countDocuments()
+imageSchema.statics.random = function (): Promise<ImageDoc | null> {
+  return this.countDocuments()
     .then((count: number) => {
       const rand = Math.floor(Math.random() * count);
-      this.findOne()
-        .skip(rand)
-        .then((image: ImageDoc | null) => callback(image))
-        .catch((err: any) => console.error(err));
+      return this.findOne().skip(rand).exec();
     })
-    .catch((err: any) => console.error(err));
+    .catch((err: any) => {
+      console.error(err);
+      return null;
+    });
 };
 
-const Image = model<ImageDoc>('Image', imageSchema);
+const Image = mongoose.model<ImageDoc, ImageModel>('Image', imageSchema);
 
 export default Image;

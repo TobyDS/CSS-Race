@@ -24,4 +24,4 @@ const sampleImages = [
   },
 ];
 
-module.exports = sampleImages;
+export default sampleImages;

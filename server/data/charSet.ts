@@ -27,4 +27,4 @@ const charSet = [
   'Y',
 ];
 
-module.exports = charSet;
+export default charSet;

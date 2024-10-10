@@ -1,4 +1,4 @@
-const charSet = require('../data/charSet.js');
+import charSet from '../data/charSet';
 
 function generateRoomId () {
   let roomId = '';
@@ -12,4 +12,4 @@ function generateRoomId () {
   return roomId;
 }
 
-module.exports = generateRoomId;
+export default generateRoomId;

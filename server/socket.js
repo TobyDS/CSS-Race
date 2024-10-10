@@ -1,4 +1,4 @@
-const Room = require('./libs/Room');
+const Room = require('./libs/Room').default;
 const compareImages = require('./utils/compareImages');
 const codeToImage = require('./utils/codeToImage');
 
