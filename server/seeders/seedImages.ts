@@ -1,7 +1,7 @@
-const path = require('path');
-const mongoose = require('mongoose');
-const Image = require('../models/image');
-const sampleImages = require('../data/sampleImages');
+import path from 'path';
+import mongoose from 'mongoose';
+import Image from '../models/image';
+import sampleImages from '../data/sampleImages';
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const URI =
   process.env.MONGO_URI || 'mongodb://localhost:27017/CSSRaceDatabase';
